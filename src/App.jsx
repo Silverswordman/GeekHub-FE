@@ -6,6 +6,8 @@ import Login from "./components/LoginPage";
 import NavbarCustom from "./components/Navbar";
 import Home from "./components/HomePage";
 import PageFooter from "./components/Footer";
+import ConventionDetailCard from "./components/ConventionDetail";
+import ProfileComponent from "./components/ProfilePage";
 
 function App() {
   return (
@@ -15,6 +17,11 @@ function App() {
         <Routes>
           <Route path="/home" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route
+            path="/convention/:conventionId"
+            element={<ConventionDetailCard />}
+          />
+          <Route path="/me" element={<ProfileComponent />} />
         </Routes>
       </BrowserRouter>
       <PageFooter />

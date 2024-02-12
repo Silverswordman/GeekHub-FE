@@ -1,96 +1,63 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../redux/actions/authactions";
 
-const Login = () => {
+const LoginComponent = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const loginError = useSelector((state) => state.auth.error);
 
-  const bodyToUse = {
-    email: email,
-    password: password,
+  const handleLogin = (e) => {
+    e.preventDefault();
+    dispatch(loginUser(email, password));
   };
 
-  const serverLogin = () => {
-    fetch("http://localhost:3003/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(bodyToUse),
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          throw new Error("errore nel login");
-        }
-      })
-      .then((data) => {
-        console.log(data);
-        localStorage.setItem("token", "Bearer " + data.token);
-        navigate("/home");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    console.log(token);
-  }, []);
+  if (isAuthenticated && !loginError) {
+    navigate("/home");
+  }
 
   return (
-    <>
-      <Container>
-        <Row className="flex-column">
-          <Col>
-            <Form
-              onSubmit={(e) => {
-                e.preventDefault();
-                serverLogin();
-              }}
-            >
-              <Form.Group
-                className="mb-3"
-                controlId="formBasicEmail"
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
-              >
+    <Container>
+      <Row className="flex-column">
+        <Col>
+          {!isAuthenticated ? (
+            <Form onSubmit={handleLogin}>
+              <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
                 <Form.Control
                   type="email"
-                  placeholder="Scrivi qui la tua mail"
+                  placeholder="Enter email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </Form.Group>
 
-              <Form.Group
-                className="mb-3"
-                controlId="formBasicPassword"
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-              >
-                <Form.Label className="text-danger ">Password</Form.Label>
+              <Form.Group controlId="formBasicPassword">
+                <Form.Label>Password</Form.Label>
                 <Form.Control
                   type="password"
-                  placeholder="Inserisci la password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </Form.Group>
 
-              <Button variant="info" type="submit">
-                Login
+              <Button variant="primary" type="submit">
+                Submit
               </Button>
-              <Button variant="danger">Registrati</Button>
             </Form>
-          </Col>
-        </Row>
-      </Container>
-    </>
+          ) : (
+            <p>Sei già autenticato!</p>
+          )}
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
-export default Login;
+export default LoginComponent;

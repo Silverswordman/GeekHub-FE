@@ -1,7 +1,8 @@
-import { Card, Pagination, Spinner, Col, Row } from "react-bootstrap";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { getConventions } from "../redux/actions/conventionactions";
+import { Card, Col, Row, Spinner, Pagination } from "react-bootstrap";
 
 const HomeCard = () => {
   const dispatch = useDispatch();
@@ -32,15 +33,19 @@ const HomeCard = () => {
               xs={12}
               className="pt-3"
             >
-              <Card className="p-1">
-                <Card.Img variant="top" src={convention.coverImage} />
-                <Card.Body>
-                  <Card.Title>{convention.title}</Card.Title>
-                  <Card.Title>{convention.title}</Card.Title>
-                  <Card.Text>{convention.city.cityName}</Card.Text>
-                  <Card.Text>{convention.address}</Card.Text>
-                </Card.Body>
-              </Card>
+              <Link
+                to={`/convention/${convention.conventionId}`}
+                className="text-decoration-none"
+              >
+                <Card className="p-1">
+                  <Card.Img variant="top" src={convention.coverImage} />
+                  <Card.Body>
+                    <Card.Title>{convention.title}</Card.Title>
+                    <Card.Text>{convention.city.cityName}</Card.Text>
+                    <Card.Text>{convention.address}</Card.Text>
+                  </Card.Body>
+                </Card>
+              </Link>
             </Col>
           ))}
       </Row>

@@ -1,12 +1,12 @@
 import { Container, Row } from "react-bootstrap";
-import HomeCard from "./HomeCardConvention";
+import HomeCard from "./ConventionCards";
 import CustomHomeCarousel from "./HomeCarousel";
 
 const Home = () => {
   return (
     <Container>
       <Row>
-        <CustomHomeCarousel/>
+        <CustomHomeCarousel />
       </Row>
       <Row>
         <HomeCard />
