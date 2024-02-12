@@ -13,20 +13,13 @@ const NavbarCustom = () => {
           onClick={() => {
             navigate("/home");
           }}
+          className="pointer-cursor"
         >
           Geekhub
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link
-              onClick={() => {
-                navigate("/login");
-              }}
-            >
-              Login
-            </Nav.Link>
-
             <Nav.Link
               onClick={() => {
                 navigate("/home");
@@ -36,6 +29,13 @@ const NavbarCustom = () => {
             </Nav.Link>
             <Nav.Link href="#link"></Nav.Link>
             <Nav.Link href="#link">My Profile</Nav.Link>
+            <Nav.Link
+              onClick={() => {
+                navigate("/login");
+              }}
+            >
+              Login
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

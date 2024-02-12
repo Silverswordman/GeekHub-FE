@@ -20,7 +20,7 @@ const HomeCard = () => {
   return (
     <>
       <Row xs={1} md={2} lg={3}>
-        {loading && <Spinner animation="border" />}
+        {loading && <Spinner animation="grow" variant="info" />}
         {error && <div>Error: {error}</div>}
         {!loading &&
           !error &&
@@ -33,7 +33,7 @@ const HomeCard = () => {
               className="pt-3"
             >
               <Card className="p-1">
-                <Card.Img variant="top" src={convention.coverImage}  />
+                <Card.Img variant="top" src={convention.coverImage} />
                 <Card.Body>
                   <Card.Title>{convention.title}</Card.Title>
                   <Card.Title>{convention.title}</Card.Title>

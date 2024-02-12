@@ -30,6 +30,7 @@ const Login = () => {
       .then((data) => {
         console.log(data);
         localStorage.setItem("token", "Bearer " + data.token);
+        navigate("/home");
       })
       .catch((err) => {
         console.log(err);
@@ -73,20 +74,18 @@ const Login = () => {
                   setPassword(e.target.value);
                 }}
               >
-                <Form.Label>Password</Form.Label>
+                <Form.Label className="text-danger ">Password</Form.Label>
                 <Form.Control
                   type="password"
-                  placeholder="Scrivi qui la password"
+                  placeholder="Inserisci la password"
                 />
               </Form.Group>
 
-              <Button variant="primary" type="submit">
-                Submit
+              <Button variant="info" type="submit">
+                Login
               </Button>
+              <Button variant="danger">Registrati</Button>
             </Form>
-          </Col>
-          <Col className="mt-5">
-            <h3>Non hai un account? Registrati</h3>
           </Col>
         </Row>
       </Container>

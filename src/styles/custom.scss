@@ -1,6 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;500;700;900&display=swap");
+
 $primary: #5c3e92;
 $info: #8fd8b8;
+$danger: #ffa500;
 
+* {
+  font-family: "Roboto Condensed", sans-serif;
+}
 
-@import "node_modules/bootstrap/scss/bootstrap.scss";
-
+@import "node_modules/bootstrap/scss/bootstrap";
