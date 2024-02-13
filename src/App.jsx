@@ -11,7 +11,7 @@ import ProfileComponent from "./components/ProfilePage";
 
 function App() {
   return (
-    <Container fluid="true" className="p-0 bg-primary d-flex flex-column h-100">
+    <Container fluid className="p-0 bg-primary d-flex flex-column h-100 flex-grow-1">
       <BrowserRouter>
         <NavbarCustom />
         <Routes>

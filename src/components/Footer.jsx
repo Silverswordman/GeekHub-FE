@@ -6,7 +6,7 @@ function PageFooter() {
   const currentYear = format(currentDate, "yyyy");
 
   return (
-    <Card className="text-center   bg-primary-subtle ">
+    <Card className="text-center  bg-primary-subtle sticky-bottom">
       <Card.Footer className="text-muted small fst-italic">
         © Silvestrini Giulia for Epicode {currentYear}
       </Card.Footer>
