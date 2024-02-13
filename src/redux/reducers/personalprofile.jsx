@@ -4,6 +4,9 @@ import {
   FETCH_PROFILE_FAILURE,
 } from "../actions/profileactions";
 
+
+// stato iniziale del profilo
+
 const initialState = {
   loading: false,
   profile: null,

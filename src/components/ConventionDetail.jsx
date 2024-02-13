@@ -5,22 +5,28 @@ import {
   getConventionDetail,
   getConventionSections,
 } from "../redux/actions/conventionactions";
-import { Card, Container } from "react-bootstrap";
+import { Card, Container, Row, Col } from "react-bootstrap";
 
 const ConventionDetail = () => {
+
   const { conventionId } = useParams();
   const dispatch = useDispatch();
+
+// caricamento dettagli
   const {
     conventionDetail,
     loading: detailLoading,
     error: detailError,
   } = useSelector((state) => state.conventionDetails);
+
+// caricamento sezioni
   const {
     sections,
     loading: sectionsLoading,
     error: sectionsError,
   } = useSelector((state) => state.conventionSections);
 
+  // use effect che prende id della fiera
   useEffect(() => {
     dispatch(getConventionDetail(conventionId));
     dispatch(getConventionSections(conventionId));
@@ -33,29 +39,32 @@ const ConventionDetail = () => {
 
   return (
     <Container className="my-5">
-      <Card>
-        <Card.Img variant="top" src={conventionDetail.coverImage} />
-        <Card.Img variant="top" src={conventionDetail.logo} />
+      <Row>
+        <Col>
+          <Card className="p-1">
+            <Card.Img variant="top" src={conventionDetail.coverImage} />
+            <Card.Img variant="top" src={conventionDetail.logo} />
 
-        <Card.Title>{conventionDetail.title}</Card.Title>
-        <Card.Title>{conventionDetail.startDate}</Card.Title>
-        <Card.Title>{conventionDetail.endDate}</Card.Title>
-        <Card.Title>{conventionDetail.address}</Card.Title>
-        <Card.Title>{conventionDetail.city.cityName}</Card.Title>
-      </Card>
-
-      <Container className="mt-3">
-        <h2>Sections</h2>
-        {Array.isArray(sections.content) &&
-          sections.content.map((section) => (
-            <Card key={section.id}>
-              <Card.Body>
-                <Card.Title>{section.sectionTitle}</Card.Title>
-                {/* Render other details of the section here */}
-              </Card.Body>
-            </Card>
-          ))}
-      </Container>
+            <Card.Title>{conventionDetail.title}</Card.Title>
+            <Card.Title>{conventionDetail.startDate}</Card.Title>
+            <Card.Title>{conventionDetail.endDate}</Card.Title>
+            <Card.Title>{conventionDetail.address}</Card.Title>
+            <Card.Title>{conventionDetail.city.cityName}</Card.Title>
+          </Card>
+        </Col>
+        <Col>
+          <h2 className="text-info">Sections</h2>
+          {Array.isArray(sections.content) &&
+            sections.content.map((section) => (
+              <Card key={section.id}>
+                <Card.Body>
+                  <Card.Title>{section.sectionTitle}</Card.Title>
+                  <Card.Title>{section.sectionSubtitle}</Card.Title>
+                </Card.Body>
+              </Card>
+            ))}
+        </Col>
+      </Row>
     </Container>
   );
 };

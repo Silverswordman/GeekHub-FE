@@ -50,6 +50,7 @@ const LoginComponent = () => {
               <Button variant="primary" type="submit">
                 Submit
               </Button>
+              <Button onClick={() => navigate("/register")}>Register</Button>
             </Form>
           ) : (
             <p>Sei già autenticato!</p>
@@ -61,3 +62,4 @@ const LoginComponent = () => {
 };
 
 export default LoginComponent;
+

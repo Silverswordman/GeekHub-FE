@@ -1,10 +1,12 @@
-// profileActions.js
 
 export const FETCH_PROFILE_REQUEST = "FETCH_PROFILE_REQUEST";
 export const FETCH_PROFILE_SUCCESS = "FETCH_PROFILE_SUCCESS";
 export const FETCH_PROFILE_FAILURE = "FETCH_PROFILE_FAILURE";
 
 const urlprofile = "http://localhost:3003/users";
+
+
+//fetch proprio profilo
 
 export const fetchProfile = () => {
   return (dispatch) => {
@@ -17,7 +19,7 @@ export const fetchProfile = () => {
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          throw new Error("Problemi con il Server risolveremo al piu presto");
         }
         return response.json();
       })

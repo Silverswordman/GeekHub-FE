@@ -1,4 +1,8 @@
-import { loginRequest, loginSuccess, loginFailure } from "../reducers/authslice";
+import {
+  loginRequest,
+  loginSuccess,
+  loginFailure,
+} from "../reducers/authslice";
 
 export const loginUser = (email, password) => {
   return async (dispatch) => {

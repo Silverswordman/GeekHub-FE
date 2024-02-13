@@ -1,6 +1,9 @@
+// export generali 
 export const FETCH_CONVENTIONS_REQUEST = "FETCH_CONVENTIONS_REQUEST";
 export const FETCH_CONVENTIONS_SUCCESS = "FETCH_CONVENTIONS_SUCCESS";
 export const FETCH_CONVENTIONS_FAILURE = "FETCH_CONVENTIONS_FAILURE";
+
+// export dei dettagli
 export const FETCH_CONVENTION_DETAIL_REQUEST =
   "FETCH_CONVENTION_DETAIL_REQUEST";
 export const FETCH_CONVENTION_DETAIL_SUCCESS =
@@ -8,6 +11,8 @@ export const FETCH_CONVENTION_DETAIL_SUCCESS =
 export const FETCH_CONVENTION_DETAIL_FAILURE =
   "FETCH_CONVENTION_DETAIL_FAILURE";
 
+
+// export sezione
 export const FETCH_CONVENTION_SECTIONS_REQUEST =
   "FETCH_CONVENTION_SECTIONS_REQUEST";
 export const FETCH_CONVENTION_SECTIONS_SUCCESS =
@@ -16,6 +21,8 @@ export const FETCH_CONVENTION_SECTIONS_FAILURE =
   "FETCH_CONVENTION_SECTIONS_FAILURE";
 
 const urlconventions = "http://localhost:3003/conventions";
+
+//get conventions page come parametro
 
 export const getConventions = (currentPage) => {
   return async (dispatch) => {
@@ -68,6 +75,7 @@ export const getConventionDetail = (conventionId) => {
     }
   };
 };
+
 export const getConventionSections = (
   conventionId,
   page = 0,
