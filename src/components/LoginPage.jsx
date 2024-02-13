@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { Button, Col, Container, Form, Row, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../redux/actions/authactions";
@@ -53,7 +53,15 @@ const LoginComponent = () => {
               <Button onClick={() => navigate("/register")}>Register</Button>
             </Form>
           ) : (
-            <p>Sei già autenticato!</p>
+            <Row className="my-5 justify-content-center ">
+              <Col className="col-6 col-md-3 ">
+                <Card>
+                  <Card.Text className="fs-5 text-center p-3 text-primary fst-italic ">
+                    Sei già autenticato!
+                  </Card.Text>
+                </Card>
+              </Col>
+            </Row>
           )}
         </Col>
       </Row>
@@ -62,4 +70,3 @@ const LoginComponent = () => {
 };
 
 export default LoginComponent;
-

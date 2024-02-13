@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../redux/actions/registeractions";
-import { useNavigate } from "react-router-dom"; // Importa useNavigate
+import { useNavigate } from "react-router-dom"; 
 
 const RegistrationComponent = () => {
   const [userData, setUserData] = useState({
@@ -16,7 +16,7 @@ const RegistrationComponent = () => {
   const dispatch = useDispatch();
   const registerError = useSelector((state) => state.register.error);
   const userId = useSelector((state) => state.register.userId);
-  const navigate = useNavigate(); // Usa useNavigate per la navigazione
+  const navigate = useNavigate(); 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -53,9 +53,8 @@ const RegistrationComponent = () => {
     return true;
   };
 
-  // Controlla se la registrazione è avvenuta con successo
   if (userId) {
-    navigate("/login"); // Reindirizza alla pagina di login se la registrazione è avvenuta con successo
+    navigate("/login");
   }
 
   return (

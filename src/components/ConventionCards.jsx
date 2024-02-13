@@ -68,7 +68,6 @@ const HomeCard = () => {
           </Col>
         </Row>
       )}
-    
     </>
   );
 };

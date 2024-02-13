@@ -7,7 +7,7 @@ const Home = () => {
     <Container>
       <Row>{/* <CustomHomeCarousel /> */}</Row>
       <Row>
-        <HomeCard />
+        <HomeCard  />
       </Row>
     </Container>
   );
