@@ -28,7 +28,9 @@ const NavbarCustom = () => {
                 Login
               </Nav.Link>
             )}
-            
+            <Nav.Link as={Link} to="/addconvention">
+              ADD
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

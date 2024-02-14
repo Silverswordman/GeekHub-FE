@@ -1,7 +1,7 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Container, Row } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import Login from "./components/LoginPage";
 import NavbarCustom from "./components/Navbar";
 import Home from "./components/HomePage";
@@ -9,6 +9,7 @@ import PageFooter from "./components/Footer";
 import ConventionDetailCard from "./components/ConventionDetail";
 import ProfileComponent from "./components/ProfilePage";
 import RegistrationComponent from "./components/Registration";
+import ConventionForm from "./components/ConventionAdd";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           />
           <Route path="/me" element={<ProfileComponent />} />
           <Route path="/register" element={<RegistrationComponent />} />
+          <Route path="/addconvention" element={<ConventionForm />} />
         </Routes>
       </BrowserRouter>
 

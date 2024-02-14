@@ -1,10 +1,8 @@
-
 export const FETCH_PROFILE_REQUEST = "FETCH_PROFILE_REQUEST";
 export const FETCH_PROFILE_SUCCESS = "FETCH_PROFILE_SUCCESS";
 export const FETCH_PROFILE_FAILURE = "FETCH_PROFILE_FAILURE";
 
 const urlprofile = "http://localhost:3003/users";
-
 
 //fetch proprio profilo
 

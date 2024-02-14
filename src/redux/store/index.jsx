@@ -5,6 +5,8 @@ import personalProfileReducer from "../reducers/personalprofile";
 import authReducer from "../reducers/authslice";
 import conventionSectionsReducer from "../reducers/conventionsections";
 import registerReducer from "../reducers/register";
+import locationReducer from "../reducers/location";
+import newConventionReducer from "../reducers/newconvention";
 
 const rootReducer = combineReducers({
   conventions: conventionReducer,
@@ -13,6 +15,8 @@ const rootReducer = combineReducers({
   personalProfile: personalProfileReducer,
   auth: authReducer,
   register: registerReducer,
+  location: locationReducer,
+  newConvention: newConventionReducer,
 });
 
 const store = configureStore({

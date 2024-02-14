@@ -1,4 +1,4 @@
-// export generali 
+// export generali
 export const FETCH_CONVENTIONS_REQUEST = "FETCH_CONVENTIONS_REQUEST";
 export const FETCH_CONVENTIONS_SUCCESS = "FETCH_CONVENTIONS_SUCCESS";
 export const FETCH_CONVENTIONS_FAILURE = "FETCH_CONVENTIONS_FAILURE";
@@ -11,7 +11,6 @@ export const FETCH_CONVENTION_DETAIL_SUCCESS =
 export const FETCH_CONVENTION_DETAIL_FAILURE =
   "FETCH_CONVENTION_DETAIL_FAILURE";
 
-
 // export sezione
 export const FETCH_CONVENTION_SECTIONS_REQUEST =
   "FETCH_CONVENTION_SECTIONS_REQUEST";
@@ -19,6 +18,9 @@ export const FETCH_CONVENTION_SECTIONS_SUCCESS =
   "FETCH_CONVENTION_SECTIONS_SUCCESS";
 export const FETCH_CONVENTION_SECTIONS_FAILURE =
   "FETCH_CONVENTION_SECTIONS_FAILURE";
+
+export const SAVE_CONVENTION_SUCCESS = "SAVE_CONVENTION_SUCCESS";
+export const SAVE_CONVENTION_FAILURE = "SAVE_CONVENTION_FAILURE";
 
 const urlconventions = "http://localhost:3003/conventions";
 
@@ -101,13 +103,43 @@ export const getConventionSections = (
       }
 
       const data = await response.json();
-      
+
       dispatch({ type: FETCH_CONVENTION_SECTIONS_SUCCESS, payload: data });
     } catch (error) {
       dispatch({
         type: FETCH_CONVENTION_SECTIONS_FAILURE,
         payload: error.message,
       });
+    }
+  };
+};
+
+export const saveConventionSuccess = (convention) => ({
+  type: SAVE_CONVENTION_SUCCESS,
+  payload: convention,
+});
+
+export const saveConventionFailure = (error) => ({
+  type: SAVE_CONVENTION_FAILURE,
+  payload: error,
+});
+
+export const saveNewConvention = (formData) => {
+  return async (dispatch) => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch(urlconventions, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await response.json();
+      dispatch(saveConventionSuccess(data));
+    } catch (error) {
+      dispatch(saveConventionFailure(error.message));
     }
   };
 };

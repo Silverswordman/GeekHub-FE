@@ -79,7 +79,7 @@ const ConventionDetail = () => {
             sections.content.map((section) => (
               <Card key={section.sectionId} className="my-2">
                 <Card.Body>
-                  <Card.Img src={section.sectionImage} className="w-50" />
+                  <Card.Img src={section.sectionImage} className="w-50 " />
                   <Card.Title>{section.sectionTitle}</Card.Title>
                   <Card.Text>{section.sectionSubtitle}</Card.Text>
                 </Card.Body>
