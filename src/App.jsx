@@ -13,27 +13,29 @@ import ConventionForm from "./components/ConventionAdd";
 
 function App() {
   return (
-    <Container
-      fluid
-      className="p-0 bg-primary d-flex flex-column h-100 flex-grow-1"
-    >
+    <>
       <BrowserRouter>
-        <NavbarCustom />
-        <Routes>
-          <Route path="/home" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route
-            path="/convention/:conventionId"
-            element={<ConventionDetailCard />}
-          />
-          <Route path="/me" element={<ProfileComponent />} />
-          <Route path="/register" element={<RegistrationComponent />} />
-          <Route path="/addconvention" element={<ConventionForm />} />
-        </Routes>
-      </BrowserRouter>
+        <Container
+          fluid
+          className="p-0 bg-primary d-flex flex-column flex-grow-0   min-vh-100 "
+        >
+          <NavbarCustom />
 
-      <PageFooter />
-    </Container>
+          <Routes>
+            <Route path="/home" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route
+              path="/convention/:conventionId"
+              element={<ConventionDetailCard />}
+            />
+            <Route path="/me" element={<ProfileComponent />} />
+            <Route path="/register" element={<RegistrationComponent />} />
+            <Route path="/addconvention" element={<ConventionForm />} />
+          </Routes>
+        </Container>
+        <PageFooter />
+      </BrowserRouter>
+    </>
   );
 }
 

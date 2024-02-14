@@ -24,7 +24,6 @@ export const SAVE_CONVENTION_FAILURE = "SAVE_CONVENTION_FAILURE";
 
 const urlconventions = "http://localhost:3003/conventions";
 
-//get conventions page come parametro
 
 export const getConventions = (currentPage) => {
   return async (dispatch) => {

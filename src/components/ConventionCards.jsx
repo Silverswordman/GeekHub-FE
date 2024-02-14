@@ -37,13 +37,20 @@ const HomeCard = () => {
                 to={`/convention/${convention.conventionId}`}
                 className="text-decoration-none"
               >
-                <Card className="p-1">
-                  <Card.Img variant="top" src={convention.coverImage} />
-                  <Card.Body>
-                    <Card.Title>{convention.title}</Card.Title>
-                    <Card.Text>{convention.city.cityName}</Card.Text>
-                    <Card.Text>{convention.address}</Card.Text>
-                  </Card.Body>
+                <Card className="p-1 bg-primary-subtle border-info border-4 shadow-lg">
+                  <Row>
+                    <Col className="col-6">
+                      <Card.Img variant="top" src={convention.coverImage} />
+                    </Col>
+
+                    <Col className="col-6">
+                      <Card.Body>
+                        <Card.Title>{convention.title}</Card.Title>
+                        <Card.Text>{convention.city.cityName}</Card.Text>
+                        <Card.Text>{convention.address}</Card.Text>
+                      </Card.Body>
+                    </Col>
+                  </Row>
                 </Card>
               </Link>
             </Col>

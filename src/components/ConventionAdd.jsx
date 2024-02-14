@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom"; // Importiamo useNavigate
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {
@@ -8,9 +9,11 @@ import {
   fetchCitiesByProvinceId,
 } from "../redux/actions/locationactions";
 import { saveNewConvention } from "../redux/actions/conventionactions";
+import { Row, Col, Card, Form, Button } from "react-bootstrap";
 
 const ConventionForm = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate(); // Inizializziamo useNavigate
   const [formData, setFormData] = useState({
     title: "",
     startDate: new Date(),
@@ -34,37 +37,38 @@ const ConventionForm = () => {
   }, [dispatch]);
 
   const handleRegionChange = (e) => {
-    const selectedRegionId = e.target.value;
-    const selectedRegion = regions.find(
-      (region) => region.id === parseInt(selectedRegionId)
-    );
+    const selectedRegionName = e.target.value;
     setFormData({
       ...formData,
-      region: selectedRegion ? selectedRegion.regionName : "",
+      region: selectedRegionName,
     });
-    dispatch(fetchProvincesByRegionId(selectedRegionId));
+    const selectedRegionId = regions.find(
+      (region) => region.regionName === selectedRegionName
+    )?.id;
+    if (selectedRegionId) {
+      dispatch(fetchProvincesByRegionId(selectedRegionId));
+    }
   };
 
   const handleProvinceChange = (e) => {
-    const selectedProvinceId = e.target.value;
-    const selectedProvince = provinces.find(
-      (province) => province.id === parseInt(selectedProvinceId)
-    );
+    const selectedProvinceName = e.target.value;
     setFormData({
       ...formData,
-      province: selectedProvince ? selectedProvince.provinceName : "",
+      province: selectedProvinceName,
     });
-    dispatch(fetchCitiesByProvinceId(selectedProvinceId));
+    const selectedProvinceId = provinces.find(
+      (province) => province.provinceName === selectedProvinceName
+    )?.id;
+    if (selectedProvinceId) {
+      dispatch(fetchCitiesByProvinceId(selectedProvinceId));
+    }
   };
 
   const handleCityChange = (e) => {
-    const selectedCityId = e.target.value;
-    const selectedCity = cities.find(
-      (city) => city.id === parseInt(selectedCityId)
-    );
+    const selectedCityName = e.target.value;
     setFormData({
       ...formData,
-      city: selectedCity ? selectedCity.cityName : "",
+      city: selectedCityName,
     });
   };
 
@@ -101,68 +105,119 @@ const ConventionForm = () => {
 
       await dispatch(saveNewConvention(formData));
       console.log("Convention salvata con successo!");
+
+      // Se il submit va a buon fine, reindirizziamo alla pagina "/home"
+      navigate("/home");
     } catch (error) {
       console.error("Errore nel salvataggio della convention:", error);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      {error && <div>{error}</div>}
-      <input
-        type="text"
-        placeholder="Titolo"
-        value={formData.title}
-        onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-      />
-      <DatePicker
-        selected={formData.startDate}
-        onChange={(date) => setFormData({ ...formData, startDate: date })}
-        placeholderText="Data di inizio"
-      />
-      <DatePicker
-        selected={formData.endDate}
-        onChange={(date) => setFormData({ ...formData, endDate: date })}
-        placeholderText="Data di fine"
-      />
-      <input
-        type="text"
-        placeholder="Sito"
-        value={formData.site}
-        onChange={(e) => setFormData({ ...formData, site: e.target.value })}
-      />
-      <input
-        type="text"
-        placeholder="Indirizzo"
-        value={formData.address}
-        onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-      />
-      <select value={formData.region} onChange={handleRegionChange}>
-        <option value="">Seleziona Regione</option>
-        {regions.map((region) => (
-          <option key={region.id} value={region.id}>
-            {region.regionName}
-          </option>
-        ))}
-      </select>
-      <select value={formData.province} onChange={handleProvinceChange}>
-        <option value="">Seleziona Provincia</option>
-        {provinces.map((province) => (
-          <option key={province.id} value={province.id}>
-            {province.provinceName}
-          </option>
-        ))}
-      </select>
-      <select value={formData.city} onChange={handleCityChange}>
-        <option value="">Seleziona Città</option>
-        {cities.map((city) => (
-          <option key={city.id} value={city.id}>
-            {city.cityName}
-          </option>
-        ))}
-      </select>
-      <button type="submit">Salva</button>
-    </form>
+    <Row>
+      <Col className="col-6">
+        <Card className="bg-primary-subtle">
+          <Row>
+            <Col className="col-6 ">
+              <Form onSubmit={handleSubmit}>
+                {error && <div>{error}</div>}
+                <Form.Group controlId="title">
+                  <Form.Control
+                    type="text"
+                    placeholder="Titolo"
+                    value={formData.title}
+                    onChange={(e) =>
+                      setFormData({ ...formData, title: e.target.value })
+                    }
+                  />
+                </Form.Group>
+                <Form.Group controlId="startDate">
+                  <DatePicker
+                    selected={formData.startDate}
+                    onChange={(date) =>
+                      setFormData({ ...formData, startDate: date })
+                    }
+                    placeholderText="Data di inizio"
+                  />
+                </Form.Group>
+                <Form.Group controlId="endDate">
+                  <DatePicker
+                    selected={formData.endDate}
+                    onChange={(date) =>
+                      setFormData({ ...formData, endDate: date })
+                    }
+                    placeholderText="Data di fine"
+                  />
+                </Form.Group>
+                <Form.Group controlId="site">
+                  <Form.Control
+                    type="text"
+                    placeholder="Sito"
+                    value={formData.site}
+                    onChange={(e) =>
+                      setFormData({ ...formData, site: e.target.value })
+                    }
+                  />
+                </Form.Group>
+                <Form.Group controlId="address">
+                  <Form.Control
+                    type="text"
+                    placeholder="Indirizzo"
+                    value={formData.address}
+                    onChange={(e) =>
+                      setFormData({ ...formData, address: e.target.value })
+                    }
+                  />
+                </Form.Group>
+                <Form.Group controlId="region">
+                  <Form.Control
+                    as="select"
+                    value={formData.region}
+                    onChange={handleRegionChange}
+                  >
+                    <option value="">Seleziona Regione</option>
+                    {regions.map((region) => (
+                      <option key={region.id} value={region.regionName}>
+                        {region.regionName}
+                      </option>
+                    ))}
+                  </Form.Control>
+                </Form.Group>
+                <Form.Group controlId="province">
+                  <Form.Control
+                    as="select"
+                    value={formData.province}
+                    onChange={handleProvinceChange}
+                  >
+                    <option value="">Seleziona Provincia</option>
+                    {provinces.map((province) => (
+                      <option key={province.id} value={province.provinceName}>
+                        {province.provinceName}
+                      </option>
+                    ))}
+                  </Form.Control>
+                </Form.Group>
+                <Form.Group controlId="city">
+                  <Form.Control
+                    as="select"
+                    value={formData.city}
+                    onChange={handleCityChange}
+                  >
+                    <option value="">Seleziona Città</option>
+                    {cities.map((city) => (
+                      <option key={city.id} value={city.cityName}>
+                        {city.cityName}
+                      </option>
+                    ))}
+                  </Form.Control>
+                </Form.Group>
+                <Button type="submit">Salva</Button>
+              </Form>
+            </Col>
+          </Row>
+        </Card>
+      </Col>
+    </Row>
   );
 };
 

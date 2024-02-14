@@ -58,8 +58,8 @@ const ConventionDetail = () => {
   return (
     <Container className="my-5">
       <Row>
-        <Col>
-          <Card className="px-2 py-4">
+        <Col className="col-11 col-md-6">
+          <Card className="p-5 bg-primary-subtle border-info border-4 shadow-lg">
             <Card.Img variant="top" src={conventionDetail.coverImage} />
             <Card.Img
               variant="top"
@@ -73,11 +73,14 @@ const ConventionDetail = () => {
             <Card.Text>{conventionDetail.city.cityName}</Card.Text>
           </Card>
         </Col>
-        <Col>
+        <Col className="col-11 col-md-6">
           <h2 className="text-info">Sections</h2>
           {sections.content &&
             sections.content.map((section) => (
-              <Card key={section.sectionId} className="my-2">
+              <Card
+                key={section.sectionId}
+                className="p-1 bg-primary-subtle border-info border-4 shadow-lg"
+              >
                 <Card.Body>
                   <Card.Img src={section.sectionImage} className="w-50 " />
                   <Card.Title>{section.sectionTitle}</Card.Title>
