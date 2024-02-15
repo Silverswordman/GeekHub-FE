@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import {
   getConventionDetail,
   getConventionSections,
@@ -105,6 +105,9 @@ const ConventionDetail = () => {
               Next
             </Button>
           </div>
+          <Link to={`/conventions/${conventionId}/new-section`}>
+            <Button className="text-primary bg-info">Create New Section</Button>
+          </Link>
         </Col>
       </Row>
     </Container>
