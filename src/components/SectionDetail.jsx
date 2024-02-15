@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import {
@@ -27,7 +27,7 @@ const SectionDetail = () => {
 
   useEffect(() => {
     dispatch(getSectionDetail(conventionId, sectionId));
-    dispatch(getSubsections(conventionId, sectionId, currentPage)); 
+    dispatch(getSubsections(conventionId, sectionId, currentPage));
   }, [dispatch, conventionId, sectionId, currentPage]);
 
   const handleNextPage = () => {
@@ -41,31 +41,41 @@ const SectionDetail = () => {
   };
 
   if (sectionLoading || subsectionLoading)
-    return <Spinner animation="grow" className="text-info" size="sm" />;
+    return <Spinner animation="grow" className="text-info" />;
   if (sectionError || subsectionError)
     return <p>Error: {sectionError || subsectionError}</p>;
   if (!sectionDetail) return null;
 
   return (
-    <Container>
+    <Container className="my-5">
       <Row>
-        <Col className="col-11 col-md-6">
-          <Card>
-            <Card.Title>{sectionDetail.sectionTitle}</Card.Title>
-            <Card.Text>{sectionDetail.sectionSubtitle}</Card.Text>
+        <Col className="col-10 col-md-5">
+          <Card className="p-5 bg-primary-subtle border-info border-4 shadow-lg text-">
+            <Card.Img
+              variant="top"
+              className="p-3"
+              src={sectionDetail.sectionImage}
+            ></Card.Img>
+            <Card.Title className="text-center fw-bolder fst-italic text-primary fs-3">
+              {sectionDetail.sectionTitle}
+            </Card.Title>
+            <Card.Text className="text-black fw-medium ">
+              {sectionDetail.sectionSubtitle}
+            </Card.Text>
+            <Card.Text className="text-black fw-medium ">
+              {sectionDetail.creator.userId}
+            </Card.Text>
           </Card>
         </Col>
-        <Col className="col-11 col-md-6">
-          <h3>Subsections:</h3>
+        <Col className="col-11 col-md-6 col-lg-5">
+          <h2 className="text-info text-center ">Subsections</h2>
           {Array.isArray(subsections.content) &&
             subsections.content.map((subsection) => (
               <Card key={subsection.id}>
                 <Card.Title>{subsection.title}</Card.Title>
                 <Card.Text>{subsection.description}</Card.Text>
-                {/* Altri dettagli della sottosezione */}
               </Card>
             ))}
-          {/* Paging delle sottosezioni */}
           <Button onClick={handlePrevPage} disabled={currentPage === 0}>
             Prev
           </Button>

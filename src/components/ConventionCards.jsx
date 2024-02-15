@@ -45,9 +45,15 @@ const HomeCard = () => {
 
                     <Col className="col-6">
                       <Card.Body>
-                        <Card.Title>{convention.title}</Card.Title>
-                        <Card.Text>{convention.city.cityName}</Card.Text>
-                        <Card.Text>{convention.address}</Card.Text>
+                        <Card.Title className="text-center fw-bolder fst-italic text-primary fs-3">
+                          {convention.title}
+                        </Card.Title>
+                        <Card.Text className="text-black fw-medium ">
+                          {convention.city.cityName}
+                        </Card.Text>
+                        <Card.Text className="text-black fw-medium ">
+                          {convention.address}
+                        </Card.Text>
                       </Card.Body>
                     </Col>
                   </Row>

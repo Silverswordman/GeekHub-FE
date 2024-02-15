@@ -50,7 +50,7 @@ const ConventionDetail = () => {
   };
 
   if (detailLoading || sectionsLoading)
-    return <Spinner animation="grow" className="text-info" size="sm" />;
+    return <Spinner animation="grow" className="text-info" />;
   if (detailError || sectionsError)
     return <p>Error: {detailError || sectionsError}</p>;
   if (!conventionDetail) return null;
@@ -59,35 +59,59 @@ const ConventionDetail = () => {
     <Container className="my-5">
       <Row>
         <Col className="col-11 col-md-6">
-          <Card className="p-5 bg-primary-subtle border-info border-4 shadow-lg">
-            <Card.Img variant="top" src={conventionDetail.coverImage} />
+          <Card className="p-5 bg-primary-subtle border-info border-4 shadow-lg text-">
             <Card.Img
               variant="top"
-              src={conventionDetail.logo}
-              className="w-50"
+              className="p-2"
+              src={conventionDetail.coverImage}
             />
-            <Card.Title>{conventionDetail.title}</Card.Title>
-            <Card.Text>{conventionDetail.startDate}</Card.Text>
-            <Card.Text>{conventionDetail.endDate}</Card.Text>
-            <Card.Text>{conventionDetail.address}</Card.Text>
-            <Card.Text>{conventionDetail.city.cityName}</Card.Text>
+            <div className="d-flex justify-content-center">
+              <Card.Img
+                variant="top"
+                src={conventionDetail.logo}
+                className="w-50 p-3"
+              />
+            </div>
+            <Card.Title className="text-center fw-bolder fst-italic text-primary fs-1">
+              {conventionDetail.title}
+            </Card.Title>
+            <Card.Text className="text-black fw-medium ">
+              {conventionDetail.startDate}
+            </Card.Text>
+            <Card.Text className="text-black fw-medium ">
+              {conventionDetail.endDate}
+            </Card.Text>
+            <Card.Text className="text-black fw-medium ">
+              {conventionDetail.address}
+            </Card.Text>
+            <Card.Text className="text-black fw-medium ">
+              {conventionDetail.city.cityName}
+            </Card.Text>
+            <Card.Text className="text-black fw-medium ">
+              {conventionDetail.creator.userId}
+            </Card.Text>
           </Card>
         </Col>
-        <Col className="col-11 col-md-6">
-          <h2 className="text-info">Sections</h2>
+        <Col className="col-11 col-md-6 col-lg-5">
+          <h2 className="text-info text-center ">Sections</h2>
           {sections.content &&
             sections.content.map((section) => (
               <Card
                 key={section.sectionId}
-                className="p-1 bg-primary-subtle border-info border-4 shadow-lg"
+                className="p-1 bg-primary-subtle border-info border-4 shadow-lg my-3"
               >
                 <Card.Body>
                   <Link
+                    className="text-decoration-none"
                     to={`/conventions/${conventionId}/sec/${section.sectionId}`}
                   >
-                    <Card.Img src={section.sectionImage} className="w-50" />
-                    <Card.Title>{section.sectionTitle}</Card.Title>
-                    <Card.Text>{section.sectionSubtitle}</Card.Text>
+                    <Card.Img src={section.sectionImage} className="w-50 p-2" />
+                    <Card.Title className="text-center fw-bolder fst-italic">
+                      {section.sectionTitle}
+                    </Card.Title>
+                    <Card.Text className="text-black fw-medium ">
+                      {section.sectionSubtitle}
+                    </Card.Text>
                   </Link>
                 </Card.Body>
               </Card>
