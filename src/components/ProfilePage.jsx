@@ -1,14 +1,28 @@
-import { useEffect } from "react";
-import { Button, Container, Card, Col, Row, Spinner } from "react-bootstrap";
+import { useState, useEffect } from "react";
+import {
+  Button,
+  Container,
+  Card,
+  Col,
+  Row,
+  Spinner,
+  InputGroup,
+} from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logoutUser } from "../redux/reducers/authslice";
-import { fetchProfile } from "../redux/actions/profileactions";
+import {
+  fetchProfile,
+  uploadProfilePicture,
+} from "../redux/actions/profileactions";
 
 const ProfileComponent = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const profileDetail = useSelector((state) => state.personalProfile);
+
+  const [file, setFile] = useState(null);
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     dispatch(fetchProfile());
@@ -17,6 +31,24 @@ const ProfileComponent = () => {
   const handleLogout = () => {
     dispatch(logoutUser());
     navigate("/login");
+  };
+
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0]);
+  };
+
+  const handleUpload = async () => {
+    if (!file) return;
+
+    setUploading(true);
+
+    try {
+      await dispatch(uploadProfilePicture(file));
+    } catch (error) {
+      console.error("Error uploading file:", error);
+    } finally {
+      setUploading(false);
+    }
   };
 
   return (
@@ -29,17 +61,18 @@ const ProfileComponent = () => {
             )}
             {profileDetail && profileDetail.profile && (
               <Card.Body>
-                <Card.Text className="fw-bold fs-4 fst-italic text-center">
+                <Card.Text className="fw-bolder fs-3 fst-italic text-center text-primary">
                   Benvenuto! {profileDetail.profile.username}
                 </Card.Text>
+
                 <Card.Img
                   src={profileDetail.profile.avatar}
                   className="fluid w-50 my-1"
                 ></Card.Img>
+
                 <Row className="align-items-baseline">
                   <Col className="col-5">
                     <Card.Text className="fs-5">
-                      {" "}
                       {profileDetail.profile.name}{" "}
                       {profileDetail.profile.surname}
                     </Card.Text>
@@ -50,13 +83,24 @@ const ProfileComponent = () => {
                 </Row>
 
                 <Card.Text className="fs-5">
-                  {" "}
                   {profileDetail.profile.email}
                 </Card.Text>
 
+                <InputGroup className="mb-3">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="form-control"
+                    onChange={handleFileChange}
+                  />
+                </InputGroup>
+                <Button onClick={handleUpload} disabled={!file || uploading}>
+                  {uploading ? "Uploading..." : "Upload Avatar"}
+                </Button>
+
                 <Button
                   onClick={handleLogout}
-                  className="text-primary fw-semibold  btn-danger"
+                  className="text-primary fw-semibold btn-danger"
                 >
                   Logout
                 </Button>

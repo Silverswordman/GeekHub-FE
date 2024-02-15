@@ -22,7 +22,6 @@ const SectionDetail = () => {
     error: subsectionError,
   } = useSelector((state) => state.subsections);
 
-  // State per il numero di pagina corrente
   const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {

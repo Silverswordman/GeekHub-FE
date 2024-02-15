@@ -49,3 +49,37 @@ const fetchProfileFailure = (error) => {
     payload: error,
   };
 };
+
+export const UPLOAD_PROFILE_PICTURE_REQUEST = "UPLOAD_PROFILE_PICTURE_REQUEST";
+export const UPLOAD_PROFILE_PICTURE_SUCCESS = "UPLOAD_PROFILE_PICTURE_SUCCESS";
+export const UPLOAD_PROFILE_PICTURE_FAILURE = "UPLOAD_PROFILE_PICTURE_FAILURE";
+
+export const uploadProfilePicture = (file) => {
+  return (dispatch) => {
+    dispatch({ type: UPLOAD_PROFILE_PICTURE_REQUEST });
+    const token = localStorage.getItem("token");
+    const formData = new FormData();
+    formData.append("image", file);
+
+    fetch(`${urlprofile}/me/upload`, {
+      method: "PATCH",
+      headers: {
+        Authorization: `${token}`,
+      },
+      body: formData,
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Impossibile caricare la nuova immagine");
+        }
+        return response.text(); 
+      })
+      .then((imageUrl) => {
+        dispatch({
+          type: UPLOAD_PROFILE_PICTURE_SUCCESS,
+          payload: imageUrl,
+        });
+        dispatch(fetchProfile()); 
+      });
+  };
+};
