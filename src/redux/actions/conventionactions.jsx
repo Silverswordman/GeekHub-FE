@@ -226,3 +226,40 @@ export const getSectionDetail = (conventionId, sectionId) => {
     }
   };
 };
+
+export const FETCH_SUBSECTIONS_REQUEST = "FETCH_SUBSECTIONS_REQUEST";
+export const FETCH_SUBSECTIONS_SUCCESS = "FETCH_SUBSECTIONS_SUCCESS";
+export const FETCH_SUBSECTIONS_FAILURE = "FETCH_SUBSECTIONS_FAILURE";
+
+export const getSubsections = (
+  conventionId,
+  sectionId,
+  page = 0,
+  size = 6,
+  order = "subsectionTitle"
+) => {
+  return async (dispatch) => {
+    dispatch({ type: FETCH_SUBSECTIONS_REQUEST });
+
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch(
+        `${urlconventions}/${conventionId}/sec/${sectionId}/?page=${page}&size=${size}&order=${order}`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Errore nel caricamento delle sottosezioni");
+      }
+
+      const data = await response.json();
+      dispatch({ type: FETCH_SUBSECTIONS_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({ type: FETCH_SUBSECTIONS_FAILURE, payload: error.message });
+    }
+  };
+};
