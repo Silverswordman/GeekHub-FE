@@ -10,6 +10,7 @@ import ConventionDetailCard from "./components/ConventionDetail";
 import ProfileComponent from "./components/ProfilePage";
 import RegistrationComponent from "./components/Registration";
 import ConventionForm from "./components/ConventionAdd";
+import AddSection from "./components/SectionAdd";
 
 function App() {
   return (
@@ -28,6 +29,11 @@ function App() {
               path="/convention/:conventionId"
               element={<ConventionDetailCard />}
             />
+            <Route
+              path="/conventions/:conventionId/add-section"
+              element={<AddSection />}
+            />
+
             <Route path="/me" element={<ProfileComponent />} />
             <Route path="/register" element={<RegistrationComponent />} />
             <Route path="/addconvention" element={<ConventionForm />} />

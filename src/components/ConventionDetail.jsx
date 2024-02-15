@@ -105,7 +105,7 @@ const ConventionDetail = () => {
               Next
             </Button>
           </div>
-          <Link to={`/conventions/${conventionId}/new-section`}>
+          <Link to={`/conventions/${conventionId}/add-section`}>
             <Button className="text-primary bg-info">Create New Section</Button>
           </Link>
         </Col>

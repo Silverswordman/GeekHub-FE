@@ -1,9 +1,9 @@
-// Azioni per le convenzioni
+// export generali
 export const FETCH_CONVENTIONS_REQUEST = "FETCH_CONVENTIONS_REQUEST";
 export const FETCH_CONVENTIONS_SUCCESS = "FETCH_CONVENTIONS_SUCCESS";
 export const FETCH_CONVENTIONS_FAILURE = "FETCH_CONVENTIONS_FAILURE";
 
-// Azioni per i dettagli delle convenzioni
+// export dei dettagli
 export const FETCH_CONVENTION_DETAIL_REQUEST =
   "FETCH_CONVENTION_DETAIL_REQUEST";
 export const FETCH_CONVENTION_DETAIL_SUCCESS =
@@ -11,7 +11,7 @@ export const FETCH_CONVENTION_DETAIL_SUCCESS =
 export const FETCH_CONVENTION_DETAIL_FAILURE =
   "FETCH_CONVENTION_DETAIL_FAILURE";
 
-// Azioni per le sezioni delle convenzioni
+// export sezione
 export const FETCH_CONVENTION_SECTIONS_REQUEST =
   "FETCH_CONVENTION_SECTIONS_REQUEST";
 export const FETCH_CONVENTION_SECTIONS_SUCCESS =
@@ -19,19 +19,19 @@ export const FETCH_CONVENTION_SECTIONS_SUCCESS =
 export const FETCH_CONVENTION_SECTIONS_FAILURE =
   "FETCH_CONVENTION_SECTIONS_FAILURE";
 
-// Azioni per salvare una nuova convenzione
 export const SAVE_CONVENTION_SUCCESS = "SAVE_CONVENTION_SUCCESS";
 export const SAVE_CONVENTION_FAILURE = "SAVE_CONVENTION_FAILURE";
 
 const urlconventions = "http://localhost:3003/conventions";
 
-// Azione per ottenere le convenzioni
+
 export const getConventions = (currentPage) => {
   return async (dispatch) => {
     dispatch({ type: FETCH_CONVENTIONS_REQUEST });
 
     try {
       const token = localStorage.getItem("token");
+
       const response = await fetch(`${urlconventions}?page=${currentPage}`, {
         headers: {
           Authorization: token,
@@ -50,7 +50,6 @@ export const getConventions = (currentPage) => {
   };
 };
 
-// Azione per ottenere i dettagli di una convenzione
 export const getConventionDetail = (conventionId) => {
   return async (dispatch) => {
     dispatch({ type: FETCH_CONVENTION_DETAIL_REQUEST });
@@ -78,7 +77,6 @@ export const getConventionDetail = (conventionId) => {
   };
 };
 
-// Azione per ottenere le sezioni di una convenzione
 export const getConventionSections = (
   conventionId,
   page = 0,
@@ -115,30 +113,76 @@ export const getConventionSections = (
   };
 };
 
-export const saveNewConvention = (conventionId, formData) => {
+export const saveConventionSuccess = (convention) => ({
+  type: SAVE_CONVENTION_SUCCESS,
+  payload: convention,
+});
+
+export const saveConventionFailure = (error) => ({
+  type: SAVE_CONVENTION_FAILURE,
+  payload: error,
+});
+
+export const saveNewConvention = (formData) => {
   return async (dispatch) => {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(
-        `http://localhost:3003/conventions/${conventionId}/sec`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token,
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+      const response = await fetch(urlconventions, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await response.json();
+      dispatch(saveConventionSuccess(data));
+    } catch (error) {
+      dispatch(saveConventionFailure(error.message));
+    }
+  };
+};
+export const SAVE_SECTION_REQUEST = "SAVE_SECTION_REQUEST";
+export const SAVE_SECTION_SUCCESS = "SAVE_SECTION_SUCCESS";
+export const SAVE_SECTION_FAILURE = "SAVE_SECTION_FAILURE";
+
+export const saveSectionRequest = () => ({
+  type: SAVE_SECTION_REQUEST,
+});
+
+export const saveSectionSuccess = (data) => ({
+  type: SAVE_SECTION_SUCCESS,
+  payload: data,
+});
+
+export const saveSectionFailure = (error) => ({
+  type: SAVE_SECTION_FAILURE,
+  payload: error,
+});
+
+export const saveNewSection = (conventionId, formData) => {
+  return async (dispatch) => {
+    dispatch(saveSectionRequest());
+
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch(`${urlconventions}/${conventionId}/sec`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+        body: JSON.stringify(formData),
+      });
 
       if (!response.ok) {
-        throw new Error("Failed to save new section");
+        throw new Error("Errore durante il salvataggio della nuova sezione");
       }
 
       const data = await response.json();
-      dispatch({ type: SAVE_CONVENTION_SUCCESS, payload: data });
+      dispatch(saveSectionSuccess(data));
     } catch (error) {
-      dispatch({ type: SAVE_CONVENTION_FAILURE, payload: error.message });
+      dispatch(saveSectionFailure(error.message));
     }
   };
 };
