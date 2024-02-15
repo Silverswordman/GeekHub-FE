@@ -1,17 +1,30 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import {
   getConventionDetail,
   getConventionSections,
+  uploadConventionLogo,
+  uploadConventionCover,
 } from "../redux/actions/conventionactions";
-import { Card, Container, Row, Col, Spinner, Button } from "react-bootstrap";
+import {
+  Card,
+  Container,
+  Row,
+  Col,
+  Spinner,
+  Button,
+  Modal,
+} from "react-bootstrap";
+import { BsPencilFill } from "react-icons/bs";
 
 const ConventionDetail = () => {
   const { conventionId } = useParams();
   const dispatch = useDispatch();
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
+  const [showLogoModal, setShowLogoModal] = useState(false);
+  const [showCoverModal, setShowCoverModal] = useState(false);
 
   // caricamento dettagli
   const {
@@ -19,12 +32,16 @@ const ConventionDetail = () => {
     loading: detailLoading,
     error: detailError,
   } = useSelector((state) => state.conventionDetails);
+
   // caricamento sezioni
   const {
     sections,
     loading: sectionsLoading,
     error: sectionsError,
   } = useSelector((state) => state.conventionSections);
+
+  const [logoFile, setLogoFile] = useState(null);
+  const [coverFile, setCoverFile] = useState(null);
 
   useEffect(() => {
     dispatch(getConventionDetail(conventionId));
@@ -49,6 +66,36 @@ const ConventionDetail = () => {
     }
   };
 
+  const handleLogoChange = (event) => {
+    setLogoFile(event.target.files[0]);
+  };
+
+  const handleCoverChange = (event) => {
+    setCoverFile(event.target.files[0]);
+  };
+
+  const handleLogoUpload = async () => {
+    if (!logoFile) return;
+
+    try {
+      await dispatch(uploadConventionLogo(logoFile, conventionId));
+      setShowLogoModal(false);
+    } catch (error) {
+      console.error("Error uploading logo:", error);
+    }
+  };
+
+  const handleCoverUpload = async () => {
+    if (!coverFile) return;
+
+    try {
+      await dispatch(uploadConventionCover(coverFile, conventionId));
+      setShowCoverModal(false);
+    } catch (error) {
+      console.error("Error uploading cover:", error);
+    }
+  };
+
   if (detailLoading || sectionsLoading)
     return <Spinner animation="grow" className="text-info" />;
   if (detailError || sectionsError)
@@ -64,31 +111,30 @@ const ConventionDetail = () => {
               variant="top"
               className="p-2"
               src={conventionDetail.coverImage}
+              onClick={() => setShowCoverModal(true)}
             />
             <div className="d-flex justify-content-center">
               <Card.Img
                 variant="top"
                 src={conventionDetail.logo}
                 className="w-50 p-3"
+                onClick={() => setShowLogoModal(true)}
               />
             </div>
             <Card.Title className="text-center fw-bolder fst-italic text-primary fs-1">
               {conventionDetail.title}
             </Card.Title>
-            <Card.Text className="text-black fw-medium ">
+            <Card.Text className="text-center fw-bolder fst-italic text-primary fs-1">
               {conventionDetail.startDate}
             </Card.Text>
-            <Card.Text className="text-black fw-medium ">
+            <Card.Text className="text-center fw-bolder fst-italic text-primary fs-1">
               {conventionDetail.endDate}
             </Card.Text>
             <Card.Text className="text-black fw-medium ">
+              {conventionDetail.description}
+            </Card.Text>
+            <Card.Text className="text-black fw-medium ">
               {conventionDetail.address}
-            </Card.Text>
-            <Card.Text className="text-black fw-medium ">
-              {conventionDetail.city.cityName}
-            </Card.Text>
-            <Card.Text className="text-black fw-medium ">
-              {conventionDetail.creator.userId}
             </Card.Text>
           </Card>
         </Col>
@@ -116,7 +162,6 @@ const ConventionDetail = () => {
                 </Card.Body>
               </Card>
             ))}
-
           <div className="d-flex justify-content-between mt-4">
             <Button
               onClick={prevPage}
@@ -138,6 +183,56 @@ const ConventionDetail = () => {
           </Link>
         </Col>
       </Row>
+
+      {/* modale per l aggiunta immagini */}
+      <Modal
+        show={showLogoModal}
+        onHide={() => setShowLogoModal(false)}
+        className="bg-primary-subtle"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Carica il tuo Logo</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <input
+            type="file"
+            accept="image/*"
+            className="form-control"
+            onChange={handleLogoChange}
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="info" onClick={() => setShowLogoModal(false)}>
+            Chiudi
+          </Button>
+          <Button variant="primary" onClick={handleLogoUpload}>
+            Salva
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Cover Modal */}
+      <Modal show={showCoverModal} onHide={() => setShowCoverModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Carica la tua Cover Image</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <input
+            type="file"
+            accept="image/*"
+            className="form-control"
+            onChange={handleCoverChange}
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowCoverModal(false)}>
+            Chiudi
+          </Button>
+          <Button variant="primary" onClick={handleCoverUpload}>
+            Salva
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 };

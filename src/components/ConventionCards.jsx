@@ -31,13 +31,13 @@ const HomeCard = () => {
               md={4}
               sm={6}
               xs={12}
-              className="pt-3"
+              className="pt-3 "
             >
               <Link
                 to={`/convention/${convention.conventionId}`}
                 className="text-decoration-none"
               >
-                <Card className="p-1 bg-primary-subtle border-info border-4 shadow-lg">
+                <Card className="p-1 bg-primary-subtle border-info border-4 shadow-lg h-100">
                   <Row>
                     <Col className="col-6">
                       <Card.Img variant="top" src={convention.coverImage} />
