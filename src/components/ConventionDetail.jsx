@@ -82,9 +82,13 @@ const ConventionDetail = () => {
                 className="p-1 bg-primary-subtle border-info border-4 shadow-lg"
               >
                 <Card.Body>
-                  <Card.Img src={section.sectionImage} className="w-50 " />
-                  <Card.Title>{section.sectionTitle}</Card.Title>
-                  <Card.Text>{section.sectionSubtitle}</Card.Text>
+                  <Link
+                    to={`/conventions/${conventionId}/sec/${section.sectionId}`}
+                  >
+                    <Card.Img src={section.sectionImage} className="w-50" />
+                    <Card.Title>{section.sectionTitle}</Card.Title>
+                    <Card.Text>{section.sectionSubtitle}</Card.Text>
+                  </Link>
                 </Card.Body>
               </Card>
             ))}

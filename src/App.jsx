@@ -11,6 +11,7 @@ import ProfileComponent from "./components/ProfilePage";
 import RegistrationComponent from "./components/Registration";
 import ConventionForm from "./components/ConventionAdd";
 import AddSection from "./components/SectionAdd";
+import SectionDetail from "./components/SectionDetail";
 
 function App() {
   return (
@@ -33,6 +34,8 @@ function App() {
               path="/conventions/:conventionId/add-section"
               element={<AddSection />}
             />
+            <Route path="/conventions/:conventionId/sec/:sectionId" element={<SectionDetail/>} />
+
 
             <Route path="/me" element={<ProfileComponent />} />
             <Route path="/register" element={<RegistrationComponent />} />

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { saveNewSection } from "../redux/actions/conventionactions";
@@ -39,7 +39,7 @@ const AddSection = () => {
       setTimeout(() => {
         setShowSuccessMessage(false);
         navigate(`/convention/${conventionId}`);
-      }, 3000);
+      }, 2000);
     } catch (error) {
       console.error("Errore durante la creazione della sezione:", error);
     }

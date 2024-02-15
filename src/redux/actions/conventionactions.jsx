@@ -24,7 +24,6 @@ export const SAVE_CONVENTION_FAILURE = "SAVE_CONVENTION_FAILURE";
 
 const urlconventions = "http://localhost:3003/conventions";
 
-
 export const getConventions = (currentPage) => {
   return async (dispatch) => {
     dispatch({ type: FETCH_CONVENTIONS_REQUEST });
@@ -183,6 +182,47 @@ export const saveNewSection = (conventionId, formData) => {
       dispatch(saveSectionSuccess(data));
     } catch (error) {
       dispatch(saveSectionFailure(error.message));
+    }
+  };
+};
+
+export const FETCH_SECTION_DETAIL_REQUEST = "FETCH_SECTION_DETAIL_REQUEST";
+export const FETCH_SECTION_DETAIL_SUCCESS = "FETCH_SECTION_DETAIL_SUCCESS";
+export const FETCH_SECTION_DETAIL_FAILURE = "FETCH_SECTION_DETAIL_FAILURE";
+
+export const fetchSectionDetailSuccess = (sectionDetail) => ({
+  type: FETCH_SECTION_DETAIL_SUCCESS,
+  payload: sectionDetail,
+});
+
+export const getSectionDetail = (conventionId, sectionId) => {
+  return async (dispatch) => {
+    try {
+      console.log(
+        "Fetching section detail with conventionId:",
+        conventionId,
+        "and sectionId:",
+        sectionId
+      ); // console log di controllo
+
+      const token = localStorage.getItem("token");
+      const response = await fetch(
+        `${urlconventions}/${conventionId}/sec/${sectionId}`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Errore nel caricamento dei dettagli della sezione");
+      }
+
+      const sectionDetail = await response.json();
+      dispatch(fetchSectionDetailSuccess(sectionDetail));
+    } catch (error) {
+      console.error("Errore:", error);
     }
   };
 };

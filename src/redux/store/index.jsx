@@ -7,6 +7,7 @@ import conventionSectionsReducer from "../reducers/conventionsections";
 import registerReducer from "../reducers/register";
 import locationReducer from "../reducers/location";
 import newConventionReducer from "../reducers/newconvention";
+import sectionDetailReducer from "../reducers/section_details";
 
 const rootReducer = combineReducers({
   conventions: conventionReducer,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   register: registerReducer,
   location: locationReducer,
   newConvention: newConventionReducer,
+  sectionDetails: sectionDetailReducer,
 });
 
 const store = configureStore({
