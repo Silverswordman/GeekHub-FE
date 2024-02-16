@@ -57,7 +57,7 @@ const AddSection = () => {
     <Container>
       <Row className="justify-content-center mt-4">
         <Col className="col-11 col-md-8">
-          <Card className="p-4 bg-primary-subtle ">
+          <Card className="p-4 bg-primary-subtle  border border-4 border-info  ">
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="sectionTitle">
                 <Form.Label className="fw-bolder ">

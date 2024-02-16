@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import {
@@ -26,6 +26,8 @@ const ConventionDetail = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [showLogoModal, setShowLogoModal] = useState(false);
   const [showCoverModal, setShowCoverModal] = useState(false);
+
+  const { role, userId } = useSelector((state) => state.auth);
 
   // caricamento dettagli
   const {
@@ -67,7 +69,6 @@ const ConventionDetail = () => {
       setPage(page - 1);
     }
   };
-  //
 
   // upload logo e cover
   const handleLogoChange = (event) => {
@@ -100,8 +101,6 @@ const ConventionDetail = () => {
     }
   };
 
-  //
-
   if (detailLoading || sectionsLoading)
     return <Spinner animation="grow" className="text-info" />;
   if (detailError || sectionsError)
@@ -115,46 +114,71 @@ const ConventionDetail = () => {
           <Card className="p-5 bg-primary-subtle border-info border-4 shadow-lg text-">
             <Card.Img
               variant="top"
-              className=" border border-info border-5 rounded-start-5 rounded-top-5 position-relative"
+              className={`border border-info border-5 rounded-start-5 rounded-top-5 position-relative ${
+                role !== "ADMIN" &&
+                userId !== conventionDetail.creator.userId &&
+                "no-pointer"
+              }`}
               src={conventionDetail.coverImage}
               onClick={() => setShowCoverModal(true)}
-              style={{ cursor: "pointer" }}
-            />
-            <Badge
-              pill
-              bg="primary"
-              className="position-absolute  badge bg-info"
               style={{
-                width: "30px",
-                height: "25px",
-                borderRadius: "50%",
-                cursor: "pointer",
+                cursor:
+                  role === "ADMIN" || userId === conventionDetail.creator.userId
+                    ? "pointer"
+                    : "default",
               }}
-            >
-              <BsPencilFill />
-            </Badge>
+            />
+            {(role === "ADMIN" ||
+              userId === conventionDetail.creator.userId) && (
+              <Badge
+                pill
+                bg="primary"
+                className="position-absolute badge bg-info"
+                style={{
+                  width: "30px",
+                  height: "25px",
+                  borderRadius: "50%",
+                  cursor: "pointer",
+                }}
+              >
+                <BsPencilFill />
+              </Badge>
+            )}
             <Row className="align-items-center mt-2 justify-content-md-center">
               <Col className="col-12 col-sm-11 col-lg-6 ">
                 <Card.Img
                   variant="top"
                   src={conventionDetail.logo}
-                  className="w-50 border border-3 border-primary-subtle rounded-pill position-relative  "
-                  style={{ cursor: "pointer" }}
-                  onClick={() => setShowLogoModal(true)}
-                />{" "}
-                <Badge
-                  pill
-                  bg="primary"
-                  className="position-absolute  translate-middle-x text-info-subtle badge bg-primary-subtle border border-1  border-info"
+                  className={`w-50 border border-4 border-primary rounded-pill position-relative ${
+                    role !== "ADMIN" &&
+                    userId !== conventionDetail.creator.userId &&
+                    "no-pointer"
+                  }`}
                   style={{
-                    width: "30px",
-                    height: "25px",
-                    borderRadius: "50%",
-                    cursor: "pointer",
+                    cursor:
+                      role === "ADMIN" ||
+                      userId === conventionDetail.creator.userId
+                        ? "pointer"
+                        : "default",
                   }}
-                >
-                  <BsPencilFill />
-                </Badge>
+                  onClick={() => setShowLogoModal(true)}
+                />
+                {(role === "ADMIN" ||
+                  userId === conventionDetail.creator.userId) && (
+                  <Badge
+                    pill
+                    bg="primary"
+                    className="position-absolute translate-middle-x badge bg-primary-subtle border border-1 border border-2 border-info"
+                    style={{
+                      width: "30px",
+                      height: "25px",
+                      borderRadius: "50%",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <BsPencilFill />
+                  </Badge>
+                )}
               </Col>
               <Col className="col-12 col-sm-11 col-lg-6 ">
                 <Card.Title className="text-center fw-bolder fst-italic text-primary fs-1">
@@ -170,6 +194,9 @@ const ConventionDetail = () => {
             </Card.Text>
             <Card.Text className="text-black fw-medium ">
               {conventionDetail.description}
+            </Card.Text>
+            <Card.Text className="text-black fw-medium ">
+              {conventionDetail.address}
             </Card.Text>
             <Card.Text className="text-black fw-medium ">
               {conventionDetail.address}
@@ -191,7 +218,7 @@ const ConventionDetail = () => {
                   >
                     <Card.Img
                       src={section.sectionImage}
-                      className="w-50  border border-4 border-info rounded-start-5 rounded-top-5"
+                      className="w-50 border border-4 border-info rounded-start-5 rounded-top-5"
                     />
                     <Card.Title className="text-center fw-bolder fst-italic">
                       {section.sectionTitle}
@@ -220,76 +247,83 @@ const ConventionDetail = () => {
             </Button>
           </div>
           <Link to={`/conventions/${conventionId}/add-section`}>
-            <Button className="text-primary bg-info">Create New Section</Button>
+            {(role === "ADMIN" ||
+              userId === conventionDetail.creator.userId) && (
+              <Button className="text-primary bg-info">
+                Crea una nuova sezione
+              </Button>
+            )}
           </Link>
         </Col>
       </Row>
 
       {/* modale per logo */}
-
-      <Modal show={showLogoModal} onHide={() => setShowLogoModal(false)}>
-        <Modal.Header closeButton className="bg-info-subtle">
-          <Modal.Title>Carica il tuo Logo</Modal.Title>
-        </Modal.Header>
-        <Modal.Body className="bg-primary-subtle">
-          <p>Dimensioni massime per l immagine 1mega</p>
-          <input
-            type="file"
-            accept="image/*"
-            className="form-control"
-            onChange={handleLogoChange}
-          />
-        </Modal.Body>
-        <Modal.Footer className="bg-info-subtle">
-          <Button
-            variant="danger"
-            onClick={() => setShowLogoModal(false)}
-            className="fw-bolder"
-          >
-            Chiudi
-          </Button>
-          <Button
-            variant="primary"
-            onClick={handleLogoUpload}
-            className="fw-bolder"
-          >
-            Salva
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      {(role === "ADMIN" || userId === conventionDetail.creator.userId) && (
+        <Modal show={showLogoModal} onHide={() => setShowLogoModal(false)}>
+          <Modal.Header closeButton className="bg-info-subtle">
+            <Modal.Title>Carica il tuo Logo</Modal.Title>
+          </Modal.Header>
+          <Modal.Body className="bg-primary-subtle">
+            <p>Dimensioni massime per immagine 1MB</p>
+            <input
+              type="file"
+              accept="image/*"
+              className="form-control"
+              onChange={handleLogoChange}
+            />
+          </Modal.Body>
+          <Modal.Footer className="bg-info-subtle">
+            <Button
+              variant="danger"
+              onClick={() => setShowLogoModal(false)}
+              className="fw-bolder"
+            >
+              Chiudi
+            </Button>
+            <Button
+              variant="primary"
+              onClick={handleLogoUpload}
+              className="fw-bolder"
+            >
+              Salva
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      )}
 
       {/* modale cover */}
-
-      <Modal show={showCoverModal} onHide={() => setShowCoverModal(false)}>
-        <Modal.Header closeButton className="bg-info-subtle">
-          <Modal.Title>Carica la tua Cover Image</Modal.Title>
-        </Modal.Header>
-        <Modal.Body className="bg-primary-subtle">
-          <p>Dimensioni massime per l immagine 1mega</p>
-          <input
-            type="file"
-            accept="image/*"
-            className="form-control"
-            onChange={handleCoverChange}
-          />
-        </Modal.Body>
-        <Modal.Footer className="bg-info-subtle">
-          <Button
-            variant="danger"
-            onClick={() => setShowCoverModal(false)}
-            className="fw-bolder"
-          >
-            Chiudi
-          </Button>
-          <Button
-            variant="primary"
-            onClick={handleCoverUpload}
-            className="fw-bolder"
-          >
-            Salva
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      {(role === "ADMIN" || userId === conventionDetail.creator.userId) && (
+        <Modal show={showCoverModal} onHide={() => setShowCoverModal(false)}>
+          <Modal.Header closeButton className="bg-info-subtle">
+            <Modal.Title>Carica la tua Cover Image</Modal.Title>
+          </Modal.Header>
+          <Modal.Body className="bg-primary-subtle">
+            <p>Dimensioni massime per l immagine 1MB</p>
+            <input
+              type="file"
+              accept="image/*"
+              className="form-control"
+              onChange={handleCoverChange}
+            />
+          </Modal.Body>
+          <Modal.Footer className="bg-info-subtle">
+            <Button
+              variant="danger"
+              onClick={() => setShowCoverModal(false)}
+              className="fw-bolder"
+            >
+              Chiudi
+            </Button>
+            <Button
+              variant="primary"
+              onClick={handleCoverUpload}
+              className="fw-bolder"
+            >
+              Salva
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      )}
     </Container>
   );
 };

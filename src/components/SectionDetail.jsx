@@ -56,7 +56,6 @@ const SectionDetail = () => {
               variant="top"
               className=" border border-4 border-info rounded-start-5 rounded-top-5"
               src={sectionDetail.sectionImage}
-              
             ></Card.Img>
             <Card.Title className="text-center fw-bolder fst-italic text-primary fs-3">
               {sectionDetail.sectionTitle}
@@ -78,18 +77,21 @@ const SectionDetail = () => {
                 <Card.Text>{subsection.subsectionDescription}</Card.Text>
               </Card>
             ))}
-
-          <Button onClick={handlePrevPage} disabled={currentPage === 0}>
-            Prev
-          </Button>
-          <Button onClick={handleNextPage}>Next</Button>
+          <div className="d-flex justify-content-between mt-4">
+            <Button onClick={handlePrevPage} disabled={currentPage === 0}>
+              Prev
+            </Button>
+            <Button onClick={handleNextPage}>Next</Button>
+          </div>{" "}
+          <Link
+            to={`/conventions/${conventionId}/sec/${sectionId}/add-subsection`}
+          >
+            <Button className="text-primary bg-info">
+              Crea una nuova sottosezione
+            </Button>
+          </Link>
         </Col>
       </Row>
-      <Link to={`/conventions/${conventionId}/sec/${sectionId}/add-subsection`}>
-        <Button className="text-primary bg-info">
-          Crea una nuova sottosezione
-        </Button>
-      </Link>
     </Container>
   );
 };

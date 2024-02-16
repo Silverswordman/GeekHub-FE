@@ -44,7 +44,7 @@ const HomeCard = () => {
                         variant="top"
                         fluid
                         src={convention.coverImage}
-                        className=" border border-info border-4 rounded-start-5 rounded-top-5 bg-primary shadow-sm"
+                        className=" border border-info border-4 rounded-start-5 rounded-top-5 bg-primary shadow"
                       />
                     </Col>
 

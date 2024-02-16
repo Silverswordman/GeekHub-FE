@@ -106,7 +106,6 @@ const ConventionForm = () => {
       await dispatch(saveNewConvention(formData));
       console.log("Convention salvata con successo!");
 
-      // Se il submit va a buon fine, reindirizziamo alla pagina "/home"
       navigate("/home");
     } catch (error) {
       console.error("Errore nel salvataggio della convention:", error);
@@ -116,7 +115,7 @@ const ConventionForm = () => {
   return (
     <Row className="justify-content-center mt-4">
       <Col className="col-11 col-md-8">
-        <Card className="p-4 bg-primary-subtle ">
+        <Card className="p-4 bg-primary-subtle border border-4 border-info ">
           <Row>
             <Col className="col-6 ">
               <Form onSubmit={handleSubmit}>
