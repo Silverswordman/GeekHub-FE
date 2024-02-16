@@ -9,6 +9,7 @@ import locationReducer from "../reducers/location";
 import newConventionReducer from "../reducers/newconvention";
 import sectionDetailReducer from "../reducers/section_details";
 import subsectionsReducer from "../reducers/subsections";
+import newSubsectionReducer from "../reducers/newsubsection";
 
 const rootReducer = combineReducers({
   conventions: conventionReducer,
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   newConvention: newConventionReducer,
   sectionDetails: sectionDetailReducer,
   subsections: subsectionsReducer,
+  subsection:newSubsectionReducer,
 });
 
 const store = configureStore({

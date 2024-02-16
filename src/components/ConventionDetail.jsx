@@ -20,6 +20,7 @@ import {
 import { BsPencilFill } from "react-icons/bs";
 
 const ConventionDetail = () => {
+  
   const { conventionId } = useParams();
   const dispatch = useDispatch();
   const [page, setPage] = useState(0);

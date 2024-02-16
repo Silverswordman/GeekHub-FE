@@ -7,6 +7,7 @@ import {
   Col,
   Container,
   Card,
+  
 } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { saveNewSection } from "../redux/actions/conventionactions";
@@ -101,6 +102,7 @@ const AddSection = () => {
           </Col>
         </Row>
       )}
+     
     </Container>
   );
 };

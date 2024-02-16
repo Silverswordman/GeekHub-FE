@@ -12,6 +12,7 @@ import RegistrationComponent from "./components/Registration";
 import ConventionForm from "./components/ConventionAdd";
 import AddSection from "./components/SectionAdd";
 import SectionDetail from "./components/SectionDetail";
+import AddSubsection from "./components/SubsectionAdd";
 
 function App() {
   return (
@@ -34,8 +35,14 @@ function App() {
               path="/conventions/:conventionId/add-section"
               element={<AddSection />}
             />
-            <Route path="/conventions/:conventionId/sec/:sectionId" element={<SectionDetail/>} />
-
+            <Route
+              path="/conventions/:conventionId/sec/:sectionId"
+              element={<SectionDetail />}
+            />
+            <Route
+              path="/conventions/:conventionId/sec/:sectionId/add-subsection"
+              element={<AddSubsection />}
+            />
 
             <Route path="/me" element={<ProfileComponent />} />
             <Route path="/register" element={<RegistrationComponent />} />

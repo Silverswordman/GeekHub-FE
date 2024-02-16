@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import {
   getSectionDetail,
   getSubsections,
 } from "../redux/actions/conventionactions";
 import { Spinner, Card, Container, Row, Col, Button } from "react-bootstrap";
+
+import AddSubsection from "./SubsectionAdd";
 
 const SectionDetail = () => {
   const { sectionId, conventionId } = useParams();
@@ -70,9 +72,9 @@ const SectionDetail = () => {
           <h2 className="text-info text-center ">Subsections</h2>
           {Array.isArray(subsections.content) &&
             subsections.content.map((subsection) => (
-              <Card key={subsection.id}>
-                <Card.Title>{subsection.title}</Card.Title>
-                <Card.Text>{subsection.description}</Card.Text>
+              <Card key={subsection.subsectionId}>
+                <Card.Title>{subsection.subsectionTitle}</Card.Title>
+                <Card.Text>{subsection.subsectionDescription}</Card.Text>
               </Card>
             ))}
           <Button onClick={handlePrevPage} disabled={currentPage === 0}>
@@ -81,6 +83,12 @@ const SectionDetail = () => {
           <Button onClick={handleNextPage}>Next</Button>
         </Col>
       </Row>
+
+      <Link to={`/conventions/${conventionId}/sec/${sectionId}/add-subsection`}>
+        <Button className="text-primary bg-info">
+          Crea una nuova sottosezione
+        </Button>
+      </Link>
     </Container>
   );
 };

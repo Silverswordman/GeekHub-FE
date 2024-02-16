@@ -372,3 +372,53 @@ export const uploadConventionCover = (file, conventionId) => {
     }
   };
 };
+
+export const SAVE_SUBSECTION_REQUEST = "SAVE_SUBSECTION_REQUEST";
+export const SAVE_SUBSECTION_SUCCESS = "SAVE_SUBSECTION_SUCCESS";
+export const SAVE_SUBSECTION_FAILURE = "SAVE_SUBSECTION_FAILURE";
+
+export const saveSubsectionRequest = () => ({
+  type: SAVE_SUBSECTION_REQUEST,
+});
+
+export const saveSubsectionSuccess = (data) => ({
+  type: SAVE_SUBSECTION_SUCCESS,
+  payload: data,
+});
+
+export const saveSubsectionFailure = (error) => ({
+  type: SAVE_SUBSECTION_FAILURE,
+  payload: error,
+});
+
+export const saveNewSubsection = (conventionId, sectionId, formData) => {
+  return async (dispatch) => {
+    dispatch(saveSubsectionRequest());
+
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch(
+        `${urlconventions}/${conventionId}/sec/${sectionId}/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token,
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(
+          "Errore durante il salvataggio della nuova sottosezione"
+        );
+      }
+
+      const data = await response.json();
+      dispatch(saveSubsectionSuccess(data));
+    } catch (error) {
+      dispatch(saveSubsectionFailure(error.message));
+    }
+  };
+};
