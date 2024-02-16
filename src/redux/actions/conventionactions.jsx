@@ -422,3 +422,56 @@ export const saveNewSubsection = (conventionId, sectionId, formData) => {
     }
   };
 };
+export const UPLOAD_SECTION_IMAGE_REQUEST = "UPLOAD_SECTION_IMAGE_REQUEST";
+export const UPLOAD_SECTION_IMAGE_SUCCESS = "UPLOAD_SECTION_IMAGE_SUCCESS";
+export const UPLOAD_SECTION_IMAGE_FAILURE = "UPLOAD_SECTION_IMAGE_FAILURE";
+
+export const uploadSectionImageRequest = () => ({
+  type: UPLOAD_SECTION_IMAGE_REQUEST,
+});
+
+export const uploadSectionImageSuccess = (imageUrl) => ({
+  type: UPLOAD_SECTION_IMAGE_SUCCESS,
+  payload: imageUrl,
+});
+
+export const uploadSectionImageFailure = (error) => ({
+  type: UPLOAD_SECTION_IMAGE_FAILURE,
+  payload: error,
+});
+
+export const uploadSectionImage = (conventionId, sectionId, file) => {
+  return async (dispatch) => {
+    dispatch(uploadSectionImageRequest());
+
+    try {
+      const token = localStorage.getItem("token");
+      const formData = new FormData();
+      formData.append("image", file);
+
+      const response = await fetch(
+        `${urlconventions}/${conventionId}/sec/${sectionId}/uploadImage`,
+        {
+          method: "PATCH",
+          headers: {
+            Authorization: token,
+          },
+          body: formData,
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(
+          "Errore durante il caricamento dell'immagine della sezione"
+        );
+      }
+
+      const imageUrl = await response.text();
+
+      dispatch(uploadSectionImageSuccess(imageUrl));
+      dispatch(getSectionDetail(conventionId, sectionId));
+    } catch (error) {
+      dispatch(uploadSectionImageFailure(error.message));
+    }
+  };
+};

@@ -1,17 +1,27 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import {
   getSectionDetail,
   getSubsections,
+  uploadSectionImage,
 } from "../redux/actions/conventionactions";
-import { Spinner, Card, Container, Row, Col, Button } from "react-bootstrap";
-
-import AddSubsection from "./SubsectionAdd";
+import {
+  Spinner,
+  Card,
+  Container,
+  Row,
+  Col,
+  Button,
+  Modal,
+  Badge,
+} from "react-bootstrap";
+import { BsPencilFill } from "react-icons/bs";
 
 const SectionDetail = () => {
   const { sectionId, conventionId } = useParams();
   const dispatch = useDispatch();
+  const { role, userId } = useSelector((state) => state.auth);
 
   const {
     sectionDetail,
@@ -25,6 +35,8 @@ const SectionDetail = () => {
   } = useSelector((state) => state.subsections);
 
   const [currentPage, setCurrentPage] = useState(0);
+  const [showImageModal, setShowImageModal] = useState(false);
+  const [imageFile, setImageFile] = useState(null);
 
   useEffect(() => {
     dispatch(getSectionDetail(conventionId, sectionId));
@@ -41,6 +53,27 @@ const SectionDetail = () => {
     }
   };
 
+  const handleImageClick = () => {
+    if (sectionDetail.creator.userId === userId || role === "ADMIN") {
+      setShowImageModal(true);
+    }
+  };
+
+  const handleImageChange = (event) => {
+    setImageFile(event.target.files[0]);
+  };
+
+  const handleImageSave = async () => {
+    if (!imageFile) return;
+
+    try {
+      await dispatch(uploadSectionImage(conventionId, sectionId, imageFile));
+      setShowImageModal(false);
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    }
+  };
+
   if (sectionLoading || subsectionLoading)
     return <Spinner animation="grow" className="text-info" />;
   if (sectionError || subsectionError)
@@ -51,12 +84,29 @@ const SectionDetail = () => {
     <Container className="my-5">
       <Row>
         <Col className="col-10 col-md-5">
-          <Card className="p-5 bg-primary-subtle border-info border-4 shadow-lg text-">
+          <Card className="p-5 bg-primary-subtle border-info border-4 shadow-lg ">
             <Card.Img
               variant="top"
-              className=" border border-4 border-info rounded-start-5 rounded-top-5"
+              className=" border border-4 border-info rounded-start-5 rounded-top-5 position-relative"
               src={sectionDetail.sectionImage}
-            ></Card.Img>
+              onClick={handleImageClick}
+              style={{ cursor: "pointer" }}
+            />
+            {(role === "ADMIN" || userId === sectionDetail.creator.userId) && (
+              <Badge
+                pill
+                bg="primary"
+                className="position-absolute badge bg-info"
+                style={{
+                  width: "30px",
+                  height: "25px",
+                  borderRadius: "50%",
+                  cursor: "pointer",
+                }}
+              >
+                <BsPencilFill />
+              </Badge>
+            )}
             <Card.Title className="text-center fw-bolder fst-italic text-primary fs-3">
               {sectionDetail.sectionTitle}
             </Card.Title>
@@ -82,16 +132,36 @@ const SectionDetail = () => {
               Prev
             </Button>
             <Button onClick={handleNextPage}>Next</Button>
-          </div>{" "}
-          <Link
-            to={`/conventions/${conventionId}/sec/${sectionId}/add-subsection`}
-          >
-            <Button className="text-primary bg-info">
-              Crea una nuova sottosezione
-            </Button>
-          </Link>
+          </div>
+          {(sectionDetail.creator.userId === userId || role === "ADMIN") && (
+            <Link
+              to={`/conventions/${conventionId}/sec/${sectionId}/add-subsection`}
+            >
+              <Button className="text-primary bg-info">
+                Create New Subsection
+              </Button>
+            </Link>
+          )}
         </Col>
       </Row>
+
+      {/* Modal */}
+      <Modal show={showImageModal} onHide={() => setShowImageModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Change Section Image</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <input type="file" onChange={handleImageChange} />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowImageModal(false)}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleImageSave}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 };
