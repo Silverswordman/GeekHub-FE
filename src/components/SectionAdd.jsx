@@ -7,7 +7,6 @@ import {
   Col,
   Container,
   Card,
-  
 } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { saveNewSection } from "../redux/actions/conventionactions";
@@ -32,7 +31,7 @@ const AddSection = () => {
     e.preventDefault();
 
     if (!conventionId) {
-      console.error("ID della convenzione non valido");
+      console.error("ID della fiera non valido");
       return;
     }
 
@@ -61,23 +60,27 @@ const AddSection = () => {
           <Card className="p-4 bg-primary-subtle ">
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="sectionTitle">
-                <Form.Label className="fw-bolder ">Section Title</Form.Label>
+                <Form.Label className="fw-bolder ">
+                  Inserisci qui il titolo della tua nuova sezione!
+                </Form.Label>
                 <Form.Control
                   type="text"
                   name="sectionTitle"
                   value={sectionData.sectionTitle}
                   onChange={handleChange}
-                  placeholder="Titolo della sezione della tua fiera esempio:Cosplay,Editori,Ospiti... "
+                  placeholder="Ad esempio:Cosplay,Editori,Ospiti,Self-Area... "
                 />
               </Form.Group>
               <Form.Group controlId="sectionSubtitle">
-                <Form.Label className="fw-bolder ">Section Subtitle</Form.Label>
+                <Form.Label className="fw-bolder ">
+                  Inserisci qui una descrizione di cosa include questa sezione
+                </Form.Label>
                 <Form.Control
                   type="text"
                   name="sectionSubtitle"
                   value={sectionData.sectionSubtitle}
                   onChange={handleChange}
-                  placeholder="Scrivi qui in breve di cosa tratta questa sezione!"
+                  placeholder="Ad esempio : Tutti gli editori che sono presenti! o Servizi che offriamo ai cosplayer ecc. "
                 />
               </Form.Group>
               <Button
@@ -102,7 +105,6 @@ const AddSection = () => {
           </Col>
         </Row>
       )}
-     
     </Container>
   );
 };

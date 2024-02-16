@@ -1,8 +1,4 @@
-import {
-  loginRequest,
-  loginSuccess,
-  loginFailure,
-} from "../reducers/authslice";
+import { loginRequest, loginSuccess, loginFailure } from "../reducers/authslice";
 
 export const loginUser = (email, password) => {
   return async (dispatch) => {
@@ -19,8 +15,8 @@ export const loginUser = (email, password) => {
         throw new Error("Errore nel login");
       }
       const data = await response.json();
+      dispatch(loginSuccess({ token: data.token, userId: data.userId, role: data.role }));
       localStorage.setItem("token", "Bearer " + data.token);
-      dispatch(loginSuccess({ token: data.token }));
     } catch (error) {
       dispatch(loginFailure(error.message));
     }

@@ -39,12 +39,12 @@ const HomeCard = () => {
               >
                 <Card className="p-1 bg-primary-subtle border-info border-4 shadow-lg h-100">
                   <Row>
-                    <Col className="col-12  col-md-9 col-lg-6">
+                    <Col className="col-12  col-md-9 col-lg-6 ">
                       <Card.Img
                         variant="top"
                         fluid
                         src={convention.coverImage}
-                        className=" border border-info border-4 rounded-start-5 rounded-top-5"
+                        className=" border border-info border-4 rounded-start-5 rounded-top-5 bg-primary shadow-sm"
                       />
                     </Col>
 

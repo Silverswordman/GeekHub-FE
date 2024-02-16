@@ -54,8 +54,9 @@ const SectionDetail = () => {
           <Card className="p-5 bg-primary-subtle border-info border-4 shadow-lg text-">
             <Card.Img
               variant="top"
-              className="p-3"
+              className=" border border-4 border-info rounded-start-5 rounded-top-5"
               src={sectionDetail.sectionImage}
+              
             ></Card.Img>
             <Card.Title className="text-center fw-bolder fst-italic text-primary fs-3">
               {sectionDetail.sectionTitle}
@@ -77,13 +78,13 @@ const SectionDetail = () => {
                 <Card.Text>{subsection.subsectionDescription}</Card.Text>
               </Card>
             ))}
+
           <Button onClick={handlePrevPage} disabled={currentPage === 0}>
             Prev
           </Button>
           <Button onClick={handleNextPage}>Next</Button>
         </Col>
       </Row>
-
       <Link to={`/conventions/${conventionId}/sec/${sectionId}/add-subsection`}>
         <Button className="text-primary bg-info">
           Crea una nuova sottosezione

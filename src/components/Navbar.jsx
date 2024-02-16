@@ -7,7 +7,11 @@ const NavbarCustom = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   return (
-    <Navbar expand="lg" className="bg-primary-subtle" fluid="true">
+    <Navbar
+      expand="lg"
+      className="bg-primary-subtle border border-bottom border-4 border-info"
+      fluid="true"
+    >
       <Container className=" m-0">
         <Navbar.Brand as={Link} to="/home">
           Geekhub

@@ -20,7 +20,6 @@ import {
 import { BsPencilFill } from "react-icons/bs";
 
 const ConventionDetail = () => {
-  
   const { conventionId } = useParams();
   const dispatch = useDispatch();
   const [page, setPage] = useState(0);
@@ -56,6 +55,7 @@ const ConventionDetail = () => {
     }
   }, [sections]);
 
+  //paging logic
   const nextPage = () => {
     if (page + 1 < totalPages) {
       setPage(page + 1);
@@ -67,7 +67,9 @@ const ConventionDetail = () => {
       setPage(page - 1);
     }
   };
+  //
 
+  // upload logo e cover
   const handleLogoChange = (event) => {
     setLogoFile(event.target.files[0]);
   };
@@ -97,6 +99,8 @@ const ConventionDetail = () => {
       console.error("Error uploading cover:", error);
     }
   };
+
+  //
 
   if (detailLoading || sectionsLoading)
     return <Spinner animation="grow" className="text-info" />;
@@ -221,7 +225,8 @@ const ConventionDetail = () => {
         </Col>
       </Row>
 
-      {/* modale per l aggiunta immagini */}
+      {/* modale per logo */}
+
       <Modal show={showLogoModal} onHide={() => setShowLogoModal(false)}>
         <Modal.Header closeButton className="bg-info-subtle">
           <Modal.Title>Carica il tuo Logo</Modal.Title>
@@ -253,7 +258,8 @@ const ConventionDetail = () => {
         </Modal.Footer>
       </Modal>
 
-      {/* Cover Modal */}
+      {/* modale cover */}
+
       <Modal show={showCoverModal} onHide={() => setShowCoverModal(false)}>
         <Modal.Header closeButton className="bg-info-subtle">
           <Modal.Title>Carica la tua Cover Image</Modal.Title>

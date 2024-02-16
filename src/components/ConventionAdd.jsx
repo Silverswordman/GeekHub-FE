@@ -114,17 +114,21 @@ const ConventionForm = () => {
   };
 
   return (
-    <Row>
-      <Col className="col-6">
-        <Card className="bg-primary-subtle">
+    <Row className="justify-content-center mt-4">
+      <Col className="col-11 col-md-8">
+        <Card className="p-4 bg-primary-subtle ">
           <Row>
             <Col className="col-6 ">
               <Form onSubmit={handleSubmit}>
                 {error && <div>{error}</div>}
                 <Form.Group controlId="title">
+                  <Form.Label className="fw-bolder ">
+                    Inserisci qui una nuova fiera/evento!{" "}
+                  </Form.Label>
                   <Form.Control
+                    className="my-1"
                     type="text"
-                    placeholder="Titolo"
+                    placeholder="Inserisci qui il nome della tua fiera/evento!"
                     value={formData.title}
                     onChange={(e) =>
                       setFormData({ ...formData, title: e.target.value })
@@ -138,6 +142,7 @@ const ConventionForm = () => {
                       setFormData({ ...formData, startDate: date })
                     }
                     placeholderText="Data di inizio"
+                    className="my-1 border-0 rounded-pill"
                   />
                 </Form.Group>
                 <Form.Group controlId="endDate">
@@ -147,6 +152,7 @@ const ConventionForm = () => {
                       setFormData({ ...formData, endDate: date })
                     }
                     placeholderText="Data di fine"
+                    className="my-1 border-0 rounded-pill"
                   />
                 </Form.Group>
                 <Form.Group controlId="site">
@@ -157,6 +163,7 @@ const ConventionForm = () => {
                     onChange={(e) =>
                       setFormData({ ...formData, site: e.target.value })
                     }
+                    className="my-1"
                   />
                 </Form.Group>
                 <Form.Group controlId="address">
@@ -167,10 +174,12 @@ const ConventionForm = () => {
                     onChange={(e) =>
                       setFormData({ ...formData, address: e.target.value })
                     }
+                    className="my-1"
                   />
                 </Form.Group>
                 <Form.Group controlId="region">
                   <Form.Control
+                    className="my-1"
                     as="select"
                     value={formData.region}
                     onChange={handleRegionChange}
@@ -185,6 +194,7 @@ const ConventionForm = () => {
                 </Form.Group>
                 <Form.Group controlId="province">
                   <Form.Control
+                    className="my-1"
                     as="select"
                     value={formData.province}
                     onChange={handleProvinceChange}
@@ -199,6 +209,7 @@ const ConventionForm = () => {
                 </Form.Group>
                 <Form.Group controlId="city">
                   <Form.Control
+                    className="my-1"
                     as="select"
                     value={formData.city}
                     onChange={handleCityChange}
@@ -211,7 +222,12 @@ const ConventionForm = () => {
                     ))}
                   </Form.Control>
                 </Form.Group>
-                <Button type="submit">Salva</Button>
+                <Button
+                  type="submit"
+                  className="bg-info text-primary fw-bolder border border-3  border-primary-subtle mt-3"
+                >
+                  Salva
+                </Button>
               </Form>
             </Col>
           </Row>

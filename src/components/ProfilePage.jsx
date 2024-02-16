@@ -12,7 +12,7 @@ import {
 import { BsPencilFill } from "react-icons/bs";
 
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { logoutUser } from "../redux/reducers/authslice";
 import {
   fetchProfile,
@@ -23,6 +23,7 @@ const ProfileComponent = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const profileDetail = useSelector((state) => state.personalProfile);
+  const role = useSelector((state) => state.auth.role);
 
   const [file, setFile] = useState(null);
   const [uploading, setUploading] = useState(false);
@@ -58,13 +59,13 @@ const ProfileComponent = () => {
     <Container className="my-4">
       <Row className="justify-content-center ">
         <Col className=" col-11 col-md-7 col-lg-6">
-          <Card className="bg-info-subtle border-primary-subtle border-4 shadow-lg">
+          <Card className="bg-info-subtle border-info border-4 shadow-lg">
             {profileDetail && profileDetail.loading && (
               <Spinner animation="grow" className="text-primary" size="sm" />
             )}
             {profileDetail && profileDetail.profile && (
               <Card.Body>
-                <Card.Text className="fw-bolder fs-3 fst-italic text-center text-primary">
+                <Card.Text className="fw-bolder fs-3 fst-italic text-center text-primary ">
                   Benvenuto! {profileDetail.profile.username}
                 </Card.Text>
                 <Row className="justify-content-center ">
@@ -139,11 +140,9 @@ const ProfileComponent = () => {
                   {profileDetail.profile.email}
                 </Card.Text>
 
-           
-
                 <Button
                   onClick={handleLogout}
-                  className="text-primary fw-semibold btn-danger"
+                  className="text-primary fw-semibold btn-danger shadow-sm"
                 >
                   Logout
                 </Button>
@@ -151,6 +150,11 @@ const ProfileComponent = () => {
             )}
             {profileDetail && profileDetail.error && (
               <p>Error: {profileDetail.error}</p>
+            )}
+            {(role === "ADMIN" || role === "EVENTPLANNER") && (
+              <Link as={Link} to="/addconvention">
+                Vuoi aggiungere una fiera alla lista?
+              </Link>
             )}
           </Card>
         </Col>

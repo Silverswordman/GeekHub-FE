@@ -10,7 +10,7 @@ import {
 } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { saveNewSubsection } from "../redux/actions/conventionactions";
-import { useParams,useNavigate  } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 const AddSubsection = () => {
   const { conventionId, sectionId } = useParams();
@@ -50,7 +50,7 @@ const AddSubsection = () => {
       setShowSuccessMessage(true);
       setTimeout(() => {
         setShowSuccessMessage(false);
-        navigate(`/convention/${conventionId}/sec/${sectionId}`);
+        navigate(`/conventions/${conventionId}/sec/${sectionId}`);
       }, 1500);
     } catch (error) {
       console.error("Errore durante la creazione della sottosezione:", error);
