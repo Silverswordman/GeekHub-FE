@@ -20,7 +20,7 @@ const HomeCard = () => {
 
   return (
     <>
-      <Row xs={1} md={2} lg={3}>
+      <Row xs={1} md={2} lg={3} className="mt-5">
         {loading && <Spinner animation="grow" variant="info" />}
         {error && <div>Error: {error}</div>}
         {!loading &&
@@ -28,7 +28,7 @@ const HomeCard = () => {
           conventions.map((convention) => (
             <Col
               key={convention.conventionId}
-              md={4}
+              md={5}
               sm={6}
               xs={12}
               className="pt-3 "
@@ -39,11 +39,16 @@ const HomeCard = () => {
               >
                 <Card className="p-1 bg-primary-subtle border-info border-4 shadow-lg h-100">
                   <Row>
-                    <Col className="col-6">
-                      <Card.Img variant="top" src={convention.coverImage} />
+                    <Col className="col-12  col-md-9 col-lg-6">
+                      <Card.Img
+                        variant="top"
+                        fluid
+                        src={convention.coverImage}
+                        className=" border border-info border-4 rounded-start-5 rounded-top-5"
+                      />
                     </Col>
 
-                    <Col className="col-6">
+                    <Col className="col-12 col-md-9 col-lg-6 ">
                       <Card.Body>
                         <Card.Title className="text-center fw-bolder fst-italic text-primary fs-3">
                           {convention.title}

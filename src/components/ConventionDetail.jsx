@@ -15,6 +15,7 @@ import {
   Spinner,
   Button,
   Modal,
+  Badge,
 } from "react-bootstrap";
 import { BsPencilFill } from "react-icons/bs";
 
@@ -105,29 +106,61 @@ const ConventionDetail = () => {
   return (
     <Container className="my-5">
       <Row>
-        <Col className="col-11 col-md-6">
+        <Col className="col-11 col-sm-11 col-md-6 my-3">
           <Card className="p-5 bg-primary-subtle border-info border-4 shadow-lg text-">
             <Card.Img
               variant="top"
-              className="p-2"
+              className=" border border-info border-5 rounded-start-5 rounded-top-5 position-relative"
               src={conventionDetail.coverImage}
               onClick={() => setShowCoverModal(true)}
+              style={{ cursor: "pointer" }}
             />
-            <div className="d-flex justify-content-center">
-              <Card.Img
-                variant="top"
-                src={conventionDetail.logo}
-                className="w-50 p-3"
-                onClick={() => setShowLogoModal(true)}
-              />
-            </div>
-            <Card.Title className="text-center fw-bolder fst-italic text-primary fs-1">
-              {conventionDetail.title}
-            </Card.Title>
-            <Card.Text className="text-center fw-bolder fst-italic text-primary fs-1">
+            <Badge
+              pill
+              bg="primary"
+              className="position-absolute  badge bg-info"
+              style={{
+                width: "30px",
+                height: "25px",
+                borderRadius: "50%",
+                cursor: "pointer",
+              }}
+            >
+              <BsPencilFill />
+            </Badge>
+            <Row className="align-items-center mt-2 justify-content-md-center">
+              <Col className="col-12 col-sm-11 col-lg-6 ">
+                <Card.Img
+                  variant="top"
+                  src={conventionDetail.logo}
+                  className="w-50 border border-3 border-primary-subtle rounded-pill position-relative  "
+                  style={{ cursor: "pointer" }}
+                  onClick={() => setShowLogoModal(true)}
+                />{" "}
+                <Badge
+                  pill
+                  bg="primary"
+                  className="position-absolute  translate-middle-x text-info-subtle badge bg-primary-subtle border border-1  border-info"
+                  style={{
+                    width: "30px",
+                    height: "25px",
+                    borderRadius: "50%",
+                    cursor: "pointer",
+                  }}
+                >
+                  <BsPencilFill />
+                </Badge>
+              </Col>
+              <Col className="col-12 col-sm-11 col-lg-6 ">
+                <Card.Title className="text-center fw-bolder fst-italic text-primary fs-1">
+                  {conventionDetail.title}
+                </Card.Title>
+              </Col>
+            </Row>
+            <Card.Text className="text-center fw-bolder fst-italic text-primary ">
               {conventionDetail.startDate}
             </Card.Text>
-            <Card.Text className="text-center fw-bolder fst-italic text-primary fs-1">
+            <Card.Text className="text-center fw-bolder fst-italic text-primary ">
               {conventionDetail.endDate}
             </Card.Text>
             <Card.Text className="text-black fw-medium ">
@@ -151,7 +184,10 @@ const ConventionDetail = () => {
                     className="text-decoration-none"
                     to={`/conventions/${conventionId}/sec/${section.sectionId}`}
                   >
-                    <Card.Img src={section.sectionImage} className="w-50 p-2" />
+                    <Card.Img
+                      src={section.sectionImage}
+                      className="w-50  border border-4 border-info rounded-start-5 rounded-top-5"
+                    />
                     <Card.Title className="text-center fw-bolder fst-italic">
                       {section.sectionTitle}
                     </Card.Title>
@@ -185,15 +221,12 @@ const ConventionDetail = () => {
       </Row>
 
       {/* modale per l aggiunta immagini */}
-      <Modal
-        show={showLogoModal}
-        onHide={() => setShowLogoModal(false)}
-        className="bg-primary-subtle"
-      >
-        <Modal.Header closeButton>
+      <Modal show={showLogoModal} onHide={() => setShowLogoModal(false)}>
+        <Modal.Header closeButton className="bg-info-subtle">
           <Modal.Title>Carica il tuo Logo</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className="bg-primary-subtle">
+          <p>Dimensioni massime per l immagine 1mega</p>
           <input
             type="file"
             accept="image/*"
@@ -201,11 +234,19 @@ const ConventionDetail = () => {
             onChange={handleLogoChange}
           />
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="info" onClick={() => setShowLogoModal(false)}>
+        <Modal.Footer className="bg-info-subtle">
+          <Button
+            variant="danger"
+            onClick={() => setShowLogoModal(false)}
+            className="fw-bolder"
+          >
             Chiudi
           </Button>
-          <Button variant="primary" onClick={handleLogoUpload}>
+          <Button
+            variant="primary"
+            onClick={handleLogoUpload}
+            className="fw-bolder"
+          >
             Salva
           </Button>
         </Modal.Footer>
@@ -213,10 +254,11 @@ const ConventionDetail = () => {
 
       {/* Cover Modal */}
       <Modal show={showCoverModal} onHide={() => setShowCoverModal(false)}>
-        <Modal.Header closeButton>
+        <Modal.Header closeButton className="bg-info-subtle">
           <Modal.Title>Carica la tua Cover Image</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className="bg-primary-subtle">
+          <p>Dimensioni massime per l immagine 1mega</p>
           <input
             type="file"
             accept="image/*"
@@ -224,11 +266,19 @@ const ConventionDetail = () => {
             onChange={handleCoverChange}
           />
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowCoverModal(false)}>
+        <Modal.Footer className="bg-info-subtle">
+          <Button
+            variant="danger"
+            onClick={() => setShowCoverModal(false)}
+            className="fw-bolder"
+          >
             Chiudi
           </Button>
-          <Button variant="primary" onClick={handleCoverUpload}>
+          <Button
+            variant="primary"
+            onClick={handleCoverUpload}
+            className="fw-bolder"
+          >
             Salva
           </Button>
         </Modal.Footer>

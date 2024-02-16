@@ -139,14 +139,7 @@ const ProfileComponent = () => {
                   {profileDetail.profile.email}
                 </Card.Text>
 
-                {/* <InputGroup className="mb-3">
-                  <input
-                    type="file"
-                    accept="image/*"
-                    className="form-control"
-                    onChange={handleFileChange}
-                  />
-                </InputGroup> */}
+           
 
                 <Button
                   onClick={handleLogout}
