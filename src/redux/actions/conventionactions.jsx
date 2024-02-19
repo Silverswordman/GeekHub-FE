@@ -475,3 +475,35 @@ export const uploadSectionImage = (conventionId, sectionId, file) => {
     }
   };
 };
+export const UPDATE_CONVENTION_SUCCESS = "UPDATE_CONVENTION_SUCCESS";
+export const UPDATE_CONVENTION_FAILURE = "UPDATE_CONVENTION_FAILURE";
+
+export const updateConventionSuccess = (convention) => ({
+  type: UPDATE_CONVENTION_SUCCESS,
+  payload: convention,
+});
+
+export const updateConventionFailure = (error) => ({
+  type: UPDATE_CONVENTION_FAILURE,
+  payload: error,
+});
+
+export const updateConvention = (conventionId, formData) => {
+  return async (dispatch) => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch(`${urlconventions}/${conventionId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await response.json();
+      dispatch(updateConventionSuccess(data));
+    } catch (error) {
+      dispatch(updateConventionFailure(error.message));
+    }
+  };
+};

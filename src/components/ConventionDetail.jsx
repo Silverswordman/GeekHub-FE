@@ -217,6 +217,17 @@ const ConventionDetail = () => {
               {conventionDetail.province.sigla},{" "}
               {conventionDetail.city.cityName}
             </Card.Text>
+            {/* Aggiungiamo il pulsante di modifica */}
+            {(role === "ADMIN" ||
+              userId === conventionDetail.creator.userId) && (
+              <Row className="mb-3">
+                <Col>
+                  <Link to={`/updateconvention/${conventionId}`}>
+                    <Button variant="primary">Modifica Convenzione</Button>
+                  </Link>
+                </Col>
+              </Row>
+            )}
           </Card>
         </Col>
         <Col className="col-11 col-md-6 col-lg-5">

@@ -13,6 +13,7 @@ import ConventionForm from "./components/ConventionAdd";
 import AddSection from "./components/SectionAdd";
 import SectionDetail from "./components/SectionDetail";
 import AddSubsection from "./components/SubsectionAdd";
+import UpdateConventionForm from "./components/UpdateConvention";
 
 function App() {
   return (
@@ -47,6 +48,10 @@ function App() {
             <Route path="/me" element={<ProfileComponent />} />
             <Route path="/register" element={<RegistrationComponent />} />
             <Route path="/addconvention" element={<ConventionForm />} />
+            <Route
+              path="/updateconvention/:conventionId"
+              element={<UpdateConventionForm />}
+            />
           </Routes>
         </Container>
         <PageFooter />

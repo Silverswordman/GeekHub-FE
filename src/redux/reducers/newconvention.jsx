@@ -1,6 +1,8 @@
 import {
   SAVE_CONVENTION_SUCCESS,
   SAVE_CONVENTION_FAILURE,
+  UPDATE_CONVENTION_SUCCESS,
+  UPDATE_CONVENTION_FAILURE,
 } from "../actions/conventionactions";
 
 const initialState = {
@@ -8,15 +10,17 @@ const initialState = {
   error: null,
 };
 
-const newConventionReducer = (state = initialState, action) => {
+const conventionReducer = (state = initialState, action) => {
   switch (action.type) {
     case SAVE_CONVENTION_SUCCESS:
+    case UPDATE_CONVENTION_SUCCESS:
       return {
         ...state,
         convention: action.payload,
         error: null,
       };
     case SAVE_CONVENTION_FAILURE:
+    case UPDATE_CONVENTION_FAILURE:
       return {
         ...state,
         error: action.payload,
@@ -26,4 +30,4 @@ const newConventionReducer = (state = initialState, action) => {
   }
 };
 
-export default newConventionReducer;
+export default conventionReducer;
