@@ -8,13 +8,14 @@ import {
   uploadConventionCover,
 } from "../redux/actions/conventionactions";
 import {
-  Card,
   Container,
   Row,
   Col,
   Spinner,
-  Button,
   Modal,
+  Button,
+  Alert,
+  Card,
   Badge,
 } from "react-bootstrap";
 import { BsPencilFill } from "react-icons/bs";
@@ -26,25 +27,23 @@ const ConventionDetail = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [showLogoModal, setShowLogoModal] = useState(false);
   const [showCoverModal, setShowCoverModal] = useState(false);
-
+  const [logoFile, setLogoFile] = useState(null);
+  const [coverFile, setCoverFile] = useState(null);
+  const [logoFileSizeExceedsLimit, setLogoFileSizeExceedsLimit] =
+    useState(false);
+  const [coverFileSizeExceedsLimit, setCoverFileSizeExceedsLimit] =
+    useState(false);
   const { role, userId } = useSelector((state) => state.auth);
-
-  // caricamento dettagli
   const {
     conventionDetail,
     loading: detailLoading,
     error: detailError,
   } = useSelector((state) => state.conventionDetails);
-
-  // caricamento sezioni
   const {
     sections,
     loading: sectionsLoading,
     error: sectionsError,
   } = useSelector((state) => state.conventionSections);
-
-  const [logoFile, setLogoFile] = useState(null);
-  const [coverFile, setCoverFile] = useState(null);
 
   useEffect(() => {
     dispatch(getConventionDetail(conventionId));
@@ -57,26 +56,26 @@ const ConventionDetail = () => {
     }
   }, [sections]);
 
-  //paging logic
-  const nextPage = () => {
-    if (page + 1 < totalPages) {
-      setPage(page + 1);
-    }
-  };
-
-  const prevPage = () => {
-    if (page > 0) {
-      setPage(page - 1);
-    }
-  };
-
-  // upload logo e cover
   const handleLogoChange = (event) => {
-    setLogoFile(event.target.files[0]);
+    const file = event.target.files[0];
+    if (file && file.size > 1048576) {
+      setLogoFileSizeExceedsLimit(true);
+      setLogoFile(null);
+    } else {
+      setLogoFileSizeExceedsLimit(false);
+      setLogoFile(file);
+    }
   };
 
   const handleCoverChange = (event) => {
-    setCoverFile(event.target.files[0]);
+    const file = event.target.files[0];
+    if (file && file.size > 1048576) {
+      setCoverFileSizeExceedsLimit(true);
+      setCoverFile(null);
+    } else {
+      setCoverFileSizeExceedsLimit(false);
+      setCoverFile(file);
+    }
   };
 
   const handleLogoUpload = async () => {
@@ -87,6 +86,7 @@ const ConventionDetail = () => {
       setShowLogoModal(false);
     } catch (error) {
       console.error("Error uploading logo:", error);
+      alert("Error uploading logo. Please try again.");
     }
   };
 
@@ -98,6 +98,19 @@ const ConventionDetail = () => {
       setShowCoverModal(false);
     } catch (error) {
       console.error("Error uploading cover:", error);
+      alert("Error uploading cover. Please try again.");
+    }
+  };
+
+  const nextPage = () => {
+    if (page + 1 < totalPages) {
+      setPage(page + 1);
+    }
+  };
+
+  const prevPage = () => {
+    if (page > 0) {
+      setPage(page - 1);
     }
   };
 
@@ -186,8 +199,9 @@ const ConventionDetail = () => {
                 </Card.Title>
               </Col>
             </Row>
+
             <Card.Text className="text-center fw-bolder fst-italic text-primary ">
-              {conventionDetail.startDate}
+              Giorno e ora di inizio {conventionDetail.startDate}
             </Card.Text>
             <Card.Text className="text-center fw-bolder fst-italic text-primary ">
               {conventionDetail.endDate}
@@ -199,7 +213,9 @@ const ConventionDetail = () => {
               {conventionDetail.address}
             </Card.Text>
             <Card.Text className="text-black fw-medium ">
-              {conventionDetail.address}
+              {conventionDetail.region.regionName} ,{" "}
+              {conventionDetail.province.sigla},{" "}
+              {conventionDetail.city.cityName}
             </Card.Text>
           </Card>
         </Col>
@@ -257,7 +273,7 @@ const ConventionDetail = () => {
         </Col>
       </Row>
 
-      {/* modale per logo */}
+      {/* Modale per caricamento logo */}
       {(role === "ADMIN" || userId === conventionDetail.creator.userId) && (
         <Modal show={showLogoModal} onHide={() => setShowLogoModal(false)}>
           <Modal.Header closeButton className="bg-info-subtle">
@@ -271,6 +287,9 @@ const ConventionDetail = () => {
               className="form-control"
               onChange={handleLogoChange}
             />
+            {logoFileSizeExceedsLimit && (
+              <Alert variant="danger">Dimensione massima superata (1MB)</Alert>
+            )}
           </Modal.Body>
           <Modal.Footer className="bg-info-subtle">
             <Button
@@ -291,20 +310,23 @@ const ConventionDetail = () => {
         </Modal>
       )}
 
-      {/* modale cover */}
+      {/* Modale per caricamento cover */}
       {(role === "ADMIN" || userId === conventionDetail.creator.userId) && (
         <Modal show={showCoverModal} onHide={() => setShowCoverModal(false)}>
           <Modal.Header closeButton className="bg-info-subtle">
             <Modal.Title>Carica la tua Cover Image</Modal.Title>
           </Modal.Header>
           <Modal.Body className="bg-primary-subtle">
-            <p>Dimensioni massime per l immagine 1MB</p>
+            <p>Dimensioni massime per l'immagine 1MB</p>
             <input
               type="file"
               accept="image/*"
               className="form-control"
               onChange={handleCoverChange}
             />
+            {coverFileSizeExceedsLimit && (
+              <Alert variant="danger">Dimensione massima superata (1MB)</Alert>
+            )}
           </Modal.Body>
           <Modal.Footer className="bg-info-subtle">
             <Button

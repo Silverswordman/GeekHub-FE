@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import {
@@ -15,6 +15,7 @@ import {
   Button,
   Modal,
   Badge,
+  Alert,
 } from "react-bootstrap";
 import { BsPencilFill } from "react-icons/bs";
 
@@ -37,6 +38,7 @@ const SectionDetail = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [showImageModal, setShowImageModal] = useState(false);
   const [imageFile, setImageFile] = useState(null);
+  const [imageFileSizeExceedsLimit, setImageFileSizeExceedsLimit] = useState(false);
 
   useEffect(() => {
     dispatch(getSectionDetail(conventionId, sectionId));
@@ -60,7 +62,14 @@ const SectionDetail = () => {
   };
 
   const handleImageChange = (event) => {
-    setImageFile(event.target.files[0]);
+    const file = event.target.files[0];
+    if (file && file.size > 1048576) {
+      setImageFileSizeExceedsLimit(true);
+      setImageFile(null);
+    } else {
+      setImageFileSizeExceedsLimit(false);
+      setImageFile(file);
+    }
   };
 
   const handleImageSave = async () => {
@@ -79,6 +88,7 @@ const SectionDetail = () => {
   if (sectionError || subsectionError)
     return <p>Error: {sectionError || subsectionError}</p>;
   if (!sectionDetail) return null;
+
 
   return (
     <Container className="my-5">
@@ -152,6 +162,9 @@ const SectionDetail = () => {
         </Modal.Header>
         <Modal.Body>
           <input type="file" onChange={handleImageChange} />
+          {imageFileSizeExceedsLimit && (
+            <Alert variant="danger">Image size exceeds the limit (1MB)</Alert>
+          )}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowImageModal(false)}>

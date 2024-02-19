@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Container,
@@ -7,10 +7,9 @@ import {
   Row,
   Spinner,
   Badge,
+  Alert,
 } from "react-bootstrap";
-
 import { BsPencilFill } from "react-icons/bs";
-
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { logoutUser } from "../redux/reducers/authslice";
@@ -27,6 +26,8 @@ const ProfileComponent = () => {
 
   const [file, setFile] = useState(null);
   const [uploading, setUploading] = useState(false);
+  const [imageFileSizeExceedsLimit, setImageFileSizeExceedsLimit] =
+    useState(false);
 
   useEffect(() => {
     dispatch(fetchProfile());
@@ -38,7 +39,14 @@ const ProfileComponent = () => {
   };
 
   const handleFileChange = (event) => {
-    setFile(event.target.files[0]);
+    const selectedFile = event.target.files[0];
+    if (selectedFile && selectedFile.size > 1048576) {
+      setImageFileSizeExceedsLimit(true);
+      setFile(null);
+    } else {
+      setImageFileSizeExceedsLimit(false);
+      setFile(selectedFile);
+    }
   };
 
   const handleUpload = async () => {
@@ -57,22 +65,22 @@ const ProfileComponent = () => {
 
   return (
     <Container className="my-4">
-      <Row className="justify-content-center ">
-        <Col className=" col-11 col-md-7 col-lg-6">
+      <Row className="justify-content-center">
+        <Col className="col-11 col-md-7 col-lg-6">
           <Card className="bg-info-subtle border-info border-4 shadow-lg">
             {profileDetail && profileDetail.loading && (
               <Spinner animation="grow" className="text-primary" size="sm" />
             )}
             {profileDetail && profileDetail.profile && (
               <Card.Body>
-                <Card.Text className="fw-bolder fs-3 fst-italic text-center text-primary ">
+                <Card.Text className="fw-bolder fs-3 fst-italic text-center text-primary">
                   Benvenuto! {profileDetail.profile.username}
                 </Card.Text>
-                <Row className="justify-content-center ">
+                <Row className="justify-content-center">
                   <Card.Img
                     as="label"
                     htmlFor="fileInput"
-                    className="fluid w-50 my-1 position-relative "
+                    className="fluid w-50 my-1 position-relative"
                     style={{ cursor: "pointer" }}
                   >
                     <Badge
@@ -111,11 +119,16 @@ const ProfileComponent = () => {
                       </>
                     )}
                   </Card.Img>
+                  {imageFileSizeExceedsLimit && (
+                    <Alert variant="danger" className="text-center">
+                      Image size exceeds the limit (1MB)
+                    </Alert>
+                  )}
                 </Row>
                 <Row>
                   <Col className="text-end me-5">
                     <Button
-                      className="btn-sm bg-primary text-primary-subtle  "
+                      className="btn-sm bg-primary text-primary-subtle"
                       onClick={handleUpload}
                       disabled={!file || uploading}
                     >
@@ -123,7 +136,6 @@ const ProfileComponent = () => {
                     </Button>
                   </Col>
                 </Row>
-
                 <Row className="align-items-baseline">
                   <Col className="col-5">
                     <Card.Text className="fs-5">
@@ -132,14 +144,12 @@ const ProfileComponent = () => {
                     </Card.Text>
                   </Col>
                   <Col className="col-5 text-end">
-                    <Card.Text> {profileDetail.profile.role}</Card.Text>
+                    <Card.Text>{profileDetail.profile.role}</Card.Text>
                   </Col>
                 </Row>
-
                 <Card.Text className="fs-5">
                   {profileDetail.profile.email}
                 </Card.Text>
-
                 <Button
                   onClick={handleLogout}
                   className="text-primary fw-semibold btn-danger shadow-sm"
