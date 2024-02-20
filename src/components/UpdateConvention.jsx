@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import {
@@ -6,10 +6,10 @@ import {
   fetchProvincesByRegionId,
   fetchCitiesByProvinceId,
 } from "../redux/actions/locationactions";
-import {
-  getConventionDetail,
-  updateConvention,
-} from "../redux/actions/conventionactions";
+import { getConventionDetail } from "../redux/actions/conventionactions";
+
+import { updateConvention } from "../redux/actions/update&deleteactions";
+
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Row, Col, Card, Form, Button } from "react-bootstrap";

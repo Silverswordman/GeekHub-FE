@@ -14,6 +14,9 @@ import AddSection from "./components/SectionAdd";
 import SectionDetail from "./components/SectionDetail";
 import AddSubsection from "./components/SubsectionAdd";
 import UpdateConventionForm from "./components/UpdateConvention";
+import UpdateSectionForm from "./components/UpdateSection";
+import UpdateSubsectionForm from "./components/UpdateSubsection";
+import RequestList from "./components/Request";
 
 function App() {
   return (
@@ -21,7 +24,7 @@ function App() {
       <BrowserRouter>
         <Container
           fluid
-          className="p-0 bg-primary d-flex flex-column flex-grow-0   min-vh-100 "
+          className="p-0 bg-secondary d-flex flex-column flex-grow-0   min-vh-100 "
         >
           <NavbarCustom />
 
@@ -44,7 +47,6 @@ function App() {
               path="/conventions/:conventionId/sec/:sectionId/add-subsection"
               element={<AddSubsection />}
             />
-
             <Route path="/me" element={<ProfileComponent />} />
             <Route path="/register" element={<RegistrationComponent />} />
             <Route path="/addconvention" element={<ConventionForm />} />
@@ -52,6 +54,15 @@ function App() {
               path="/updateconvention/:conventionId"
               element={<UpdateConventionForm />}
             />
+            <Route
+              path="/conventions/:conventionId/sec/:sectionId/updatesection"
+              element={<UpdateSectionForm />}
+            />
+            <Route
+              path="/conventions/:conventionId/sec/:sectionId/:subsectionId/updatesubsection"
+              element={<UpdateSubsectionForm />}
+            />
+            <Route path="/requests" element={<RequestList />} />
           </Routes>
         </Container>
         <PageFooter />

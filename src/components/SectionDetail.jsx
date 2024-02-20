@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import {
   getSectionDetail,
   getSubsections,
-  uploadSectionImage,
 } from "../redux/actions/conventionactions";
+import { uploadSectionImage } from "../redux/actions/uploadactions";
+
 import {
   Spinner,
   Card,
@@ -38,7 +39,8 @@ const SectionDetail = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [showImageModal, setShowImageModal] = useState(false);
   const [imageFile, setImageFile] = useState(null);
-  const [imageFileSizeExceedsLimit, setImageFileSizeExceedsLimit] = useState(false);
+  const [imageFileSizeExceedsLimit, setImageFileSizeExceedsLimit] =
+    useState(false);
 
   useEffect(() => {
     dispatch(getSectionDetail(conventionId, sectionId));
@@ -89,12 +91,11 @@ const SectionDetail = () => {
     return <p>Error: {sectionError || subsectionError}</p>;
   if (!sectionDetail) return null;
 
-
   return (
     <Container className="my-5">
       <Row>
         <Col className="col-10 col-md-5">
-          <Card className="p-5 bg-primary-subtle border-info border-4 shadow-lg ">
+          <Card className="p-5 bg-primary bg-gradient border-info border-4 shadow-lg ">
             <Card.Img
               variant="top"
               className=" border border-4 border-info rounded-start-5 rounded-top-5 position-relative"
@@ -113,19 +114,29 @@ const SectionDetail = () => {
                   borderRadius: "50%",
                   cursor: "pointer",
                 }}
+                onClick={handleImageClick}
               >
                 <BsPencilFill />
               </Badge>
             )}
-            <Card.Title className="text-center fw-bolder fst-italic text-primary fs-3">
+            <Card.Title className="text-center fw-bolder fst-italic text-info fs-3">
               {sectionDetail.sectionTitle}
             </Card.Title>
-            <Card.Text className="text-black fw-medium ">
+            <Card.Text className="text-white fw-medium ">
               {sectionDetail.sectionSubtitle}
             </Card.Text>
-            <Card.Text className="text-black fw-medium ">
-              {sectionDetail.creator.userId}
-            </Card.Text>
+       
+            {(role === "ADMIN" || userId === sectionDetail.creator.userId) && (
+              <Row className="mb-3">
+                <Col>
+                  <Link
+                    to={`/conventions/${conventionId}/sec/${sectionId}/updatesection`}
+                  >
+                    <Button variant="danger">Modifica</Button>
+                  </Link>
+                </Col>
+              </Row>
+            )}
           </Card>
         </Col>
         <Col className="col-11 col-md-6 col-lg-5">
@@ -135,6 +146,11 @@ const SectionDetail = () => {
               <Card key={subsection.subsectionId}>
                 <Card.Title>{subsection.subsectionTitle}</Card.Title>
                 <Card.Text>{subsection.subsectionDescription}</Card.Text>
+                <Link
+                  to={`/conventions/${conventionId}/sec/${sectionId}/${subsection.subsectionId}/updatesubsection`}
+                >
+                  <Button variant="danger">Modifica Sotto-Sezione</Button>
+                </Link>
               </Card>
             ))}
           <div className="d-flex justify-content-between mt-4">
@@ -155,7 +171,6 @@ const SectionDetail = () => {
         </Col>
       </Row>
 
-      {/* Modal */}
       <Modal show={showImageModal} onHide={() => setShowImageModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Change Section Image</Modal.Title>

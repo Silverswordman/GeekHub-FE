@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom"; // Importiamo useNavigate
+import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {
@@ -13,7 +13,7 @@ import { Row, Col, Card, Form, Button } from "react-bootstrap";
 
 const ConventionForm = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate(); // Inizializziamo useNavigate
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     title: "",
     startDate: new Date(),
@@ -142,6 +142,7 @@ const ConventionForm = () => {
                     }
                     placeholderText="Data di inizio"
                     className="my-1 border-0 rounded-pill"
+                    dateFormat="dd/MM/yyyy" // Imposta il formato italiano
                   />
                 </Form.Group>
                 <Form.Group controlId="endDate">
@@ -152,6 +153,7 @@ const ConventionForm = () => {
                     }
                     placeholderText="Data di fine"
                     className="my-1 border-0 rounded-pill"
+                    dateFormat="dd/MM/yyyy" // Imposta il formato italiano
                   />
                 </Form.Group>
                 <Form.Group controlId="site">

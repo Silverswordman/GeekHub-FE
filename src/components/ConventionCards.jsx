@@ -37,7 +37,7 @@ const HomeCard = () => {
                 to={`/convention/${convention.conventionId}`}
                 className="text-decoration-none"
               >
-                <Card className="p-1 bg-primary-subtle border-info border-4 shadow-lg h-100">
+                <Card className="p-1 bg-primary bg-gradient border-info border-4 shadow-lg h-100">
                   <Row>
                     <Col className="col-12  col-md-9 col-lg-6 ">
                       <Card.Img
@@ -50,13 +50,13 @@ const HomeCard = () => {
 
                     <Col className="col-12 col-md-9 col-lg-6 ">
                       <Card.Body>
-                        <Card.Title className="text-center fw-bolder fst-italic text-primary fs-3">
+                        <Card.Title className="text-center fw-bolder fst-italic text-white fs-3">
                           {convention.title}
                         </Card.Title>
-                        <Card.Text className="text-black fw-medium ">
+                        <Card.Text className="text-white fw-medium ">
                           {convention.city.cityName}
                         </Card.Text>
-                        <Card.Text className="text-black fw-medium ">
+                        <Card.Text className="text-white fw-medium ">
                           {convention.address}
                         </Card.Text>
                       </Card.Body>

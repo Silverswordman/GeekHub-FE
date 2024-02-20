@@ -2,13 +2,16 @@ import {
   FETCH_CONVENTION_DETAIL_REQUEST,
   FETCH_CONVENTION_DETAIL_SUCCESS,
   FETCH_CONVENTION_DETAIL_FAILURE,
+} from "../actions/conventionactions";
+
+import {
   UPLOAD_CONVENTION_LOGO_REQUEST,
   UPLOAD_CONVENTION_LOGO_SUCCESS,
   UPLOAD_CONVENTION_LOGO_FAILURE,
   UPLOAD_CONVENTION_COVER_REQUEST,
   UPLOAD_CONVENTION_COVER_SUCCESS,
   UPLOAD_CONVENTION_COVER_FAILURE,
-} from "../actions/conventionactions";
+} from "../actions/uploadactions";
 
 const initialState = {
   conventionDetail: null,

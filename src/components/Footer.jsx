@@ -6,11 +6,8 @@ function PageFooter() {
   const currentYear = format(currentDate, "yyyy");
 
   return (
-    <Container
-      fluid
-      className="border- text-center  bg-primary-subtle sticky-bottom"
-    >
-      <Row className="text-muted small fst-italic border-top border-5  border-info p-2">
+    <Container fluid className="border- text-center   bg-primary sticky-bottom">
+      <Row className="text-info small fst-italic border-top border-5  border-info p-2">
         <Col>Geekhub by Silvestrini Giulia for Epicode {currentYear}</Col>
       </Row>
     </Container>

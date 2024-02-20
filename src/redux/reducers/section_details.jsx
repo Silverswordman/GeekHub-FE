@@ -2,10 +2,12 @@ import {
   FETCH_SECTION_DETAIL_SUCCESS,
   FETCH_SECTION_DETAIL_REQUEST,
   FETCH_SECTION_DETAIL_FAILURE,
+} from "../actions/conventionactions";
+import {
   UPLOAD_SECTION_IMAGE_REQUEST,
   UPLOAD_SECTION_IMAGE_SUCCESS,
   UPLOAD_SECTION_IMAGE_FAILURE,
-} from "../actions/conventionactions";
+} from "../actions/uploadactions";
 
 const initialState = {
   sectionDetail: null,

@@ -10,6 +10,7 @@ import newConventionReducer from "../reducers/newconvention";
 import sectionDetailReducer from "../reducers/section_details";
 import subsectionsReducer from "../reducers/subsections";
 import newSubsectionReducer from "../reducers/newsubsection";
+import requestsReducer from "../reducers/requests";
 
 const rootReducer = combineReducers({
   conventions: conventionReducer,
@@ -22,7 +23,8 @@ const rootReducer = combineReducers({
   newConvention: newConventionReducer,
   sectionDetails: sectionDetailReducer,
   subsections: subsectionsReducer,
-  subsection:newSubsectionReducer,
+  requests: requestsReducer,
+  subsection: newSubsectionReducer,
 });
 
 const store = configureStore({

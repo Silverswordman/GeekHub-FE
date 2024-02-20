@@ -1,9 +1,12 @@
 import {
   SAVE_CONVENTION_SUCCESS,
   SAVE_CONVENTION_FAILURE,
+} from "../actions/conventionactions";
+
+import {
   UPDATE_CONVENTION_SUCCESS,
   UPDATE_CONVENTION_FAILURE,
-} from "../actions/conventionactions";
+} from "../actions/update&deleteactions";
 
 const initialState = {
   convention: null,

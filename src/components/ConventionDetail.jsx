@@ -1,12 +1,17 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import {
   getConventionDetail,
   getConventionSections,
+} from "../redux/actions/conventionactions";
+import {
   uploadConventionLogo,
   uploadConventionCover,
-} from "../redux/actions/conventionactions";
+} from "../redux/actions/uploadactions";
+import { format } from "date-fns";
+import it from "date-fns/locale/it";
+
 import {
   Container,
   Row,
@@ -124,7 +129,7 @@ const ConventionDetail = () => {
     <Container className="my-5">
       <Row>
         <Col className="col-11 col-sm-11 col-md-6 my-3">
-          <Card className="p-5 bg-primary-subtle border-info border-4 shadow-lg text-">
+          <Card className="p-5 bg-primary bg-gradient  border-info border-4 shadow-lg text-white">
             <Card.Img
               variant="top"
               className={`border border-info border-5 rounded-start-5 rounded-top-5 position-relative ${
@@ -153,6 +158,7 @@ const ConventionDetail = () => {
                   borderRadius: "50%",
                   cursor: "pointer",
                 }}
+                onClick={() => setShowCoverModal(true)}
               >
                 <BsPencilFill />
               </Badge>
@@ -162,7 +168,7 @@ const ConventionDetail = () => {
                 <Card.Img
                   variant="top"
                   src={conventionDetail.logo}
-                  className={`w-50 border border-4 border-primary rounded-pill position-relative ${
+                  className={`w-50 border border-4 border-info rounded-pill position-relative ${
                     role !== "ADMIN" &&
                     userId !== conventionDetail.creator.userId &&
                     "no-pointer"
@@ -181,38 +187,43 @@ const ConventionDetail = () => {
                   <Badge
                     pill
                     bg="primary"
-                    className="position-absolute translate-middle-x badge bg-primary-subtle border border-1 border border-2 border-info"
+                    className="position-absolute translate-middle-x badge bg-primary border border-1 border border-2 border-info"
                     style={{
                       width: "30px",
                       height: "25px",
                       borderRadius: "50%",
                       cursor: "pointer",
                     }}
+                    onClick={() => setShowLogoModal(true)}
                   >
                     <BsPencilFill />
                   </Badge>
                 )}
               </Col>
               <Col className="col-12 col-sm-11 col-lg-6 ">
-                <Card.Title className="text-center fw-bolder fst-italic text-primary fs-1">
+                <Card.Title className="text-center fw-bolder fst-italic text-white fs-1">
                   {conventionDetail.title}
                 </Card.Title>
               </Col>
             </Row>
 
-            <Card.Text className="text-center fw-bolder fst-italic text-primary ">
-              Giorno e ora di inizio {conventionDetail.startDate}
+            <Card.Text className="text-center fw-bolder fst-italic text-white ">
+              {format(new Date(conventionDetail.startDate), "dd/MMMM/yyyy", {
+                locale: it,
+              })}
             </Card.Text>
-            <Card.Text className="text-center fw-bolder fst-italic text-primary ">
-              {conventionDetail.endDate}
+            <Card.Text className="text-center fw-bolder fst-italic text-white ">
+              {format(new Date(conventionDetail.endDate), "dd/MMMM/yyyy", {
+                locale: it,
+              })}
             </Card.Text>
-            <Card.Text className="text-black fw-medium ">
+            <Card.Text className="text-white fw-medium ">
               {conventionDetail.description}
             </Card.Text>
-            <Card.Text className="text-black fw-medium ">
+            <Card.Text className="text-white fw-medium ">
               {conventionDetail.address}
             </Card.Text>
-            <Card.Text className="text-black fw-medium ">
+            <Card.Text className="text-white fw-medium ">
               {conventionDetail.region.regionName} ,{" "}
               {conventionDetail.province.sigla},{" "}
               {conventionDetail.city.cityName}
@@ -223,7 +234,9 @@ const ConventionDetail = () => {
               <Row className="mb-3">
                 <Col>
                   <Link to={`/updateconvention/${conventionId}`}>
-                    <Button variant="primary">Modifica Convenzione</Button>
+                    <Button variant="danger" className="small">
+                      Modifica
+                    </Button>
                   </Link>
                 </Col>
               </Row>
@@ -231,12 +244,14 @@ const ConventionDetail = () => {
           </Card>
         </Col>
         <Col className="col-11 col-md-6 col-lg-5">
-          <h2 className="text-info text-center ">Sections</h2>
+          <h2 className="text-info text-center fw-bolder  fst-italic   fs-1 shadow-sm ">
+            Sections
+          </h2>
           {sections.content &&
             sections.content.map((section) => (
               <Card
                 key={section.sectionId}
-                className="p-1 bg-primary-subtle border-info border-4 shadow-lg my-3"
+                className="p-1 bg-primary bg-gradient border-info border-4 shadow-lg my-3"
               >
                 <Card.Body>
                   <Link
@@ -247,10 +262,10 @@ const ConventionDetail = () => {
                       src={section.sectionImage}
                       className="w-50 border border-4 border-info rounded-start-5 rounded-top-5"
                     />
-                    <Card.Title className="text-center fw-bolder fst-italic">
+                    <Card.Title className="text-center text-white fw-bolder fst-italic">
                       {section.sectionTitle}
                     </Card.Title>
-                    <Card.Text className="text-black fw-medium ">
+                    <Card.Text className="text-black fw-medium text-white ">
                       {section.sectionSubtitle}
                     </Card.Text>
                   </Link>
@@ -328,7 +343,7 @@ const ConventionDetail = () => {
             <Modal.Title>Carica la tua Cover Image</Modal.Title>
           </Modal.Header>
           <Modal.Body className="bg-primary-subtle">
-            <p>Dimensioni massime per l'immagine 1MB</p>
+            <p>Dimensioni massime per dell'immagine 1MB</p>
             <input
               type="file"
               accept="image/*"
