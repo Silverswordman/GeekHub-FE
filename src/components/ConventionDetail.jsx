@@ -168,7 +168,7 @@ const ConventionDetail = () => {
                 <Card.Img
                   variant="top"
                   src={conventionDetail.logo}
-                  className={`w-50 border border-4 border-info rounded-pill position-relative ${
+                  className={`w-50 border border-4 border-info bg-primary-subtle rounded-pill position-relative ${
                     role !== "ADMIN" &&
                     userId !== conventionDetail.creator.userId &&
                     "no-pointer"

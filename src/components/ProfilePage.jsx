@@ -67,7 +67,7 @@ const ProfileComponent = () => {
     <Container className="my-4">
       <Row className="justify-content-center">
         <Col className="col-11 col-md-7 col-lg-6">
-          <Card className="bg-info-subtle border-info border-4 shadow-lg">
+          <Card className="bg-info-subtle border-success border-4 shadow-lg p-4">
             {profileDetail && profileDetail.loading && (
               <Spinner animation="grow" className="text-primary" size="sm" />
             )}
@@ -80,7 +80,7 @@ const ProfileComponent = () => {
                   <Card.Img
                     as="label"
                     htmlFor="fileInput"
-                    className="fluid w-50 my-1 position-relative"
+                    className=" w-50 my-1 position-relative"
                     style={{ cursor: "pointer" }}
                   >
                     <Badge
@@ -132,7 +132,7 @@ const ProfileComponent = () => {
                       onClick={handleUpload}
                       disabled={!file || uploading}
                     >
-                      {uploading ? "Uploading..." : "Save Avatar"}
+                      {uploading ? "Uploading..." : "Salva Nuovo Avatar"}
                     </Button>
                   </Col>
                 </Row>

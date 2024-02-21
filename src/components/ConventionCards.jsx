@@ -49,8 +49,18 @@ const HomeCard = () => {
                     </Col>
 
                     <Col className="col-12 col-md-9 col-lg-6 ">
-                      <Card.Body>
-                        <Card.Title className="text-center fw-bolder fst-italic text-white fs-3">
+                      <Card.Body className="p-0 m-1">
+                        <Row className="text-end">
+                          <Col>
+                      <Card.Img
+                        variant="top"
+                        fluid
+                        src={convention.logo}
+                        className=" w-25 border border-info border-2 rounded-start-5 rounded-top-5 bg-primary-subtle shadow-sm"
+                      />
+                      </Col>
+                      </Row>
+                        <Card.Title className="text-start text-wrap fw-bolder fst-italic text-white fs-4">
                           {convention.title}
                         </Card.Title>
                         <Card.Text className="text-white fw-medium ">

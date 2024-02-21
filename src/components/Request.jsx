@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchRequests } from "../redux/actions/requestactions";
+import {
+  fetchRequests,
+  acceptRequest,
+  declineRequest,
+} from "../redux/actions/requestactions";
 import { Card, Button, Row, Col, Container, Spinner } from "react-bootstrap";
 
 const RequestsList = () => {
@@ -26,6 +30,18 @@ const RequestsList = () => {
     }
   };
 
+  const handleAcceptRequest = (requestId) => {
+    dispatch(acceptRequest(requestId)).then(() => {
+      dispatch(fetchRequests(page, 10)); // Ricarica la lista delle richieste dopo l'accettazione
+    });
+  };
+
+  const handleDeclineRequest = (requestId) => {
+    dispatch(declineRequest(requestId)).then(() => {
+      dispatch(fetchRequests(page, 10)); // Ricarica la lista delle richieste dopo il rifiuto
+    });
+  };
+
   if (loading) {
     return <Spinner animation="grow" className="text-primary" size="sm" />;
   }
@@ -45,23 +61,38 @@ const RequestsList = () => {
   }
 
   return (
-    <Container className="mt-5">
-      <Card>
+    <Container className="mt-5 text-center">
+      <Card className="col-7 text-primary fs-3 bg-info-subtle mt-5 m-1">
         <Card.Body>
-          <h1>Requests List</h1>
+          <Card.Title className="fs-1 fw-semibold fst-italic">
+            Requests List
+          </Card.Title>
 
           {requests.map((request) => (
-            <Card.Text key={request.requestId}>
-              <p>{request.message}</p>
+            <Card.Text className="text-start fs-5" key={request.requestId}>
+              <li className="fst-italic">{request.message}</li>
+              <Button
+                variant="success"
+                onClick={() => handleAcceptRequest(request.requestId)}
+              >
+                Accept
+              </Button>
+              <Button
+                variant="danger"
+                onClick={() => handleDeclineRequest(request.requestId)}
+              >
+                Decline
+              </Button>
             </Card.Text>
           ))}
 
-          <Row className="justify-content.center">
+          <Row className="justify-content-center">
             <Col className="text-end">
               <Button
                 variant="primary"
                 onClick={handlePrevPage}
                 disabled={currentPage === 0}
+                className="btn btn-small"
               >
                 Previous
               </Button>
@@ -71,6 +102,7 @@ const RequestsList = () => {
                 variant="primary"
                 onClick={handleNextPage}
                 disabled={currentPage === totalPages - 1}
+                className="btn btn-small"
               >
                 Next
               </Button>

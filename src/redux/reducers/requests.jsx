@@ -2,6 +2,12 @@ import {
   FETCH_REQUESTS_REQUEST,
   FETCH_REQUESTS_SUCCESS,
   FETCH_REQUESTS_FAILURE,
+  ACCEPT_REQUEST_REQUEST,
+  ACCEPT_REQUEST_SUCCESS,
+  ACCEPT_REQUEST_FAILURE,
+  DECLINE_REQUEST_REQUEST,
+  DECLINE_REQUEST_SUCCESS,
+  DECLINE_REQUEST_FAILURE,
 } from "../actions/requestactions";
 
 const initialState = {
@@ -15,6 +21,8 @@ const initialState = {
 const requestsReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_REQUESTS_REQUEST:
+    case ACCEPT_REQUEST_REQUEST:
+    case DECLINE_REQUEST_REQUEST:
       return {
         ...state,
         loading: true,
@@ -27,9 +35,14 @@ const requestsReducer = (state = initialState, action) => {
         loading: false,
         error: null,
         totalPages: action.payload.totalPages,
-        currentPage: action.payload.number,
+        currentPage: action.payload.currentPage,
       };
+    case ACCEPT_REQUEST_SUCCESS:
+    case DECLINE_REQUEST_SUCCESS:
+      return state;
     case FETCH_REQUESTS_FAILURE:
+    case ACCEPT_REQUEST_FAILURE:
+    case DECLINE_REQUEST_FAILURE:
       return {
         ...state,
         loading: false,

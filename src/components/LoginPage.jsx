@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Col, Container, Form, Row, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,14 +12,16 @@ const LoginComponent = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const loginError = useSelector((state) => state.auth.error);
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/home");
+    }
+  }, [isAuthenticated, navigate]);
+
   const handleLogin = (e) => {
     e.preventDefault();
     dispatch(loginUser(email, password));
   };
-
-  if (isAuthenticated) {
-    navigate("/home");
-  }
 
   return (
     <Container>
@@ -27,7 +29,7 @@ const LoginComponent = () => {
         <Col>
           <Form onSubmit={handleLogin}>
             <Form.Group controlId="formBasicEmail">
-              <Form.Label>Email address</Form.Label>
+              <Form.Label className="text-info">Email address</Form.Label>
               <Form.Control
                 type="email"
                 placeholder="Enter email"
@@ -37,7 +39,7 @@ const LoginComponent = () => {
             </Form.Group>
 
             <Form.Group controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
+              <Form.Label className="text-info ">Password</Form.Label>
               <Form.Control
                 type="password"
                 placeholder="Password"

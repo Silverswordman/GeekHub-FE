@@ -1,5 +1,6 @@
 import { format } from "date-fns";
 import { Col, Container, Row } from "react-bootstrap";
+import { FaLinkedin } from "react-icons/fa";
 
 function PageFooter() {
   const currentDate = new Date();
@@ -9,6 +10,9 @@ function PageFooter() {
     <Container fluid className="border- text-center   bg-primary sticky-bottom">
       <Row className="text-info small fst-italic border-top border-5  border-info p-2">
         <Col>Geekhub by Silvestrini Giulia for Epicode {currentYear}</Col>
+        <Col>
+          <FaLinkedin className="fs-5"/>
+        </Col>
       </Row>
     </Container>
   );
