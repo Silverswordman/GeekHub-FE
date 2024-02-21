@@ -134,3 +134,48 @@ export const declineRequest = (requestId) => {
     }
   };
 };
+export const SEND_REQUEST_REQUEST = "SEND_REQUEST_REQUEST";
+export const SEND_REQUEST_SUCCESS = "SEND_REQUEST_SUCCESS";
+export const SEND_REQUEST_FAILURE = "SEND_REQUEST_FAILURE";
+
+export const sendRequestRequest = () => ({
+  type: SEND_REQUEST_REQUEST,
+});
+
+export const sendRequestSuccess = () => ({
+  type: SEND_REQUEST_SUCCESS,
+});
+
+export const sendRequestFailure = (error) => ({
+  type: SEND_REQUEST_FAILURE,
+  payload: error,
+});
+
+export const sendRequest = (message) => {
+  return async (dispatch) => {
+    dispatch(sendRequestRequest());
+
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch(
+        "http://localhost:3003/users/me/sendRequest",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token,
+          },
+          body: JSON.stringify({ message }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to send request");
+      }
+
+      dispatch(sendRequestSuccess());
+    } catch (error) {
+      dispatch(sendRequestFailure(error.message));
+    }
+  };
+};

@@ -17,6 +17,7 @@ import UpdateConventionForm from "./components/UpdateConvention";
 import UpdateSectionForm from "./components/UpdateSection";
 import UpdateSubsectionForm from "./components/UpdateSubsection";
 import RequestList from "./components/Request";
+import SendRequestComponent from "./components/RequestAdd";
 
 function App() {
   return (
@@ -63,6 +64,7 @@ function App() {
               element={<UpdateSubsectionForm />}
             />
             <Route path="/requests" element={<RequestList />} />
+            <Route path="/sendrequest" element={<SendRequestComponent />} />
           </Routes>
         </Container>
         <PageFooter />

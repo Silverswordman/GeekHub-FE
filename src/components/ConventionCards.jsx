@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getConventions } from "../redux/actions/conventionactions";
 import { Card, Col, Row, Spinner, Pagination } from "react-bootstrap";
+import { LuArrowBigLeftDash, LuArrowBigRightDash } from "react-icons/lu";
 
 const HomeCard = () => {
   const dispatch = useDispatch();
@@ -52,21 +53,22 @@ const HomeCard = () => {
                       <Card.Body className="p-0 m-1">
                         <Row className="text-end">
                           <Col>
-                      <Card.Img
-                        variant="top"
-                        fluid
-                        src={convention.logo}
-                        className=" w-25 border border-info border-2 rounded-start-5 rounded-top-5 bg-primary-subtle shadow-sm"
-                      />
-                      </Col>
-                      </Row>
+                            <Card.Img
+                              variant="top"
+                              fluid
+                              src={convention.logo}
+                              className=" w-25 border border-info border-2 rounded-start-5 rounded-top-5 bg-success shadow-sm"
+                            />
+                          </Col>
+                        </Row>
                         <Card.Title className="text-start text-wrap fw-bolder fst-italic text-white fs-4">
                           {convention.title}
                         </Card.Title>
-                        <Card.Text className="text-white fw-medium ">
-                          {convention.city.cityName}
+                        <Card.Text className="text-white fw-medium m-0">
+                          {convention.city.cityName},{" "}
+                          {convention.region.regionName}
                         </Card.Text>
-                        <Card.Text className="text-white fw-medium ">
+                        <Card.Text className="text-white fw-medium  m-0">
                           {convention.address}
                         </Card.Text>
                       </Card.Body>
@@ -84,6 +86,7 @@ const HomeCard = () => {
               {Array.from({ length: totalPages }, (_, i) => i + 1).map(
                 (page) => (
                   <Pagination.Item
+                    className="border border-1 border-info shadow-sm fw-bolder "
                     key={page}
                     active={page === currentPage + 1}
                     onClick={() => handlePageChange(page)}

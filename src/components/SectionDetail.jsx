@@ -1,4 +1,4 @@
-import  { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import {
@@ -6,6 +6,7 @@ import {
   getSubsections,
 } from "../redux/actions/conventionactions";
 import { uploadSectionImage } from "../redux/actions/uploadactions";
+import { LuArrowBigLeftDash, LuArrowBigRightDash } from "react-icons/lu";
 
 import {
   Spinner,
@@ -125,7 +126,7 @@ const SectionDetail = () => {
             <Card.Text className="text-white fw-medium ">
               {sectionDetail.sectionSubtitle}
             </Card.Text>
-       
+
             {(role === "ADMIN" || userId === sectionDetail.creator.userId) && (
               <Row className="mb-3">
                 <Col>
@@ -143,7 +144,7 @@ const SectionDetail = () => {
           <h2 className="text-info text-center ">Subsections</h2>
           {Array.isArray(subsections.content) &&
             subsections.content.map((subsection) => (
-              <Card key={subsection.subsectionId}>
+              <Card key={subsection.subsectionId} className="p-1 bg-primary bg-gradient border-info border-4 shadow-lg my-3 text-white">
                 <Card.Title>{subsection.subsectionTitle}</Card.Title>
                 <Card.Text>{subsection.subsectionDescription}</Card.Text>
                 <Link
@@ -154,10 +155,19 @@ const SectionDetail = () => {
               </Card>
             ))}
           <div className="d-flex justify-content-between mt-4">
-            <Button onClick={handlePrevPage} disabled={currentPage === 0}>
-              Prev
+            <Button
+              onClick={handlePrevPage}
+              disabled={currentPage === 0}
+              className="bg-primary border-1 border-info"
+            >
+              <LuArrowBigLeftDash className="fs-5 fw-bolder" />
             </Button>
-            <Button onClick={handleNextPage}>Next</Button>
+            <Button
+              onClick={handleNextPage}
+              className="bg-primary border-1 border-info"
+            >
+              <LuArrowBigRightDash className="fs-5 fw-bolder" />
+            </Button>
           </div>
           {(sectionDetail.creator.userId === userId || role === "ADMIN") && (
             <Link
@@ -172,20 +182,30 @@ const SectionDetail = () => {
       </Row>
 
       <Modal show={showImageModal} onHide={() => setShowImageModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Change Section Image</Modal.Title>
+        <Modal.Header closeButton className="bg-info-subtle">
+          <Modal.Title>Cambia l'immagine della Sezione</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className="bg-primary-subtle">
           <input type="file" onChange={handleImageChange} />
           {imageFileSizeExceedsLimit && (
-            <Alert variant="danger">Image size exceeds the limit (1MB)</Alert>
+            <Alert variant="danger">
+              Dimensioni massime per dell'immagine 1MB
+            </Alert>
           )}
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowImageModal(false)}>
+        <Modal.Footer className="bg-info-subtle">
+          <Button
+            variant="danger"
+            onClick={() => setShowImageModal(false)}
+            className="fw-bolder"
+          >
             Close
           </Button>
-          <Button variant="primary" onClick={handleImageSave}>
+          <Button
+            variant="primary"
+            onClick={handleImageSave}
+            className="fw-bolder"
+          >
             Save Changes
           </Button>
         </Modal.Footer>

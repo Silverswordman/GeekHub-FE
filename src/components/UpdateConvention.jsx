@@ -191,6 +191,7 @@ const UpdateConventionForm = () => {
                     }
                     placeholderText="Data di inizio"
                     className="my-1 border-0 rounded-pill"
+                    dateFormat="dd/MM/yyyy"
                   />
                 </Form.Group>
                 <Form.Group controlId="endDate">
@@ -201,6 +202,7 @@ const UpdateConventionForm = () => {
                     }
                     placeholderText="Data di fine"
                     className="my-1 border-0 rounded-pill"
+                    dateFormat="dd/MM/yyyy"
                   />
                 </Form.Group>
                 <Form.Group controlId="site">

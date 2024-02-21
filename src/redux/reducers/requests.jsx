@@ -8,6 +8,9 @@ import {
   DECLINE_REQUEST_REQUEST,
   DECLINE_REQUEST_SUCCESS,
   DECLINE_REQUEST_FAILURE,
+  SEND_REQUEST_REQUEST,
+  SEND_REQUEST_SUCCESS,
+  SEND_REQUEST_FAILURE,
 } from "../actions/requestactions";
 
 const initialState = {
@@ -23,6 +26,7 @@ const requestsReducer = (state = initialState, action) => {
     case FETCH_REQUESTS_REQUEST:
     case ACCEPT_REQUEST_REQUEST:
     case DECLINE_REQUEST_REQUEST:
+    case SEND_REQUEST_REQUEST: // Aggiunto caso per richiesta di invio
       return {
         ...state,
         loading: true,
@@ -39,10 +43,12 @@ const requestsReducer = (state = initialState, action) => {
       };
     case ACCEPT_REQUEST_SUCCESS:
     case DECLINE_REQUEST_SUCCESS:
+    case SEND_REQUEST_SUCCESS: // Aggiunto caso per invio con successo
       return state;
     case FETCH_REQUESTS_FAILURE:
     case ACCEPT_REQUEST_FAILURE:
     case DECLINE_REQUEST_FAILURE:
+    case SEND_REQUEST_FAILURE: // Aggiunto caso per invio con errore
       return {
         ...state,
         loading: false,

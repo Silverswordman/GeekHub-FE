@@ -166,9 +166,14 @@ const ProfileComponent = () => {
                 Vuoi aggiungere una fiera alla lista?
               </Link>
             )}
-            {(role === "ADMIN" ) && (
+            {role === "ADMIN" && (
               <Link as={Link} to="/requests">
-               Vuoi cambiare un utente?
+                Vuoi cambiare un utente?
+              </Link>
+            )}
+            {role === "USER" && (
+              <Link as={Link} to="/sendrequest" className="mb-3">
+                Invia Richiesta
               </Link>
             )}
           </Card>

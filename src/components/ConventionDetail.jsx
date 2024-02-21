@@ -11,6 +11,7 @@ import {
 } from "../redux/actions/uploadactions";
 import { format } from "date-fns";
 import it from "date-fns/locale/it";
+import { LuArrowBigLeftDash, LuArrowBigRightDash } from "react-icons/lu";
 
 import {
   Container,
@@ -168,7 +169,7 @@ const ConventionDetail = () => {
                 <Card.Img
                   variant="top"
                   src={conventionDetail.logo}
-                  className={`w-50 border border-4 border-info bg-primary-subtle rounded-pill position-relative ${
+                  className={`w-50 border border-4 border-info bg-success rounded-pill position-relative ${
                     role !== "ADMIN" &&
                     userId !== conventionDetail.creator.userId &&
                     "no-pointer"
@@ -276,16 +277,16 @@ const ConventionDetail = () => {
             <Button
               onClick={prevPage}
               disabled={page === 0}
-              className="text-primary-subtle"
+              className="text-primary-subtle bg-primary border-1 border-info "
             >
-              Previous
+              <LuArrowBigLeftDash className="fs-5 fw-bolder" />
             </Button>
             <Button
               onClick={nextPage}
               disabled={page + 1 === totalPages}
-              className="text-primary-subtle"
+              className="text-primary-subtle bg-primary border-1 border-info "
             >
-              Next
+              <LuArrowBigRightDash className="fs-5 fw-bolder" />
             </Button>
           </div>
           <Link to={`/conventions/${conventionId}/add-section`}>
@@ -340,7 +341,7 @@ const ConventionDetail = () => {
       {(role === "ADMIN" || userId === conventionDetail.creator.userId) && (
         <Modal show={showCoverModal} onHide={() => setShowCoverModal(false)}>
           <Modal.Header closeButton className="bg-info-subtle">
-            <Modal.Title>Carica la tua Cover Image</Modal.Title>
+            <Modal.Title>Cambia l' immagine dell'Evento </Modal.Title>
           </Modal.Header>
           <Modal.Body className="bg-primary-subtle">
             <p>Dimensioni massime per dell'immagine 1MB</p>

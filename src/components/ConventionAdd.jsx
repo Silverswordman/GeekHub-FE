@@ -142,7 +142,7 @@ const ConventionForm = () => {
                     }
                     placeholderText="Data di inizio"
                     className="my-1 border-0 rounded-pill"
-                    dateFormat="dd/MM/yyyy" // Imposta il formato italiano
+                    dateFormat="dd/MM/yyyy" 
                   />
                 </Form.Group>
                 <Form.Group controlId="endDate">
@@ -153,7 +153,7 @@ const ConventionForm = () => {
                     }
                     placeholderText="Data di fine"
                     className="my-1 border-0 rounded-pill"
-                    dateFormat="dd/MM/yyyy" // Imposta il formato italiano
+                    dateFormat="dd/MM/yyyy" 
                   />
                 </Form.Group>
                 <Form.Group controlId="site">
