@@ -8,6 +8,9 @@ import {
   UPDATE_SUBSECTION_REQUEST,
   UPDATE_SUBSECTION_SUCCESS,
   UPDATE_SUBSECTION_FAILURE,
+  DELETE_SUBSECTION_REQUEST,
+  DELETE_SUBSECTION_SUCCESS,
+  DELETE_SUBSECTION_FAILURE,
 } from "../actions/update&deleteactions";
 
 const initialState = {
@@ -20,11 +23,11 @@ const subsectionReducer = (state = initialState, action) => {
   switch (action.type) {
     case SAVE_SUBSECTION_REQUEST:
     case UPDATE_SUBSECTION_REQUEST:
+    case DELETE_SUBSECTION_REQUEST:
       return {
         ...state,
         loading: true,
         error: null,
-        subsection: null,
       };
     case SAVE_SUBSECTION_SUCCESS:
     case UPDATE_SUBSECTION_SUCCESS:
@@ -34,13 +37,20 @@ const subsectionReducer = (state = initialState, action) => {
         error: null,
         subsection: action.payload,
       };
+    case DELETE_SUBSECTION_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        subsection: null,
+      };
     case SAVE_SUBSECTION_FAILURE:
     case UPDATE_SUBSECTION_FAILURE:
+    case DELETE_SUBSECTION_FAILURE:
       return {
         ...state,
         loading: false,
         error: action.payload,
-        subsection: null,
       };
     default:
       return state;

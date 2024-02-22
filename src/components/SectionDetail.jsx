@@ -1,10 +1,14 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import {
   getSectionDetail,
   getSubsections,
 } from "../redux/actions/conventionactions";
+import {
+  deleteSection,
+  deleteSubsection,
+} from "../redux/actions/update&deleteactions";
 import { uploadSectionImage } from "../redux/actions/uploadactions";
 import { LuArrowBigLeftDash, LuArrowBigRightDash } from "react-icons/lu";
 
@@ -25,6 +29,7 @@ const SectionDetail = () => {
   const { sectionId, conventionId } = useParams();
   const dispatch = useDispatch();
   const { role, userId } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
 
   const {
     sectionDetail,
@@ -36,6 +41,7 @@ const SectionDetail = () => {
     loading: subsectionLoading,
     error: subsectionError,
   } = useSelector((state) => state.subsections);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(0);
   const [showImageModal, setShowImageModal] = useState(false);
@@ -62,6 +68,25 @@ const SectionDetail = () => {
     if (sectionDetail.creator.userId === userId || role === "ADMIN") {
       setShowImageModal(true);
     }
+  };
+
+  const handleDelete = () => {
+    dispatch(deleteSection(conventionId, sectionId));
+    navigate(`/convention/${conventionId}`);
+
+    setShowDeleteModal(false);
+  };
+
+  const [showDeleteSubsectionModal, setShowDeleteSubsectionModal] =
+    useState(false);
+  const [subsectionIdToDelete, setSubsectionIdToDelete] = useState(null);
+
+  const handleDeleteSubsection = () => {
+    if (!subsectionIdToDelete) return; // Controllo di sicurezza aggiuntivo
+
+    dispatch(deleteSubsection(conventionId, sectionId, subsectionIdToDelete));
+    navigate(`/convention/${conventionId}/sec/${sectionId}`);
+    setShowDeleteSubsectionModal(false);
   };
 
   const handleImageChange = (event) => {
@@ -135,6 +160,12 @@ const SectionDetail = () => {
                   >
                     <Button variant="danger">Modifica</Button>
                   </Link>
+                  <Button
+                    variant="danger"
+                    onClick={() => setShowDeleteModal(true)}
+                  >
+                    Elimina
+                  </Button>
                 </Col>
               </Row>
             )}
@@ -144,14 +175,31 @@ const SectionDetail = () => {
           <h2 className="text-info text-center ">Subsections</h2>
           {Array.isArray(subsections.content) &&
             subsections.content.map((subsection) => (
-              <Card key={subsection.subsectionId} className="p-1 bg-primary bg-gradient border-info border-4 shadow-lg my-3 text-white">
+              <Card
+                key={subsection.subsectionId}
+                className="p-1 bg-primary bg-gradient border-info border-4 shadow-lg my-3 text-white"
+              >
                 <Card.Title>{subsection.subsectionTitle}</Card.Title>
                 <Card.Text>{subsection.subsectionDescription}</Card.Text>
-                <Link
-                  to={`/conventions/${conventionId}/sec/${sectionId}/${subsection.subsectionId}/updatesubsection`}
-                >
-                  <Button variant="danger">Modifica Sotto-Sezione</Button>
-                </Link>
+                {(role === "ADMIN" ||
+                  userId === sectionDetail.creator.userId) && (
+                  <div>
+                    <Link
+                      to={`/conventions/${conventionId}/sec/${sectionId}/${subsection.subsectionId}/updatesubsection`}
+                    >
+                      <Button variant="danger">Modifica Sotto-Sezione</Button>
+                    </Link>
+                    <Button
+                      variant="danger"
+                      onClick={() => {
+                        setSubsectionIdToDelete(subsection.subsectionId);
+                        setShowDeleteSubsectionModal(true);
+                      }}
+                    >
+                      Elimina Sotto-Sezione
+                    </Button>
+                  </div>
+                )}
               </Card>
             ))}
           <div className="d-flex justify-content-between mt-4">
@@ -207,6 +255,52 @@ const SectionDetail = () => {
             className="fw-bolder"
           >
             Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Modal for subsection deletion confirmation */}
+      <Modal
+        show={showDeleteSubsectionModal}
+        onHide={() => {
+          setSubsectionIdToDelete(null);
+          setShowDeleteSubsectionModal(false);
+        }}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Elimina Sotto-Sezione</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Sei sicuro di voler eliminare questa sotto-sezione?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              setSubsectionIdToDelete(null);
+              setShowDeleteSubsectionModal(false);
+            }}
+          >
+            Annulla
+          </Button>
+          <Button variant="danger" onClick={handleDeleteSubsection}>
+            Elimina
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Modal for section deletion confirmation */}
+      <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Elimina Sezione</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Sei sicuro di voler eliminare questa sezione?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
+            Annulla
+          </Button>
+          <Button variant="danger" onClick={handleDelete}>
+            Elimina
           </Button>
         </Modal.Footer>
       </Modal>

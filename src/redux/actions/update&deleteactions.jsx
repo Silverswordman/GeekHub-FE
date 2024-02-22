@@ -132,3 +132,113 @@ export const updateSubsection = (
     }
   };
 };
+export const DELETE_CONVENTION_REQUEST = "DELETE_CONVENTION_REQUEST";
+export const DELETE_CONVENTION_SUCCESS = "DELETE_CONVENTION_SUCCESS";
+export const DELETE_CONVENTION_FAILURE = "DELETE_CONVENTION_FAILURE";
+
+export const deleteConventionRequest = () => ({
+  type: DELETE_CONVENTION_REQUEST,
+});
+
+export const deleteConventionSuccess = () => ({
+  type: DELETE_CONVENTION_SUCCESS,
+});
+
+export const deleteConventionFailure = (error) => ({
+  type: DELETE_CONVENTION_FAILURE,
+  payload: error,
+});
+
+export const deleteConvention = (conventionId) => {
+  return async (dispatch) => {
+    dispatch(deleteConventionRequest());
+
+    try {
+      const token = localStorage.getItem("token");
+      await fetch(`${urlconventions}/${conventionId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: token,
+        },
+      });
+      dispatch(deleteConventionSuccess());
+    } catch (error) {
+      dispatch(deleteConventionFailure(error.message));
+    }
+  };
+};
+// Azioni per il file conventionactions.js
+
+export const DELETE_SECTION_REQUEST = "DELETE_SECTION_REQUEST";
+export const DELETE_SECTION_SUCCESS = "DELETE_SECTION_SUCCESS";
+export const DELETE_SECTION_FAILURE = "DELETE_SECTION_FAILURE";
+
+export const deleteSectionRequest = () => ({
+  type: DELETE_SECTION_REQUEST,
+});
+
+export const deleteSectionSuccess = () => ({
+  type: DELETE_SECTION_SUCCESS,
+});
+
+export const deleteSectionFailure = (error) => ({
+  type: DELETE_SECTION_FAILURE,
+  payload: error,
+});
+
+export const deleteSection = (conventionId, sectionId) => {
+  return async (dispatch) => {
+    dispatch(deleteSectionRequest());
+
+    try {
+      const token = localStorage.getItem("token");
+      await fetch(`${urlconventions}/${conventionId}/sec/${sectionId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: token,
+        },
+      });
+      dispatch(deleteSectionSuccess());
+    } catch (error) {
+      dispatch(deleteSectionFailure(error.message));
+    }
+  };
+};
+export const DELETE_SUBSECTION_REQUEST = "DELETE_SUBSECTION_REQUEST";
+export const DELETE_SUBSECTION_SUCCESS = "DELETE_SUBSECTION_SUCCESS";
+export const DELETE_SUBSECTION_FAILURE = "DELETE_SUBSECTION_FAILURE";
+
+export const deleteSubsectionRequest = () => ({
+  type: DELETE_SUBSECTION_REQUEST,
+});
+
+export const deleteSubsectionSuccess = () => ({
+  type: DELETE_SUBSECTION_SUCCESS,
+});
+
+export const deleteSubsectionFailure = (error) => ({
+  type: DELETE_SUBSECTION_FAILURE,
+  payload: error,
+});
+
+export const deleteSubsection = (conventionId, sectionId, subsectionId) => {
+  return async (dispatch) => {
+    dispatch(deleteSubsectionRequest());
+
+    try {
+      const token = localStorage.getItem("token");
+      await fetch(
+        `${urlconventions}/${conventionId}/sec/${sectionId}/${subsectionId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      dispatch(deleteSubsectionSuccess());
+    } catch (error) {
+      dispatch(deleteSubsectionFailure(error.message));
+    }
+  };
+};

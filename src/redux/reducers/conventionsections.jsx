@@ -5,13 +5,18 @@ import {
   SAVE_SECTION_SUCCESS,
   SAVE_SECTION_FAILURE,
 } from "../actions/conventionactions";
-import { UPDATE_SECTION_SUCCESS } from "../actions/update&deleteactions";
+import {
+  UPDATE_SECTION_SUCCESS,
+  DELETE_SECTION_SUCCESS,
+  DELETE_SECTION_FAILURE,
+} from "../actions/update&deleteactions";
 
 const initialState = {
   sections: [],
   loading: false,
   error: null,
 };
+
 const conventionSectionsReducer = (state = initialState, action) => {
   let updatedSections;
 
@@ -46,6 +51,18 @@ const conventionSectionsReducer = (state = initialState, action) => {
         loading: false,
         error: null,
       };
+    case DELETE_SECTION_SUCCESS:
+      updatedSections = state.sections.filter(
+        (section) => section.id !== action.payload.id
+      );
+      return {
+        ...state,
+        sections: updatedSections,
+        loading: false,
+        error: null,
+      };
+    case DELETE_SECTION_FAILURE:
+      return { ...state, error: action.payload, loading: false };
     default:
       return state;
   }

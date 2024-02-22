@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import {
   getConventionDetail,
   getConventionSections,
 } from "../redux/actions/conventionactions";
+import { deleteConvention } from "../redux/actions/update&deleteactions";
 import {
   uploadConventionLogo,
   uploadConventionCover,
@@ -12,6 +13,7 @@ import {
 import { format } from "date-fns";
 import it from "date-fns/locale/it";
 import { LuArrowBigLeftDash, LuArrowBigRightDash } from "react-icons/lu";
+import { BsPencilFill } from "react-icons/bs";
 
 import {
   Container,
@@ -24,11 +26,12 @@ import {
   Card,
   Badge,
 } from "react-bootstrap";
-import { BsPencilFill } from "react-icons/bs";
 
 const ConventionDetail = () => {
   const { conventionId } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [showLogoModal, setShowLogoModal] = useState(false);
@@ -50,6 +53,8 @@ const ConventionDetail = () => {
     loading: sectionsLoading,
     error: sectionsError,
   } = useSelector((state) => state.conventionSections);
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   useEffect(() => {
     dispatch(getConventionDetail(conventionId));
@@ -118,6 +123,11 @@ const ConventionDetail = () => {
     if (page > 0) {
       setPage(page - 1);
     }
+  };
+
+  const handleDelete = () => {
+    dispatch(deleteConvention(conventionId));
+    navigate("/home");
   };
 
   if (detailLoading || sectionsLoading)
@@ -229,16 +239,24 @@ const ConventionDetail = () => {
               {conventionDetail.province.sigla},{" "}
               {conventionDetail.city.cityName}
             </Card.Text>
-            {/* Aggiungiamo il pulsante di modifica */}
             {(role === "ADMIN" ||
               userId === conventionDetail.creator.userId) && (
               <Row className="mb-3">
                 <Col>
                   <Link to={`/updateconvention/${conventionId}`}>
-                    <Button variant="danger" className="small">
+                    <Button variant="danger" className="btn-small fw-bolder ">
                       Modifica
                     </Button>
                   </Link>
+                </Col>
+                <Col>
+                  <Button
+                    variant="danger"
+                    className="btn-small fw-bolder"
+                    onClick={() => setShowDeleteModal(true)} // Aprire il modal di eliminazione
+                  >
+                    Elimina
+                  </Button>
                 </Col>
               </Row>
             )}
@@ -300,7 +318,35 @@ const ConventionDetail = () => {
         </Col>
       </Row>
 
-      {/* Modale per caricamento logo */}
+      {/* Delete Confirmation Modal */}
+      <Modal
+        show={showDeleteModal}
+        onHide={() => setShowDeleteModal(false)}
+        centered
+        keyboard={false}
+        backdrop="static"
+      >
+        <Modal.Header closeButton className="bg-info-subtle">
+          <Modal.Title>Conferma eliminazione</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="bg-primary-subtle">
+          Sei sicuro di voler eliminare questa convenzione?
+        </Modal.Body>
+        <Modal.Footer className="bg-info-subtle">
+          <Button variant="danger" onClick={handleDelete} className="fw-bolder">
+            Si
+          </Button>
+          <Button
+            variant="primary"
+            onClick={() => setShowDeleteModal(false)}
+            className="fw-bolder"
+          >
+            No
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Logo Upload Modal */}
       {(role === "ADMIN" || userId === conventionDetail.creator.userId) && (
         <Modal show={showLogoModal} onHide={() => setShowLogoModal(false)}>
           <Modal.Header closeButton className="bg-info-subtle">
@@ -337,11 +383,11 @@ const ConventionDetail = () => {
         </Modal>
       )}
 
-      {/* Modale per caricamento cover */}
+      {/* Cover Upload Modal */}
       {(role === "ADMIN" || userId === conventionDetail.creator.userId) && (
         <Modal show={showCoverModal} onHide={() => setShowCoverModal(false)}>
           <Modal.Header closeButton className="bg-info-subtle">
-            <Modal.Title>Cambia l' immagine dell'Evento </Modal.Title>
+            <Modal.Title>Cambia l' immagine dell'Evento</Modal.Title>
           </Modal.Header>
           <Modal.Body className="bg-primary-subtle">
             <p>Dimensioni massime per dell'immagine 1MB</p>
