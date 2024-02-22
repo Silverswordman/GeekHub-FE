@@ -8,9 +8,15 @@ $info: #61f098;
 $danger: #ff9100;
 $success: #0b3aaf;
 $secondary: #05143c;
+$warning:#d60d06;
 
 * {
   font-family: "Barlow", sans-serif;
+}
+
+.custom-placeholder::placeholder {
+  color: white !important;
+  opacity: 1 !important;
 }
 
 h1,

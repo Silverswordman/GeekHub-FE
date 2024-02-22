@@ -12,7 +12,6 @@ const CustomHomeCarousel = () => {
     dispatch(getConventions(0, 4));
   }, [dispatch]);
 
-  // Ordina le convenzioni per distanza dalla data attuale
   const sortedConventions = conventions.slice(0, 5).sort((a, b) => {
     const dateA = new Date(a.localDateTime);
     const dateB = new Date(b.localDateTime);

@@ -313,5 +313,47 @@ export const saveNewSubsection = (conventionId, sectionId, formData) => {
     }
   };
 };
+export const SEARCH_CONVENTIONS_REQUEST = "SEARCH_CONVENTIONS_REQUEST";
+export const SEARCH_CONVENTIONS_SUCCESS = "SEARCH_CONVENTIONS_SUCCESS";
+export const SEARCH_CONVENTIONS_FAILURE = "SEARCH_CONVENTIONS_FAILURE";
 
+export const searchConventionsRequest = () => ({
+  type: SEARCH_CONVENTIONS_REQUEST,
+});
 
+export const searchConventionsSuccess = (data) => ({
+  type: SEARCH_CONVENTIONS_SUCCESS,
+  payload: data,
+});
+
+export const searchConventionsFailure = (error) => ({
+  type: SEARCH_CONVENTIONS_FAILURE,
+  payload: error,
+});
+
+export const searchConventions = (searchTerm) => {
+  return async (dispatch) => {
+    dispatch(searchConventionsRequest());
+
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch(
+        `${urlconventions}/search?title=${searchTerm}`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Errore nella ricerca delle convenzioni");
+      }
+
+      const data = await response.json();
+      dispatch(searchConventionsSuccess(data));
+    } catch (error) {
+      dispatch(searchConventionsFailure(error.message));
+    }
+  };
+};

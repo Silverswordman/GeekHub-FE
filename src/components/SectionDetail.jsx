@@ -12,6 +12,10 @@ import {
 import { uploadSectionImage } from "../redux/actions/uploadactions";
 import { LuArrowBigLeftDash, LuArrowBigRightDash } from "react-icons/lu";
 
+import { RiDeleteBin6Line } from "react-icons/ri";
+
+import { MdOutlineFiberNew } from "react-icons/md";
+
 import {
   Spinner,
   Card,
@@ -22,6 +26,7 @@ import {
   Modal,
   Badge,
   Alert,
+  CardHeader,
 } from "react-bootstrap";
 import { BsPencilFill } from "react-icons/bs";
 
@@ -120,7 +125,7 @@ const SectionDetail = () => {
   return (
     <Container className="my-5">
       <Row>
-        <Col className="col-10 col-md-5">
+        <Col className="col-12 col-md-10 col-lg-6 ">
           <Card className="p-5 bg-primary bg-gradient border-info border-4 shadow-lg ">
             <Card.Img
               variant="top"
@@ -153,52 +158,71 @@ const SectionDetail = () => {
             </Card.Text>
 
             {(role === "ADMIN" || userId === sectionDetail.creator.userId) && (
-              <Row className="mb-3">
-                <Col>
+              <Row className="mt-5 mb-1 justify-content-end ">
+                <Col className="col-12 col-sm-12 col-md-6 mb-2 mb-md-0  text-end ">
                   <Link
                     to={`/conventions/${conventionId}/sec/${sectionId}/updatesection`}
                   >
-                    <Button variant="danger">Modifica</Button>
+                    <Button
+                      variant="danger"
+                      className="btn-sm border border-2 border-info  text-secondary  fw-bold shadow-sm rounded-pill px-2"
+                    >
+                      Modifica <BsPencilFill />
+                    </Button>
                   </Link>
+                </Col>
+                <Col className="col-12 col-sm-12 col-md-12 col-lg-4 text-end align-content-center ">
                   <Button
-                    variant="danger"
+                    className="btn-sm border border-2 border-info  text-secondary fw-bold shadow-sm rounded-pill px-2"
+                    variant="warning"
                     onClick={() => setShowDeleteModal(true)}
                   >
-                    Elimina
+                    Elimina <RiDeleteBin6Line />
                   </Button>
                 </Col>
               </Row>
             )}
           </Card>
         </Col>
-        <Col className="col-11 col-md-6 col-lg-5">
-          <h2 className="text-info text-center ">Subsections</h2>
+        <Col className="col-12 col-md-10 col-lg-5">
+          <h2 className="text-info text-center mt-md-5 mt-lg-0">Subsections</h2>
           {Array.isArray(subsections.content) &&
             subsections.content.map((subsection) => (
               <Card
                 key={subsection.subsectionId}
                 className="p-1 bg-primary bg-gradient border-info border-4 shadow-lg my-3 text-white"
               >
-                <Card.Title>{subsection.subsectionTitle}</Card.Title>
-                <Card.Text>{subsection.subsectionDescription}</Card.Text>
+                <Card.Body>
+                  <Card.Title>{subsection.subsectionTitle}</Card.Title>
+                  <Card.Text>{subsection.subsectionDescription}</Card.Text>
+                </Card.Body>
                 {(role === "ADMIN" ||
                   userId === sectionDetail.creator.userId) && (
-                  <div>
-                    <Link
-                      to={`/conventions/${conventionId}/sec/${sectionId}/${subsection.subsectionId}/updatesubsection`}
-                    >
-                      <Button variant="danger">Modifica Sotto-Sezione</Button>
-                    </Link>
-                    <Button
-                      variant="danger"
-                      onClick={() => {
-                        setSubsectionIdToDelete(subsection.subsectionId);
-                        setShowDeleteSubsectionModal(true);
-                      }}
-                    >
-                      Elimina Sotto-Sezione
-                    </Button>
-                  </div>
+                  <Row className="mt-5 mb-2 me-1 justify-content-end ">
+                    <Col className="col-12 col-sm-12 col-md-6 mb-2 mb-md-0  text-end ">
+                      <Link
+                        to={`/conventions/${conventionId}/sec/${sectionId}/${subsection.subsectionId}/updatesubsection`}
+                      >
+                        <Button
+                          variant="danger"
+                          className="btn-sm border border-2 border-info  text-secondary fw-bold shadow-sm rounded-pill px-2 me-sm-1"
+                        >
+                          {" "}
+                          Modifica <BsPencilFill />
+                        </Button>
+                      </Link>
+                      <Button
+                        className="btn-sm border border-2 border-info  text-secondary fw-bold shadow-sm rounded-pill px-2"
+                        variant="warning"
+                        onClick={() => {
+                          setSubsectionIdToDelete(subsection.subsectionId);
+                          setShowDeleteSubsectionModal(true);
+                        }}
+                      >
+                        Elimina <RiDeleteBin6Line />
+                      </Button>
+                    </Col>
+                  </Row>
                 )}
               </Card>
             ))}
@@ -217,15 +241,21 @@ const SectionDetail = () => {
               <LuArrowBigRightDash className="fs-5 fw-bolder" />
             </Button>
           </div>
-          {(sectionDetail.creator.userId === userId || role === "ADMIN") && (
-            <Link
-              to={`/conventions/${conventionId}/sec/${sectionId}/add-subsection`}
-            >
-              <Button className="text-primary bg-info">
-                Create New Subsection
-              </Button>
-            </Link>
-          )}
+          <Row>
+            <Col className="text-end mt-5">
+              {(sectionDetail.creator.userId === userId ||
+                role === "ADMIN") && (
+                <Link
+                  to={`/conventions/${conventionId}/sec/${sectionId}/add-subsection`}
+                >
+                  <Button className="text-primary bg-info rounded-pill border border-2 border-white fw-bold btn-sm ">
+                    <MdOutlineFiberNew className="fw-2 fs-2" />
+                    Crea una nuova sezione
+                  </Button>
+                </Link>
+              )}{" "}
+            </Col>
+          </Row>
         </Col>
       </Row>
 

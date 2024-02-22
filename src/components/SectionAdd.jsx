@@ -84,10 +84,10 @@ const AddSection = () => {
                 />
               </Form.Group>
               <Button
-                className="bg-info text-primary fw-bolder border border-3  border-primary-subtle mt-3"
+                className="bg-info text-primary fw-bolder border border-3 shadow-sm border-primary-subtle mt-3"
                 type="submit"
               >
-                Add Section
+                Aggiungi Nuova Sezione
               </Button>
             </Form>
           </Card>

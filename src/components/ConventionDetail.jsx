@@ -13,7 +13,11 @@ import {
 import { format } from "date-fns";
 import it from "date-fns/locale/it";
 import { LuArrowBigLeftDash, LuArrowBigRightDash } from "react-icons/lu";
+
 import { BsPencilFill } from "react-icons/bs";
+import { RiDeleteBin6Line } from "react-icons/ri";
+
+import { MdOutlineFiberNew } from "react-icons/md";
 
 import {
   Container,
@@ -139,11 +143,11 @@ const ConventionDetail = () => {
   return (
     <Container className="my-5">
       <Row>
-        <Col className="col-11 col-sm-11 col-md-6 my-3">
+        <Col className="col-12 col-sm-11 col-md-6 my-3">
           <Card className="p-5 bg-primary bg-gradient  border-info border-4 shadow-lg text-white">
             <Card.Img
               variant="top"
-              className={`border border-info border-5 rounded-start-5 rounded-top-5 position-relative ${
+              className={`border mb-4 border-info border-5 rounded-start-5 rounded-top-5 position-relative ${
                 role !== "ADMIN" &&
                 userId !== conventionDetail.creator.userId &&
                 "no-pointer"
@@ -174,8 +178,8 @@ const ConventionDetail = () => {
                 <BsPencilFill />
               </Badge>
             )}
-            <Row className="align-items-center mt-2 justify-content-md-center">
-              <Col className="col-12 col-sm-11 col-lg-6 ">
+            <Row className="align-items-center mt-2 justify-content-md-center mb-md-3">
+              <Col className="col-8 col-sm-9 col-md-11 col-lg-6 mb-4 md-md-5 ">
                 <Card.Img
                   variant="top"
                   src={conventionDetail.logo}
@@ -241,21 +245,24 @@ const ConventionDetail = () => {
             </Card.Text>
             {(role === "ADMIN" ||
               userId === conventionDetail.creator.userId) && (
-              <Row className="mb-3">
-                <Col>
+              <Row className="mt-5 mb-1 justify-content-end ">
+                <Col className="col-12 col-sm-12 col-md-6 mb-2 mb-md-0  text-end ">
                   <Link to={`/updateconvention/${conventionId}`}>
-                    <Button variant="danger" className="btn-small fw-bolder ">
-                      Modifica
+                    <Button
+                      variant="danger"
+                      className="btn-sm border border-2 border-info  text-secondary  fw-bold shadow-sm rounded-pill px-2"
+                    >
+                      Modifica <BsPencilFill />
                     </Button>
                   </Link>
                 </Col>
-                <Col>
+                <Col className="col-12 col-sm-12 col-md-6 col-lg-3 text-end align-content-center ">
                   <Button
-                    variant="danger"
-                    className="btn-small fw-bolder"
-                    onClick={() => setShowDeleteModal(true)} // Aprire il modal di eliminazione
+                    variant="warning"
+                    className="btn-sm border border-2 border-info  text-secondary fw-bold shadow-sm rounded-pill px-2"
+                    onClick={() => setShowDeleteModal(true)}
                   >
-                    Elimina
+                    Elimina <RiDeleteBin6Line />
                   </Button>
                 </Col>
               </Row>
@@ -279,7 +286,7 @@ const ConventionDetail = () => {
                   >
                     <Card.Img
                       src={section.sectionImage}
-                      className="w-50 border border-4 border-info rounded-start-5 rounded-top-5"
+                      className="w-50 border border-4 border-info rounded-start-5 rounded-top-5 mb-4 mb-md-2"
                     />
                     <Card.Title className="text-center text-white fw-bolder fst-italic">
                       {section.sectionTitle}
@@ -307,14 +314,19 @@ const ConventionDetail = () => {
               <LuArrowBigRightDash className="fs-5 fw-bolder" />
             </Button>
           </div>
-          <Link to={`/conventions/${conventionId}/add-section`}>
-            {(role === "ADMIN" ||
-              userId === conventionDetail.creator.userId) && (
-              <Button className="text-primary bg-info">
-                Crea una nuova sezione
-              </Button>
-            )}
-          </Link>
+          <Row>
+            <Col className="text-end mt-5">
+              <Link to={`/conventions/${conventionId}/add-section`}>
+                {(role === "ADMIN" ||
+                  userId === conventionDetail.creator.userId) && (
+                  <Button className="text-primary bg-info rounded-pill border border-2 border-white fw-bold btn-sm ">
+                    <MdOutlineFiberNew className="fw-2 fs-2" />
+                    Crea una nuova sezione
+                  </Button>
+                )}
+              </Link>
+            </Col>
+          </Row>
         </Col>
       </Row>
 

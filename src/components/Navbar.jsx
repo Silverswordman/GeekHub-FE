@@ -1,12 +1,22 @@
-import React from "react";
-import { Container, Nav, Navbar } from "react-bootstrap";
+import { Container, Nav, Navbar, Image, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import NavigationButtons from "./Buttons";
+import { useEffect } from "react";
+import { FaRegUserCircle } from "react-icons/fa";
+
+import { fetchProfile } from "../redux/actions/profileactions";
 import logo from "../assets/logo.png";
 
 const NavbarCustom = () => {
+  const dispatch = useDispatch();
+
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const profileDetail = useSelector((state) => state.personalProfile);
+
+  useEffect(() => {
+    dispatch(fetchProfile());
+  }, [dispatch]);
 
   return (
     <Navbar
@@ -20,12 +30,10 @@ const NavbarCustom = () => {
           to="/home"
           className="text-white flex-grow-0 text-center"
         >
-          
           <img
             src={logo}
             alt="GeekHub Logo"
             className="d-inline-block align-top w-25"
-           
           />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" className="bg-info " />
@@ -38,10 +46,29 @@ const NavbarCustom = () => {
           <Nav>
             {isAuthenticated ? (
               <Nav.Link as={Link} to="/me" className="text-white">
-                My Profile
+                {profileDetail.profile && (
+                  <Row className="m-0 align-items-center">
+                    <Col className="col-3 text-end ">
+                      <Image
+                        src={profileDetail.profile.avatar}
+                        alt="Profile Image"
+                        width={35}
+                        height={35}
+                        roundedCircle
+                        className="border border-2 border-info "
+                      />
+                    </Col>
+                    <Col>
+                      <p className="fw-bolder m-0">
+                        Benvenut* {profileDetail.profile.username}!
+                      </p>
+                    </Col>
+                  </Row>
+                )}
               </Nav.Link>
             ) : (
               <Nav.Link as={Link} to="/login" className="text-white">
+                <FaRegUserCircle />
                 Login
               </Nav.Link>
             )}

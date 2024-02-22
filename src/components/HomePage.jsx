@@ -5,7 +5,7 @@ import CustomHomeCarousel from "./HomeCarousel";
 const Home = () => {
   return (
     <Container>
-      <Row><CustomHomeCarousel /></Row>
+      <Row className="mb-5"><CustomHomeCarousel /></Row>
       <Row>
         <HomeCard  />
       </Row>
