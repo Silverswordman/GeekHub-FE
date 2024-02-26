@@ -63,6 +63,7 @@ const ConventionDetail = () => {
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
+
   useEffect(() => {
     dispatch(getConventionDetail(conventionId));
     dispatch(getConventionSections(conventionId, page));

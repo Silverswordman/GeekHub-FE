@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Spinner } from "react-bootstrap";
+import { Spinner, Container, Row, Col, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import {
@@ -35,7 +35,7 @@ const UserFavorites = () => {
     : errorFavoriteConventions;
 
   if (loading) {
-    return <Spinner ></Spinner>;
+    return <Spinner></Spinner>;
   }
 
   if (error) {
@@ -45,14 +45,25 @@ const UserFavorites = () => {
   const conventions = userId ? favoriteConventionsByUser : favoriteConventions;
 
   return (
-    <div className="text-white">
-      <h2>Favorite Conventions</h2>
-      <ul>
-        {conventions.map((convention) => (
-          <li key={convention.conventionId}>{convention.title}</li>
-        ))}
-      </ul>
-    </div>
+    <Container>
+      <Row className="justify-content-center mt-2">
+        <Col className="col-11 col-sm-10 col-md-9 col-lg-6">
+          <Card className="bg-info-subtle text-primary border-success border-4 shadow-lg p-4">
+            <Card.Title>I miei eventi preferiti </Card.Title>
+            <ul>
+              {conventions.map((convention) => (
+                <Card.Text
+                  className="my-1 list-group-item "
+                  key={convention.conventionId}
+                >
+                  {convention.title}
+                </Card.Text>
+              ))}
+            </ul>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
