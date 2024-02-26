@@ -11,6 +11,7 @@ import sectionDetailReducer from "../reducers/section_details";
 import subsectionsReducer from "../reducers/subsections";
 import newSubsectionReducer from "../reducers/newsubsection";
 import requestsReducer from "../reducers/requests";
+import usersReducer from "../reducers/users";
 
 const rootReducer = combineReducers({
   conventions: conventionReducer,
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   subsections: subsectionsReducer,
   requests: requestsReducer,
   subsection: newSubsectionReducer,
+  users: usersReducer,
 });
 
 const store = configureStore({
