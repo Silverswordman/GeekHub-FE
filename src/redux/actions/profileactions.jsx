@@ -4,8 +4,6 @@ export const FETCH_PROFILE_FAILURE = "FETCH_PROFILE_FAILURE";
 
 const urlprofile = "http://localhost:3003/users";
 
-//fetch proprio profilo
-
 export const fetchProfile = () => {
   return (dispatch) => {
     dispatch(fetchProfileRequest());
@@ -108,7 +106,7 @@ export const setCurrentPage = (page) => ({
   payload: page,
 });
 
-export const fetchUsers = (page=0, size=15, order = "username") => {
+export const fetchUsers = (page = 0, size = 15, order = "username") => {
   return (dispatch) => {
     const token = localStorage.getItem("token");
     dispatch(fetchUsersRequest());
@@ -170,6 +168,132 @@ export const fetchUserProfile = (userId) => {
       })
       .catch((error) => {
         dispatch(fetchUserProfileFailure(error.message));
+      });
+  };
+};
+
+export const ADD_TO_FAVORITES_REQUEST = "ADD_TO_FAVORITES_REQUEST";
+export const ADD_TO_FAVORITES_SUCCESS = "ADD_TO_FAVORITES_SUCCESS";
+export const ADD_TO_FAVORITES_FAILURE = "ADD_TO_FAVORITES_FAILURE";
+export const addToFavorites = (userId, conventionId) => {
+  return (dispatch) => {
+    dispatch({ type: ADD_TO_FAVORITES_REQUEST });
+
+    const token = localStorage.getItem("token");
+
+    fetch(`${urlprofile}/me/favorites/${conventionId}`, {
+      method: "POST",
+      headers: {
+        Authorization: token,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Impossibile aggiungere la convention ai preferiti");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        dispatch({
+          type: ADD_TO_FAVORITES_SUCCESS,
+          payload: data,
+        });
+      })
+      .catch((error) => {
+        dispatch({
+          type: ADD_TO_FAVORITES_FAILURE,
+          payload: error.message,
+        });
+      });
+  };
+};
+export const FETCH_FAVORITE_CONVENTIONS_REQUEST =
+  "FETCH_FAVORITE_CONVENTIONS_REQUEST";
+export const FETCH_FAVORITE_CONVENTIONS_SUCCESS =
+  "FETCH_FAVORITE_CONVENTIONS_SUCCESS";
+export const FETCH_FAVORITE_CONVENTIONS_FAILURE =
+  "FETCH_FAVORITE_CONVENTIONS_FAILURE";
+
+export const fetchFavoriteConventionsRequest = () => ({
+  type: FETCH_FAVORITE_CONVENTIONS_REQUEST,
+});
+
+export const fetchFavoriteConventionsSuccess = (data) => ({
+  type: FETCH_FAVORITE_CONVENTIONS_SUCCESS,
+  payload: data,
+});
+
+export const fetchFavoriteConventionsFailure = (error) => ({
+  type: FETCH_FAVORITE_CONVENTIONS_FAILURE,
+  payload: error,
+});
+
+export const fetchFavoriteConventions = () => {
+  return (dispatch) => {
+    dispatch(fetchFavoriteConventionsRequest());
+    const token = localStorage.getItem("token");
+
+    fetch(`${urlprofile}/me/favorites`, {
+      headers: {
+        Authorization: `${token}`,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch favorite conventions");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        dispatch(fetchFavoriteConventionsSuccess(data));
+      })
+      .catch((error) => {
+        dispatch(fetchFavoriteConventionsFailure(error.message));
+      });
+  };
+};
+export const FETCH_FAVORITE_CONVENTIONS_BY_USER_REQUEST =
+  "FETCH_FAVORITE_CONVENTIONS_BY_USER_REQUEST";
+export const FETCH_FAVORITE_CONVENTIONS_BY_USER_SUCCESS =
+  "FETCH_FAVORITE_CONVENTIONS_BY_USER_SUCCESS";
+export const FETCH_FAVORITE_CONVENTIONS_BY_USER_FAILURE =
+  "FETCH_FAVORITE_CONVENTIONS_BY_USER_FAILURE";
+
+export const fetchFavoriteConventionsByUserIdRequest = () => ({
+  type: FETCH_FAVORITE_CONVENTIONS_BY_USER_REQUEST,
+});
+
+export const fetchFavoriteConventionsByUserIdSuccess = (data) => ({
+  type: FETCH_FAVORITE_CONVENTIONS_BY_USER_SUCCESS,
+  payload: data,
+});
+
+export const fetchFavoriteConventionsByUserIdFailure = (error) => ({
+  type: FETCH_FAVORITE_CONVENTIONS_BY_USER_FAILURE,
+  payload: error,
+});
+
+export const fetchFavoriteConventionsByUserId = (userId) => {
+  return (dispatch) => {
+    dispatch(fetchFavoriteConventionsByUserIdRequest());
+    const token = localStorage.getItem("token");
+
+    fetch(`${urlprofile}/${userId}/favorites`, {
+      headers: {
+        Authorization: `${token}`,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch favorite conventions by user");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        dispatch(fetchFavoriteConventionsByUserIdSuccess(data));
+      })
+      .catch((error) => {
+        dispatch(fetchFavoriteConventionsByUserIdFailure(error.message));
       });
   };
 };

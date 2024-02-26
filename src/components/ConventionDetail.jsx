@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link, useNavigate } from "react-router-dom";
+import { addToFavorites } from "../redux/actions/profileactions";
+
 import {
   getConventionDetail,
   getConventionSections,
@@ -46,7 +48,8 @@ const ConventionDetail = () => {
     useState(false);
   const [coverFileSizeExceedsLimit, setCoverFileSizeExceedsLimit] =
     useState(false);
-  const { role, userId } = useSelector((state) => state.auth);
+  const { role } = useSelector((state) => state.auth);
+  const userId = useSelector((state) => state.auth.userId);
   const {
     conventionDetail,
     loading: detailLoading,
@@ -91,6 +94,10 @@ const ConventionDetail = () => {
       setCoverFileSizeExceedsLimit(false);
       setCoverFile(file);
     }
+  };
+
+  const handleAddToFavorites = () => {
+    dispatch(addToFavorites(userId, conventionId));
   };
 
   const handleLogoUpload = async () => {
@@ -265,6 +272,13 @@ const ConventionDetail = () => {
                     Elimina <RiDeleteBin6Line />
                   </Button>
                 </Col>
+                <Button
+                  variant="info"
+                  className="btn-sm rounded-pill border border-2 border-white fw-bold"
+                  onClick={handleAddToFavorites}
+                >
+                  FAV
+                </Button>
               </Row>
             )}
           </Card>

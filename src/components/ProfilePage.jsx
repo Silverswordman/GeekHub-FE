@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Container,
@@ -17,6 +17,7 @@ import {
   fetchProfile,
   uploadProfilePicture,
 } from "../redux/actions/profileactions";
+import UserFavorites from "./UserFavorites"; // Importa il componente UserFavorites
 
 const ProfileComponent = () => {
   const dispatch = useDispatch();
@@ -179,6 +180,7 @@ const ProfileComponent = () => {
           </Card>
         </Col>
       </Row>
+      <UserFavorites />
     </Container>
   );
 };

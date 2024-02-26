@@ -54,7 +54,7 @@ const UserList = () => {
               key={user.userId}
               className="m-3 col-11 col-sm-8 col-md-4 col-lg-3 h-100"
             >
-              {/* Utilizza Link per reindirizzare al profilo dell'utente */}
+      
               <Link to={`/users/${user.userId}`}>
                 <Card className="bg-info-subtle text-primary border-success border-4 shadow-lg p-4">
                   <Card.Img

@@ -6,6 +6,15 @@ import {
   FETCH_USER_PROFILE_REQUEST,
   FETCH_USER_PROFILE_SUCCESS,
   FETCH_USER_PROFILE_FAILURE,
+  ADD_TO_FAVORITES_REQUEST,
+  ADD_TO_FAVORITES_SUCCESS,
+  ADD_TO_FAVORITES_FAILURE,
+  FETCH_FAVORITE_CONVENTIONS_REQUEST,
+  FETCH_FAVORITE_CONVENTIONS_SUCCESS,
+  FETCH_FAVORITE_CONVENTIONS_FAILURE,
+  FETCH_FAVORITE_CONVENTIONS_BY_USER_REQUEST,
+  FETCH_FAVORITE_CONVENTIONS_BY_USER_SUCCESS,
+  FETCH_FAVORITE_CONVENTIONS_BY_USER_FAILURE,
 } from "../actions/profileactions";
 
 const initialState = {
@@ -17,6 +26,12 @@ const initialState = {
   userProfile: null,
   loadingProfile: false,
   errorProfile: null,
+  favoriteConventions: [],
+  loadingFavoriteConventions: false,
+  errorFavoriteConventions: null,
+  favoriteConventionsByUser: [],
+  loadingFavoriteConventionsByUser: false,
+  errorFavoriteConventionsByUser: null,
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -62,6 +77,59 @@ const usersReducer = (state = initialState, action) => {
         ...state,
         loadingProfile: false,
         errorProfile: action.payload,
+      };
+    case ADD_TO_FAVORITES_REQUEST:
+      return {
+        ...state,
+        addingToFavorites: true,
+        addToFavoritesError: null,
+      };
+    case ADD_TO_FAVORITES_SUCCESS:
+      return {
+        ...state,
+        addingToFavorites: false,
+      };
+    case ADD_TO_FAVORITES_FAILURE:
+      return {
+        ...state,
+        addingToFavorites: false,
+        addToFavoritesError: action.payload,
+      };
+    case FETCH_FAVORITE_CONVENTIONS_REQUEST:
+      return {
+        ...state,
+        loadingFavoriteConventions: true,
+        errorFavoriteConventions: null,
+      };
+    case FETCH_FAVORITE_CONVENTIONS_SUCCESS:
+      return {
+        ...state,
+        loadingFavoriteConventions: false,
+        favoriteConventions: action.payload,
+      };
+    case FETCH_FAVORITE_CONVENTIONS_FAILURE:
+      return {
+        ...state,
+        loadingFavoriteConventions: false,
+        errorFavoriteConventions: action.payload,
+      };
+    case FETCH_FAVORITE_CONVENTIONS_BY_USER_REQUEST:
+      return {
+        ...state,
+        loadingFavoriteConventionsByUser: true,
+        errorFavoriteConventionsByUser: null,
+      };
+    case FETCH_FAVORITE_CONVENTIONS_BY_USER_SUCCESS:
+      return {
+        ...state,
+        loadingFavoriteConventionsByUser: false,
+        favoriteConventionsByUser: action.payload,
+      };
+    case FETCH_FAVORITE_CONVENTIONS_BY_USER_FAILURE:
+      return {
+        ...state,
+        loadingFavoriteConventionsByUser: false,
+        errorFavoriteConventionsByUser: action.payload,
       };
     default:
       return state;
