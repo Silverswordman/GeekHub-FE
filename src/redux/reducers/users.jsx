@@ -9,6 +9,9 @@ import {
   ADD_TO_FAVORITES_REQUEST,
   ADD_TO_FAVORITES_SUCCESS,
   ADD_TO_FAVORITES_FAILURE,
+  REMOVE_FROM_FAVORITES_REQUEST,
+  REMOVE_FROM_FAVORITES_SUCCESS,
+  REMOVE_FROM_FAVORITES_FAILURE,
   FETCH_FAVORITE_CONVENTIONS_REQUEST,
   FETCH_FAVORITE_CONVENTIONS_SUCCESS,
   FETCH_FAVORITE_CONVENTIONS_FAILURE,
@@ -88,6 +91,7 @@ const usersReducer = (state = initialState, action) => {
       return {
         ...state,
         addingToFavorites: false,
+        favoriteConventions: [...state.favoriteConventions, action.payload], // Aggiungi l'evento ai preferiti
       };
     case ADD_TO_FAVORITES_FAILURE:
       return {
@@ -131,6 +135,28 @@ const usersReducer = (state = initialState, action) => {
         loadingFavoriteConventionsByUser: false,
         errorFavoriteConventionsByUser: action.payload,
       };
+    case REMOVE_FROM_FAVORITES_REQUEST:
+      return {
+        ...state,
+        removingFromFavorites: true,
+        removeFromFavoritesError: null,
+      };
+    case REMOVE_FROM_FAVORITES_SUCCESS:
+      return {
+        ...state,
+        removingFromFavorites: false,
+        favoriteConventions: state.favoriteConventions.filter(
+          (convention) =>
+            convention.conventionId !== action.payload.conventionId
+        ), // Rimuovi l'evento dai preferiti
+      };
+    case REMOVE_FROM_FAVORITES_FAILURE:
+      return {
+        ...state,
+        removingFromFavorites: false,
+        removeFromFavoritesError: action.payload,
+      };
+
     default:
       return state;
   }

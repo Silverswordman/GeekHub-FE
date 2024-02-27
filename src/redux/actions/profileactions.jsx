@@ -297,3 +297,47 @@ export const fetchFavoriteConventionsByUserId = (userId) => {
       });
   };
 };
+export const REMOVE_FROM_FAVORITES_REQUEST = "REMOVE_FROM_FAVORITES_REQUEST";
+export const REMOVE_FROM_FAVORITES_SUCCESS = "REMOVE_FROM_FAVORITES_SUCCESS";
+export const REMOVE_FROM_FAVORITES_FAILURE = "REMOVE_FROM_FAVORITES_FAILURE";
+
+export const removeFromFavoritesRequest = () => ({
+  type: REMOVE_FROM_FAVORITES_REQUEST,
+});
+
+export const removeFromFavoritesSuccess = (data) => ({
+  type: REMOVE_FROM_FAVORITES_SUCCESS,
+  payload: data,
+});
+
+export const removeFromFavoritesFailure = (error) => ({
+  type: REMOVE_FROM_FAVORITES_FAILURE,
+  payload: error,
+});
+
+export const removeFromFavorites = (userId, conventionId) => {
+  return (dispatch) => {
+    dispatch(removeFromFavoritesRequest());
+
+    const token = localStorage.getItem("token");
+
+    fetch(`${urlprofile}/me/favorites/${conventionId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: token,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Impossibile rimuovere la convention dai preferiti");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        dispatch(removeFromFavoritesSuccess(data));
+      })
+      .catch((error) => {
+        dispatch(removeFromFavoritesFailure(error.message));
+      });
+  };
+};

@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { addToFavorites } from "../redux/actions/profileactions";
+import {
+  addToFavorites,
+  removeFromFavorites,
+} from "../redux/actions/profileactions";
 
 import {
   getConventionDetail,
@@ -63,6 +66,20 @@ const ConventionDetail = () => {
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
+  const { favoriteConventions } = useSelector((state) => state.users);
+  const isFavorite = favoriteConventions.some(
+    (convention) => convention.conventionId === conventionId
+  );
+
+  const handleAddToFavorites = () => {
+    dispatch(addToFavorites(userId, conventionId));
+    navigate(`/convention/${conventionId}`, { replace: true });
+  };
+
+  const handleRemoveFromFavorites = () => {
+    dispatch(removeFromFavorites(userId, conventionId));
+    navigate(`/convention/${conventionId}`, { replace: true });
+  };
 
   useEffect(() => {
     dispatch(getConventionDetail(conventionId));
@@ -95,10 +112,6 @@ const ConventionDetail = () => {
       setCoverFileSizeExceedsLimit(false);
       setCoverFile(file);
     }
-  };
-
-  const handleAddToFavorites = () => {
-    dispatch(addToFavorites(userId, conventionId));
   };
 
   const handleLogoUpload = async () => {
@@ -273,15 +286,26 @@ const ConventionDetail = () => {
                     Elimina <RiDeleteBin6Line />
                   </Button>
                 </Col>
+              </Row>
+            )}
+            {(role === "ADMIN" || role === "USER") &&
+              (isFavorite ? (
+                <Button
+                  variant="outline-info"
+                  className="btn-sm rounded-pill border border-2 border-white fw-bold"
+                  onClick={handleRemoveFromFavorites}
+                >
+                  Rimuovi dai preferiti
+                </Button>
+              ) : (
                 <Button
                   variant="info"
                   className="btn-sm rounded-pill border border-2 border-white fw-bold"
                   onClick={handleAddToFavorites}
                 >
-                  FAV
+                  Aggiungi ai preferiti
                 </Button>
-              </Row>
-            )}
+              ))}
           </Card>
         </Col>
         <Col className="col-11 col-md-6 col-lg-5">
