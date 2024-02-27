@@ -290,21 +290,29 @@ const ConventionDetail = () => {
             )}
             {(role === "ADMIN" || role === "USER") &&
               (isFavorite ? (
-                <Button
-                  variant="outline-info"
-                  className="btn-sm rounded-pill border border-2 border-white fw-bold"
-                  onClick={handleRemoveFromFavorites}
-                >
-                  Rimuovi dai preferiti
-                </Button>
+                <Row>
+                  <Col>
+                    <Button
+                      variant="outline-info"
+                      className="btn-sm rounded-pill border border-2 border-white fw-bold"
+                      onClick={handleRemoveFromFavorites}
+                    >
+                      Rimuovi dai preferiti
+                    </Button>
+                  </Col>
+                </Row>
               ) : (
-                <Button
-                  variant="info"
-                  className="btn-sm rounded-pill border border-2 border-white fw-bold"
-                  onClick={handleAddToFavorites}
-                >
-                  Aggiungi ai preferiti
-                </Button>
+                <Row>
+                  <Col>
+                    <Button
+                      variant="info"
+                      className="btn-sm rounded-pill border border-2 border-white fw-bold"
+                      onClick={handleAddToFavorites}
+                    >
+                      Aggiungi ai preferiti
+                    </Button>
+                  </Col>
+                </Row>
               ))}
           </Card>
         </Col>

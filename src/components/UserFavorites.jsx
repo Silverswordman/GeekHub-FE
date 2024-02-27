@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Spinner, Container, Row, Col, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import {
   fetchFavoriteConventions,
   fetchFavoriteConventionsByUserId,
@@ -56,7 +56,12 @@ const UserFavorites = () => {
                   className="my-1 list-group-item "
                   key={convention.conventionId}
                 >
-                  {convention.title}
+                  <Link
+                    to={`/convention/${convention.conventionId}`}
+                    className="text-decoration-none"
+                  >
+                    {convention.title}
+                  </Link>
                 </Card.Text>
               ))}
             </ul>

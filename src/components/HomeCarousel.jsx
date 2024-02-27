@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Carousel from "react-bootstrap/Carousel";
 import { Container, Card, Row, Col } from "react-bootstrap";
 import { getConventions } from "../redux/actions/conventionactions";
+import { Link } from "react-router-dom";
 
 const CustomHomeCarousel = () => {
   const dispatch = useDispatch();
@@ -28,28 +29,33 @@ const CustomHomeCarousel = () => {
   return (
     <Container className="mt-5">
       {sortedConventions.length > 0 && (
-        <Carousel data-bs-theme="light" >
+        <Carousel data-bs-theme="light">
           {sortedConventions.map((convention) => (
             <Carousel.Item key={convention.conventionId}>
-              <Row>
-                <Col>
-                  <div
-                    className=" border border-4 border-info"
-                    style={{
-                      width: "400px",
-                      height: "300px",
-                      backgroundImage: `url(${convention.coverImage})`,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                    }}
-                  ></div>
-                </Col>
-                <Col>
-                  <h5 className="text-info">{convention.title}</h5>
-                  <p className="text-white">{convention.city.cityName} </p>
-                  <p className="text-white">{convention.address}</p>
-                </Col>
-              </Row>
+              <Link
+                to={`/convention/${convention.conventionId}`}
+                className="text-decoration-none"
+              >
+                <Row>
+                  <Col>
+                    <div
+                      className=" border border-4 border-info"
+                      style={{
+                        width: "400px",
+                        height: "300px",
+                        backgroundImage: `url(${convention.coverImage})`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                      }}
+                    ></div>
+                  </Col>
+                  <Col>
+                    <h5 className="text-info">{convention.title}</h5>
+                    <p className="text-white">{convention.city.cityName} </p>
+                    <p className="text-white">{convention.address}</p>
+                  </Col>
+                </Row>
+              </Link>
             </Carousel.Item>
           ))}
         </Carousel>
