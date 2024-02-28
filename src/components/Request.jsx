@@ -61,55 +61,73 @@ const RequestsList = () => {
   }
 
   return (
-    <Container className="mt-5 text-center">
-      <Card className="col-7 text-primary fs-3 bg-info-subtle mt-5 m-1">
-        <Card.Body>
-          <Card.Title className="fs-1 fw-semibold fst-italic">
-            Requests List
-          </Card.Title>
+    <Container>
+      <Row className="mt-3 justify-content-center">
+        <Card className="col-7 text-primary fs-3 bg-info-subtle oorder border-4 border-success mt-5 m-1">
+          <Card.Body>
+            <Card.Title className="fs-3 fw-semibold fst-italic">
+              Lista Richieste
+            </Card.Title>
 
-          {requests.map((request) => (
-            <Card.Text className="text-start fs-5" key={request.requestId}>
-              <li className="fst-italic">{request.message}</li>
-              <Button
-                variant="success"
-                onClick={() => handleAcceptRequest(request.requestId)}
-              >
-                Accept
-              </Button>
-              <Button
-                variant="danger"
-                onClick={() => handleDeclineRequest(request.requestId)}
-              >
-                Decline
-              </Button>
-            </Card.Text>
-          ))}
+            {requests.map((request) => (
+              <Card.Text className="text-start " key={request.requestId}>
+                <li className=" fs-5">
+                  L'utente <span className="fw-bold">{request.name} </span> con
+                  la mail <span className="fw-bold">{request.email} </span>{" "}
+                  invia questo messaggio per esser accettat* come event planner:
+                  
+                  <span className="fw-bold fst-italic">
+                    {" "}
+                    {request.message}{" "}
+                  </span>
+                  
+                </li>
+                <Row className="text-end">
+                  <Col>
+                    <Button
+                      className="btn-sm rounded-pill border border-4 border-info fw-bold shadow-sm "
+                      variant="success"
+                      onClick={() => handleAcceptRequest(request.requestId)}
+                    >
+                      Accetta
+                    </Button>
+                    <Button
+                      className="btn-sm rounded-pill border border-4 border-info fw-bold shadow-sm "
+                      variant="danger"
+                      onClick={() => handleDeclineRequest(request.requestId)}
+                    >
+                      Rifiuta
+                    </Button>
+                  </Col>
+                </Row>
+              </Card.Text>
+            ))}
 
-          <Row className="justify-content-center">
-            <Col className="text-end">
-              <Button
-                variant="primary"
-                onClick={handlePrevPage}
-                disabled={currentPage === 0}
-                className="btn btn-small"
-              >
-                Previous
-              </Button>
-            </Col>
-            <Col className="text-start">
-              <Button
-                variant="primary"
-                onClick={handleNextPage}
-                disabled={currentPage === totalPages - 1}
-                className="btn btn-small"
-              >
-                Next
-              </Button>
-            </Col>
-          </Row>
-        </Card.Body>
-      </Card>
+            <Row className="justify-content-center">
+              <Col className="text-end">
+                <Button
+                  variant="primary"
+                  onClick={handlePrevPage}
+                  disabled={currentPage === 0}
+                  className="btn btn-small"
+                >
+                  Previous
+                </Button>
+              </Col>
+              <Col className="text-start">
+                <Button
+                  variant="primary"
+                  onClick={handleNextPage}
+                  disabled={currentPage === totalPages - 1}
+                  className="btn btn-small"
+                >
+                  Next
+                </Button>
+              </Col>
+            </Row>
+          </Card.Body>
+        </Card>
+      </Row>
     </Container>
   );
 };

@@ -41,7 +41,9 @@ const UserList = () => {
 
   if (error) {
     return (
-      <p className="text-white fs-2">Utenti non disponibili in questo momento.</p>
+      <p className="text-white fs-2">
+        Utenti non disponibili in questo momento.
+      </p>
     );
   }
 
@@ -54,15 +56,19 @@ const UserList = () => {
               key={user.userId}
               className="m-3 col-11 col-sm-8 col-md-4 col-lg-3 h-100"
             >
-      
-              <Link to={`/users/${user.userId}`}>
-                <Card className="bg-info-subtle text-primary border-success border-4 shadow-lg p-4">
+              <Link
+                to={`/users/${user.userId}`}
+                className="text-decoration-none"
+              >
+                <Card className="bg-info-subtle text-primary border-success border-4 shadow-lg p-4  ">
                   <Card.Img
                     src={user.avatar}
                     className="w-25 rounded-pill border border-4 border-primary"
                   ></Card.Img>
-                  <Card.Text>Name: {user.name}</Card.Text>
-                  <Card.Text>Surname: {user.surname}</Card.Text>
+                  <Card.Text>Username: {user.username}</Card.Text>
+                  <Card.Text>
+                    {user.name} {user.surname}
+                  </Card.Text>
                 </Card>
               </Link>
             </Col>

@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, Card, Row, Col, Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../redux/actions/registeractions";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
+import { IoEyeOff, IoEye } from "react-icons/io5";
 
 const RegistrationComponent = () => {
   const [userData, setUserData] = useState({
@@ -12,11 +13,12 @@ const RegistrationComponent = () => {
     email: "",
     password: "",
   });
+  const [showPassword, setShowPassword] = useState(false);
 
   const dispatch = useDispatch();
   const registerError = useSelector((state) => state.register.error);
   const userId = useSelector((state) => state.register.userId);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -58,57 +60,109 @@ const RegistrationComponent = () => {
   }
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Form.Group controlId="username">
-        <Form.Label>Username</Form.Label>
-        <Form.Control
-          type="text"
-          name="username"
-          value={userData.username}
-          onChange={handleChange}
-        />
-      </Form.Group>
-      <Form.Group controlId="name">
-        <Form.Label>Name</Form.Label>
-        <Form.Control
-          type="text"
-          name="name"
-          value={userData.name}
-          onChange={handleChange}
-        />
-      </Form.Group>
-      <Form.Group controlId="surname">
-        <Form.Label>Surname</Form.Label>
-        <Form.Control
-          type="text"
-          name="surname"
-          value={userData.surname}
-          onChange={handleChange}
-        />
-      </Form.Group>
-      <Form.Group controlId="email">
-        <Form.Label>Email</Form.Label>
-        <Form.Control
-          type="email"
-          name="email"
-          value={userData.email}
-          onChange={handleChange}
-        />
-      </Form.Group>
-      <Form.Group controlId="password">
-        <Form.Label>Password</Form.Label>
-        <Form.Control
-          type="password"
-          name="password"
-          value={userData.password}
-          onChange={handleChange}
-        />
-      </Form.Group>
-      <Button variant="primary" type="submit">
-        Register
-      </Button>
-      {registerError && <p className="text-danger">{registerError}</p>}
-    </Form>
+    <Container>
+      <Card className="bg-transparent border border-4 border-info mt-5 p-4">
+        <Form onSubmit={handleSubmit}>
+          <Form.Group controlId="username">
+          <Row>
+              <Col className="col-11 pe-0">
+            <Form.Label className="text-info fw-bold">Username</Form.Label>
+            <Form.Control
+              type="text"
+              name="username"
+              value={userData.username}
+              onChange={handleChange}
+              className="mb-2"
+              placeholder="Inserisci qui il tuo username"
+            />
+             </Col>
+            </Row>
+          </Form.Group>
+          <Form.Group controlId="name">
+            <Row>
+              <Col className="col-11 pe-0">
+                <Form.Label className="text-info fw-bold">Nome</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="name"
+                  value={userData.name}
+                  onChange={handleChange}
+                  className="mb-2"
+                  placeholder="Inserisci qui il tuo nome"
+                />
+              </Col>
+            </Row>
+          </Form.Group>
+          <Form.Group controlId="surname">
+            <Row>
+              <Col className="col-11 pe-0">
+                <Form.Label className="text-info fw-bold">Cognome</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="surname"
+                  value={userData.surname}
+                  onChange={handleChange}
+                  className="mb-2"
+                  placeholder="Inserisci qui il tuo cognome"
+                />
+              </Col>
+            </Row>
+          </Form.Group>
+          <Form.Group controlId="email">
+            <Row>
+              <Col className="col-11 pe-0">
+                <Form.Label className="text-info fw-bold">Email</Form.Label>
+                <Form.Control
+                  type="email"
+                  name="email"
+                  value={userData.email}
+                  onChange={handleChange}
+                  className="mb-2"
+                  placeholder="Inserisci qui la tua mail"
+                />
+              </Col>
+            </Row>
+          </Form.Group>
+          <Form.Group controlId="password">
+            <Form.Label className="text-info fw-bold">Password</Form.Label>
+            <Row className="input-group align-content-center ">
+              <Col className="col-11 pe-0">
+                <Form.Control
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  value={userData.password}
+                  onChange={handleChange}
+                  className="mb-2"
+                  placeholder="Inserisci qui la tua password"
+                />
+              </Col>
+              <Col className="col-1 p-0">
+                <Button
+                  className=" text-white border-2 btn-outline-info  "
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <IoEye /> : <IoEyeOff />}
+                </Button>
+              </Col>
+            </Row>
+          </Form.Group>
+          <Row className="">
+            <Col>
+              <Button
+                variant="success"
+                className="rounded-pill border border-4 border-info fw-bold shadow-sm my-4"
+                type="submit"
+              >
+                Registrati
+              </Button>
+              {registerError && (
+                <p className="text-danger ms-5 my-3 fs-5">{registerError}</p>
+              )}
+            </Col>
+          </Row>
+        </Form>
+      </Card>
+    </Container>
   );
 };
 

@@ -26,7 +26,7 @@ const requestsReducer = (state = initialState, action) => {
     case FETCH_REQUESTS_REQUEST:
     case ACCEPT_REQUEST_REQUEST:
     case DECLINE_REQUEST_REQUEST:
-    case SEND_REQUEST_REQUEST: // Aggiunto caso per richiesta di invio
+    case SEND_REQUEST_REQUEST:
       return {
         ...state,
         loading: true,
@@ -43,12 +43,17 @@ const requestsReducer = (state = initialState, action) => {
       };
     case ACCEPT_REQUEST_SUCCESS:
     case DECLINE_REQUEST_SUCCESS:
-    case SEND_REQUEST_SUCCESS: // Aggiunto caso per invio con successo
       return state;
+    case SEND_REQUEST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+      };
     case FETCH_REQUESTS_FAILURE:
     case ACCEPT_REQUEST_FAILURE:
     case DECLINE_REQUEST_FAILURE:
-    case SEND_REQUEST_FAILURE: // Aggiunto caso per invio con errore
+    case SEND_REQUEST_FAILURE:
       return {
         ...state,
         loading: false,

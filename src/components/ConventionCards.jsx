@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
@@ -19,7 +19,6 @@ const HomeCard = () => {
 
   useEffect(() => {
     dispatch(fetchRegions());
-
     dispatch(getConventions(currentPage, selectedRegion));
   }, [dispatch, currentPage, selectedRegion]);
 
@@ -34,6 +33,16 @@ const HomeCard = () => {
 
   const handlePageChange = (page) => {
     dispatch(getConventions(page - 1, selectedRegion));
+  };
+
+  const filterByRegion = (convention) => {
+    if (!selectedRegion) return true;
+    return convention.region.regionName === selectedRegion;
+  };
+
+  const filterBySearchTerm = (convention) => {
+    if (!searchTerm) return true;
+    return convention.title.toLowerCase().includes(searchTerm.toLowerCase());
   };
 
   return (
@@ -53,14 +62,14 @@ const HomeCard = () => {
             onChange={handleRegionChange}
             value={selectedRegion}
           >
-            <option value="" className=" text-black fw-bold ">
+            <option value="" className="text-black fw-bold">
               All Regions
             </option>
             {regions.map((region) => (
               <option
                 key={region.id}
                 value={region.regionName}
-                className=" text-secondary"
+                className="text-secondary"
               >
                 {region.regionName}
               </option>
@@ -74,14 +83,8 @@ const HomeCard = () => {
         {!loading &&
           !error &&
           conventions
-            .filter(
-              (convention) =>
-                !selectedRegion ||
-                convention.region.regionName === selectedRegion
-            )
-            .filter((convention) =>
-              convention.title.toLowerCase().includes(searchTerm.toLowerCase())
-            )
+            .filter(filterByRegion)
+            .filter(filterBySearchTerm)
             .map((convention) => (
               <Col
                 key={convention.conventionId}
@@ -99,9 +102,8 @@ const HomeCard = () => {
                       <Col className="col-12 col-md-9 col-lg-6">
                         <Card.Img
                           variant="top"
-                          fluid
                           src={convention.coverImage}
-                          className="border border-info border-4 rounded-start-5 rounded-top-5 bg-primary shadow"
+                          className="border border-info border-4 rounded-start-5 rounded-top-5 bg-primary shadow w-100"
                         />
                       </Col>
                       <Col className="col-12 col-md-9 col-lg-6">
@@ -110,9 +112,8 @@ const HomeCard = () => {
                             <Col>
                               <Card.Img
                                 variant="top"
-                                fluid
                                 src={convention.logo}
-                                className="w-25 border border-info border-2 rounded-start-5 rounded-top-5 bg-success shadow-sm"
+                                className="w-25 border border-info border-2 rounded-start-5 rounded-top-5 bg-success shadow-sm "
                               />
                             </Col>
                           </Row>
