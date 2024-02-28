@@ -31,7 +31,7 @@ const CustomHomeCarousel = () => {
     });
 
   return (
-    <Container className="mt-5 ">
+    <Container className="mt-5 bg-gradient rounded-pill ">
       {sortedConventions.length > 0 && (
         <Carousel data-bs-theme="light">
           {sortedConventions.map((convention) => (
@@ -66,8 +66,8 @@ const CustomHomeCarousel = () => {
                       ></div>
                     </Col>
                     <Col>
-                      <Card className="bg-transparent">
-                        <Card.Text className="text-info fs-2 fw-bold fst-italic shadow-sm">
+                      <Card className="bg-transparent border-0">
+                        <Card.Text className="text-info fs-1 fw-bold fst-italic shadow-sm">
                           {convention.title}
                         </Card.Text>
                         <Card.Text className="text-white fs-4 fw-bold fst-italic">

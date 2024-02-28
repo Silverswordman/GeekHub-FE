@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import {
   addToFavorites,
+  fetchFavoriteConventions,
   removeFromFavorites,
 } from "../redux/actions/profileactions";
 
@@ -67,18 +68,19 @@ const ConventionDetail = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const { favoriteConventions } = useSelector((state) => state.users);
+
   const isFavorite = favoriteConventions.some(
     (convention) => convention.conventionId === conventionId
   );
 
   const handleAddToFavorites = () => {
     dispatch(addToFavorites(userId, conventionId));
-    navigate(`/convention/${conventionId}`, { replace: true });
+    navigate(`/convention/${conventionId}`);
   };
 
   const handleRemoveFromFavorites = () => {
     dispatch(removeFromFavorites(userId, conventionId));
-    navigate(`/convention/${conventionId}`, { replace: true });
+    navigate(`/convention/${conventionId}`);
   };
 
   useEffect(() => {
@@ -288,10 +290,10 @@ const ConventionDetail = () => {
                 </Col>
               </Row>
             )}
-            {(role === "ADMIN" || role === "USER") &&
-              (isFavorite ? (
-                <Row>
-                  <Col>
+            {(role === "ADMIN" || role === "USER") && (
+              <Row>
+                <Col>
+                  {isFavorite ? (
                     <Button
                       variant="outline-info"
                       className="btn-sm rounded-pill border border-2 border-white fw-bold"
@@ -299,11 +301,7 @@ const ConventionDetail = () => {
                     >
                       Rimuovi dai preferiti
                     </Button>
-                  </Col>
-                </Row>
-              ) : (
-                <Row>
-                  <Col>
+                  ) : (
                     <Button
                       variant="info"
                       className="btn-sm rounded-pill border border-2 border-white fw-bold"
@@ -311,9 +309,10 @@ const ConventionDetail = () => {
                     >
                       Aggiungi ai preferiti
                     </Button>
-                  </Col>
-                </Row>
-              ))}
+                  )}
+                </Col>
+              </Row>
+            )}
           </Card>
         </Col>
         <Col className="col-11 col-md-6 col-lg-5">

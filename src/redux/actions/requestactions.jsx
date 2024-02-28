@@ -170,9 +170,9 @@ export const sendRequest = (message) => {
       );
 
       if (!response.ok) {
-        const errorMessage = await response.text(); // Estrai il messaggio di errore dalla risposta
-        dispatch(sendRequestFailure(errorMessage)); // Passa il messaggio di errore al reducer
-        return; // Esci dalla funzione per evitare di continuare con il successo
+        const errorMessage = await response.text(); 
+        dispatch(sendRequestFailure(errorMessage)); 
+        return; 
       }
 
       dispatch(sendRequestSuccess());

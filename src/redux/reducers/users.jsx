@@ -91,7 +91,7 @@ const usersReducer = (state = initialState, action) => {
       return {
         ...state,
         addingToFavorites: false,
-        favoriteConventions: [...state.favoriteConventions, action.payload], // Aggiungi l'evento ai preferiti
+        favoriteConventions: [...state.favoriteConventions, action.payload],
       };
     case ADD_TO_FAVORITES_FAILURE:
       return {
@@ -146,17 +146,16 @@ const usersReducer = (state = initialState, action) => {
         ...state,
         removingFromFavorites: false,
         favoriteConventions: state.favoriteConventions.filter(
-          (convention) =>
-            convention.conventionId !== action.payload.conventionId
-        ), // Rimuovi l'evento dai preferiti
+          (convention) => convention.conventionId !== action.payload
+        ),
       };
+
     case REMOVE_FROM_FAVORITES_FAILURE:
       return {
         ...state,
         removingFromFavorites: false,
         removeFromFavoritesError: action.payload,
       };
-
     default:
       return state;
   }

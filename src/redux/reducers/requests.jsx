@@ -26,6 +26,11 @@ const requestsReducer = (state = initialState, action) => {
     case FETCH_REQUESTS_REQUEST:
     case ACCEPT_REQUEST_REQUEST:
     case DECLINE_REQUEST_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
     case SEND_REQUEST_REQUEST:
       return {
         ...state,
@@ -43,7 +48,6 @@ const requestsReducer = (state = initialState, action) => {
       };
     case ACCEPT_REQUEST_SUCCESS:
     case DECLINE_REQUEST_SUCCESS:
-      return state;
     case SEND_REQUEST_SUCCESS:
       return {
         ...state,
