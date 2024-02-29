@@ -75,12 +75,12 @@ const ConventionDetail = () => {
 
   const handleAddToFavorites = () => {
     dispatch(addToFavorites(userId, conventionId));
-    navigate(`/convention/${conventionId}`);
+    navigate(`/convention/${conventionId}`, { replace: true });
   };
 
   const handleRemoveFromFavorites = () => {
     dispatch(removeFromFavorites(userId, conventionId));
-    navigate(`/convention/${conventionId}`);
+    navigate(`/convention/${conventionId}`, { replace: true });
   };
 
   useEffect(() => {

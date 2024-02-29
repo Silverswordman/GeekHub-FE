@@ -171,42 +171,6 @@ export const fetchUserProfile = (userId) => {
       });
   };
 };
-
-export const ADD_TO_FAVORITES_REQUEST = "ADD_TO_FAVORITES_REQUEST";
-export const ADD_TO_FAVORITES_SUCCESS = "ADD_TO_FAVORITES_SUCCESS";
-export const ADD_TO_FAVORITES_FAILURE = "ADD_TO_FAVORITES_FAILURE";
-export const addToFavorites = (userId, conventionId) => {
-  return (dispatch) => {
-    dispatch({ type: ADD_TO_FAVORITES_REQUEST });
-
-    const token = localStorage.getItem("token");
-
-    fetch(`${urlprofile}/me/favorites/${conventionId}`, {
-      method: "POST",
-      headers: {
-        Authorization: token,
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Impossibile aggiungere la convention ai preferiti");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        dispatch({
-          type: ADD_TO_FAVORITES_SUCCESS,
-          payload: data,
-        });
-      })
-      .catch((error) => {
-        dispatch({
-          type: ADD_TO_FAVORITES_FAILURE,
-          payload: error.message,
-        });
-      });
-  };
-};
 export const FETCH_FAVORITE_CONVENTIONS_REQUEST =
   "FETCH_FAVORITE_CONVENTIONS_REQUEST";
 export const FETCH_FAVORITE_CONVENTIONS_SUCCESS =
@@ -299,18 +263,53 @@ export const fetchFavoriteConventionsByUserId = (userId) => {
   };
 };
 
+export const ADD_TO_FAVORITES_REQUEST = "ADD_TO_FAVORITES_REQUEST";
+export const ADD_TO_FAVORITES_SUCCESS = "ADD_TO_FAVORITES_SUCCESS";
+export const ADD_TO_FAVORITES_FAILURE = "ADD_TO_FAVORITES_FAILURE";
+export const addToFavorites = (userId, conventionId) => {
+  return (dispatch) => {
+    dispatch({ type: ADD_TO_FAVORITES_REQUEST });
+
+    const token = localStorage.getItem("token");
+
+    fetch(`${urlprofile}/me/favorites/${conventionId}`, {
+      method: "POST",
+      headers: {
+        Authorization: token,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Impossibile aggiungere la convention ai preferiti");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        dispatch({
+          type: ADD_TO_FAVORITES_SUCCESS,
+          payload: data,
+        });
+      })
+      .catch((error) => {
+        dispatch({
+          type: ADD_TO_FAVORITES_FAILURE,
+          payload: error.message,
+        });
+      });
+  };
+};
+
 export const REMOVE_FROM_FAVORITES_REQUEST = "REMOVE_FROM_FAVORITES_REQUEST";
 export const REMOVE_FROM_FAVORITES_SUCCESS = "REMOVE_FROM_FAVORITES_SUCCESS";
 export const REMOVE_FROM_FAVORITES_FAILURE = "REMOVE_FROM_FAVORITES_FAILURE";
 
-export const removeFromFavoritesRequest = (conventionId) => ({
+export const removeFromFavoritesRequest = () => ({
   type: REMOVE_FROM_FAVORITES_REQUEST,
-  payload: conventionId,
 });
 
-export const removeFromFavoritesSuccess = (conventionId) => ({
+export const removeFromFavoritesSuccess = (data) => ({
   type: REMOVE_FROM_FAVORITES_SUCCESS,
-  payload: conventionId,
+  payload: data,
 });
 
 export const removeFromFavoritesFailure = (error) => ({
@@ -334,16 +333,14 @@ export const removeFromFavorites = (userId, conventionId) => {
         if (!response.ok) {
           throw new Error("Impossibile rimuovere la convention dai preferiti");
         }
-        return response.json(); 
+        return response.json();
       })
       .then((data) => {
-        const conventionId = data.conventionId; 
-        dispatch(removeFromFavoritesSuccess(conventionId));
+        console.log(data);
+        dispatch(removeFromFavoritesSuccess(data));
       })
       .catch((error) => {
         dispatch(removeFromFavoritesFailure(error.message));
       });
   };
 };
-
-

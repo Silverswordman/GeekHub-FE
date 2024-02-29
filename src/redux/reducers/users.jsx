@@ -146,10 +146,10 @@ const usersReducer = (state = initialState, action) => {
         ...state,
         removingFromFavorites: false,
         favoriteConventions: state.favoriteConventions.filter(
-          (convention) => convention.conventionId !== action.payload
+          (convention) =>
+            convention.conventionId !== action.payload.conventionId
         ),
       };
-
     case REMOVE_FROM_FAVORITES_FAILURE:
       return {
         ...state,
