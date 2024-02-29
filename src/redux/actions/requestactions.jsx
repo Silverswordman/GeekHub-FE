@@ -146,10 +146,17 @@ export const sendRequestSuccess = () => ({
   type: SEND_REQUEST_SUCCESS,
 });
 
-export const sendRequestFailure = (error) => ({
-  type: SEND_REQUEST_FAILURE,
-  payload: error,
-});
+export const sendRequestFailure = (error) => {
+  let errorMessage = error;
+  if (error === '{"message":"Problema lato server."}') {
+    errorMessage = "Puoi inviare solo una richiesta alla volta.";
+  }
+  return {
+    type: SEND_REQUEST_FAILURE,
+    payload: errorMessage,
+  };
+};
+
 
 export const sendRequest = (message) => {
   return async (dispatch) => {
@@ -170,9 +177,9 @@ export const sendRequest = (message) => {
       );
 
       if (!response.ok) {
-        const errorMessage = await response.text(); 
-        dispatch(sendRequestFailure(errorMessage)); 
-        return; 
+        const errorMessage = await response.text(); // Estrai il messaggio di errore dalla risposta
+        dispatch(sendRequestFailure(errorMessage)); // Passa il messaggio di errore al reducer
+        return; // Esci dalla funzione per evitare di continuare con il successo
       }
 
       dispatch(sendRequestSuccess());
