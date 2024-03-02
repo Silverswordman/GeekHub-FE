@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import {
   addToFavorites,
-  fetchFavoriteConventions,
   removeFromFavorites,
 } from "../redux/actions/profileactions";
 
@@ -22,8 +21,12 @@ import { LuArrowBigLeftDash, LuArrowBigRightDash } from "react-icons/lu";
 
 import { BsPencilFill } from "react-icons/bs";
 import { RiDeleteBin6Line } from "react-icons/ri";
-
+import { FaHeart } from "react-icons/fa";
+import { FaHeartBroken } from "react-icons/fa";
 import { MdOutlineFiberNew } from "react-icons/md";
+import { IoMdPin } from "react-icons/io";
+import { IoCalendarNumberSharp } from "react-icons/io5";
+import { TiStarFullOutline } from "react-icons/ti";
 
 import {
   Container,
@@ -164,13 +167,13 @@ const ConventionDetail = () => {
   if (!conventionDetail) return null;
 
   return (
-    <Container className="my-5">
+    <Container className="my-5 fadefromleft">
       <Row>
         <Col className="col-12 col-sm-11 col-md-6 my-3">
           <Card className="p-5 bg-primary bg-gradient  border-info border-4 shadow-lg text-white">
             <Card.Img
               variant="top"
-              className={`border mb-4 border-info border-5 rounded-start-5 rounded-top-5 position-relative ${
+              className={`bg-secondary bg-gradient border mb-4 border-info border-5 rounded-start-5 rounded-top-5 position-relative ${
                 role !== "ADMIN" &&
                 userId !== conventionDetail.creator.userId &&
                 "no-pointer"
@@ -206,7 +209,7 @@ const ConventionDetail = () => {
                 <Card.Img
                   variant="top"
                   src={conventionDetail.logo}
-                  className={`w-50 border border-4 border-info bg-success rounded-pill position-relative ${
+                  className={`w-50 border border-4 border-info bg-success rounded-pill position-relative  ${
                     role !== "ADMIN" &&
                     userId !== conventionDetail.creator.userId &&
                     "no-pointer"
@@ -225,7 +228,7 @@ const ConventionDetail = () => {
                   <Badge
                     pill
                     bg="primary"
-                    className="position-absolute translate-middle-x badge bg-primary border border-1 border border-2 border-info"
+                    className="position-absolute translate-middle-x badge bg-primary border border-1 border border-2 border-info "
                     style={{
                       width: "30px",
                       height: "25px",
@@ -246,26 +249,37 @@ const ConventionDetail = () => {
             </Row>
 
             <Card.Text className="text-center fw-bolder fst-italic text-white ">
+              <IoCalendarNumberSharp className="me-1" />
+              Dal{" "}
               {format(new Date(conventionDetail.startDate), "dd/MMMM/yyyy", {
                 locale: it,
               })}
             </Card.Text>
             <Card.Text className="text-center fw-bolder fst-italic text-white ">
+              al{" "}
               {format(new Date(conventionDetail.endDate), "dd/MMMM/yyyy", {
                 locale: it,
               })}
             </Card.Text>
             <Card.Text className="text-white fw-medium ">
-              {conventionDetail.description}
-            </Card.Text>
-            <Card.Text className="text-white fw-medium ">
-              {conventionDetail.address}
-            </Card.Text>
-            <Card.Text className="text-white fw-medium ">
+              <IoMdPin />
               {conventionDetail.region.regionName} ,{" "}
               {conventionDetail.province.sigla},{" "}
               {conventionDetail.city.cityName}
             </Card.Text>
+            <Card.Text className="text-white fw-medium ">
+              <IoMdPin className="text-info " />
+              {conventionDetail.address}
+            </Card.Text>
+
+            <Link
+              as={Link}
+              to={conventionDetail.site}
+              target="blank"
+              className="fade-in-text text-white fw-medium  small text-decoration-none  "
+            >
+              {conventionDetail.site}
+            </Link>
             {(role === "ADMIN" ||
               userId === conventionDetail.creator.userId) && (
               <Row className="mt-5 mb-1 justify-content-end ">
@@ -273,7 +287,7 @@ const ConventionDetail = () => {
                   <Link to={`/updateconvention/${conventionId}`}>
                     <Button
                       variant="danger"
-                      className="btn-sm border border-2 border-info  text-secondary  fw-bold shadow-sm rounded-pill px-2"
+                      className="btn-sm border border-2 border-info  text-secondary  fw-bold shadow-sm rounded-pill px-2 hover-scale"
                     >
                       Modifica <BsPencilFill />
                     </Button>
@@ -282,7 +296,7 @@ const ConventionDetail = () => {
                 <Col className="col-12 col-sm-12 col-md-6 col-lg-3 text-end align-content-center ">
                   <Button
                     variant="warning"
-                    className="btn-sm border border-2 border-info  text-secondary fw-bold shadow-sm rounded-pill px-2"
+                    className="btn-sm border border-2 border-info  text-secondary fw-bold shadow-sm rounded-pill px-2 hover-scale"
                     onClick={() => setShowDeleteModal(true)}
                   >
                     Elimina <RiDeleteBin6Line />
@@ -296,17 +310,19 @@ const ConventionDetail = () => {
                   {isFavorite ? (
                     <Button
                       variant="outline-info"
-                      className="btn-sm rounded-pill border border-2 border-white fw-bold"
+                      className="btn-sm rounded-pill border border-2 border-white fw-bold hover-scale"
                       onClick={handleRemoveFromFavorites}
                     >
+                      <FaHeartBroken className="me-1 " />
                       Rimuovi dai preferiti
                     </Button>
                   ) : (
                     <Button
                       variant="info"
-                      className="btn-sm rounded-pill border border-2 border-white fw-bold"
+                      className="btn-sm rounded-pill border border-2 border-white fw-bold hover-scale"
                       onClick={handleAddToFavorites}
                     >
+                      <FaHeart className="me-1" />
                       Aggiungi ai preferiti
                     </Button>
                   )}
@@ -316,14 +332,14 @@ const ConventionDetail = () => {
           </Card>
         </Col>
         <Col className="col-11 col-md-6 col-lg-5">
-          <h2 className="text-info text-center fw-bolder  fst-italic   fs-1 shadow-sm ">
-            Sections
-          </h2>
+          <p className="text-info text-center fw-bolder  fst-italic fs-1 shadow-sm ">
+            Aree & Eventi
+          </p>
           {sections.content &&
             sections.content.map((section) => (
               <Card
                 key={section.sectionId}
-                className="p-1 bg-primary bg-gradient border-info border-4 shadow-lg my-3"
+                className="p-1 my-3 mx-2 bg-transparent bg-gradient border-info border-4 shadow-lg  hover-scale"
               >
                 <Card.Body>
                   <Link
@@ -334,7 +350,9 @@ const ConventionDetail = () => {
                       src={section.sectionImage}
                       className="w-50 border border-4 border-info rounded-start-5 rounded-top-5 mb-4 mb-md-2"
                     />
-                    <Card.Title className="text-center text-white fw-bolder fst-italic">
+
+                    <Card.Title className="text-center text-white fw-bolder fst-italic align-content-baseline mt-2  align-self-center">
+                      <TiStarFullOutline className="me-1 mb-1 " />{" "}
                       {section.sectionTitle}
                     </Card.Title>
                     <Card.Text className="text-black fw-medium text-white ">
@@ -348,14 +366,14 @@ const ConventionDetail = () => {
             <Button
               onClick={prevPage}
               disabled={page === 0}
-              className="text-primary-subtle bg-primary border-1 border-info "
+              className="text-primary-subtle bg-primary border-1 border-info hover-scale"
             >
-              <LuArrowBigLeftDash className="fs-5 fw-bolder" />
+              <LuArrowBigLeftDash className="fs-5 fw-bolder " />
             </Button>
             <Button
               onClick={nextPage}
               disabled={page + 1 === totalPages}
-              className="text-primary-subtle bg-primary border-1 border-info "
+              className="text-primary-subtle bg-primary border-1 border-info hover-scale"
             >
               <LuArrowBigRightDash className="fs-5 fw-bolder" />
             </Button>
@@ -365,9 +383,9 @@ const ConventionDetail = () => {
               <Link to={`/conventions/${conventionId}/add-section`}>
                 {(role === "ADMIN" ||
                   userId === conventionDetail.creator.userId) && (
-                  <Button className="text-primary bg-info rounded-pill border border-2 border-white fw-bold btn-sm ">
+                  <Button className="text-primary bg-info rounded-pill border border-2 border-white fw-bold btn-sm hover-scale">
                     <MdOutlineFiberNew className="fw-2 fs-2" />
-                    Crea una nuova sezione
+                    Crea una nuova Area
                   </Button>
                 )}
               </Link>
@@ -387,17 +405,21 @@ const ConventionDetail = () => {
         <Modal.Header closeButton className="bg-info-subtle">
           <Modal.Title>Conferma eliminazione</Modal.Title>
         </Modal.Header>
-        <Modal.Body className="bg-primary-subtle">
-          Sei sicuro di voler eliminare questa convenzione?
+        <Modal.Body className="bg-primary-subtle fw-semibold">
+          Sei sicuro di voler eliminare quest'evento?
         </Modal.Body>
         <Modal.Footer className="bg-info-subtle">
-          <Button variant="danger" onClick={handleDelete} className="fw-bolder">
+          <Button
+            variant="danger"
+            onClick={handleDelete}
+            className="fw-bolder hover-scale"
+          >
             Si
           </Button>
           <Button
             variant="primary"
             onClick={() => setShowDeleteModal(false)}
-            className="fw-bolder"
+            className="fw-bolder hover-scale"
           >
             No
           </Button>
@@ -426,14 +448,14 @@ const ConventionDetail = () => {
             <Button
               variant="danger"
               onClick={() => setShowLogoModal(false)}
-              className="fw-bolder"
+              className="fw-bolder hover-scale"
             >
               Chiudi
             </Button>
             <Button
               variant="primary"
               onClick={handleLogoUpload}
-              className="fw-bolder"
+              className="fw-bolder hover-scale"
             >
               Salva
             </Button>
@@ -441,13 +463,12 @@ const ConventionDetail = () => {
         </Modal>
       )}
 
-      {/* Cover Upload Modal */}
       {(role === "ADMIN" || userId === conventionDetail.creator.userId) && (
         <Modal show={showCoverModal} onHide={() => setShowCoverModal(false)}>
           <Modal.Header closeButton className="bg-info-subtle">
             <Modal.Title>Cambia l' immagine dell'Evento</Modal.Title>
           </Modal.Header>
-          <Modal.Body className="bg-primary-subtle">
+          <Modal.Body className="bg-primary-subtle fw-semibold">
             <p>Dimensioni massime per dell'immagine 1MB</p>
             <input
               type="file"
@@ -463,14 +484,14 @@ const ConventionDetail = () => {
             <Button
               variant="danger"
               onClick={() => setShowCoverModal(false)}
-              className="fw-bolder"
+              className="fw-bolder hover-scale"
             >
               Chiudi
             </Button>
             <Button
               variant="primary"
               onClick={handleCoverUpload}
-              className="fw-bolder"
+              className="fw-bolder hover-scale"
             >
               Salva
             </Button>

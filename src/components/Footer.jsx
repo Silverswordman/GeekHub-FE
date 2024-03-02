@@ -17,7 +17,7 @@ function PageFooter() {
             rel="noopener noreferrer"
             className="fs-5 mx-3"
           >
-            <FaLinkedin className="text-info" />
+            <FaLinkedin className="text-info hover-scale" />
           </a>
           <a
             href="https://github.com/Silverswordman"
@@ -25,7 +25,7 @@ function PageFooter() {
             rel="noopener noreferrer"
             className="fs-5"
           >
-            <FaGithub className="text-info" />
+            <FaGithub className="text-info hover-scale" />
           </a>
         </Col>
       </Row>

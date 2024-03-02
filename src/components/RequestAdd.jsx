@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Button, Form, Card, Container } from "react-bootstrap";
+import { useState } from "react";
+import { Button, Form, Card, Container, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { sendRequest } from "../redux/actions/requestactions";
 
@@ -22,13 +22,13 @@ const RequestForm = () => {
   };
 
   return (
-    <Container>
+    <Container className="fadefromtop">
       <Card className="bg-transparent border border-4 border-info mt-5 p-4">
-        {error && <div className="text-danger">{error}</div>}
+        {error && <div className="text-danger fs-5 fw-semibold ">{error}</div>}
         <Form>
           <Form.Group controlId="message">
             <Form.Label className="text-info fw-bold fs-5">
-              Send Request
+              Manda una richiesta per diventare un Event Planner!
             </Form.Label>
             <Form.Control
               as="textarea"
@@ -38,13 +38,18 @@ const RequestForm = () => {
               placeholder="Enter your message..."
             />
           </Form.Group>
-          <Button
-            variant="primary"
-            onClick={handleSendRequest}
-            disabled={loading}
-          >
-            {loading ? "Sending..." : "Send Request"}
-          </Button>
+          <Row>
+            <Col className="text-end ">
+              <Button
+                className="btn-sm rounded-pill border border-4 border-white fw-semibold shadow-sm hover-scale mt-2"
+                variant="info"
+                onClick={handleSendRequest}
+                disabled={loading}
+              >
+                {loading ? "Sending..." : "Send Request"}
+              </Button>
+            </Col>
+          </Row>
         </Form>
       </Card>
     </Container>

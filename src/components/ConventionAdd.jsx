@@ -225,7 +225,7 @@ const ConventionForm = () => {
                 </Form.Group>
                 <Button
                   type="submit"
-                  className="bg-info text-primary fw-bolder border border-3  border-primary-subtle mt-3"
+                  className="bg-info text-primary fw-bolder border border-3  border-primary-subtle mt-3 hover-scale"
                 >
                   Salva
                 </Button>

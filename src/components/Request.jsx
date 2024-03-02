@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   fetchRequests,
@@ -6,6 +6,7 @@ import {
   declineRequest,
 } from "../redux/actions/requestactions";
 import { Card, Button, Row, Col, Container, Spinner } from "react-bootstrap";
+import { LuArrowBigLeftDash, LuArrowBigRightDash } from "react-icons/lu";
 
 const RequestsList = () => {
   const dispatch = useDispatch();
@@ -61,12 +62,12 @@ const RequestsList = () => {
   }
 
   return (
-    <Container>
+    <Container className="fadefromleft">
       <Row className="mt-3 justify-content-center">
         <Card className="col-7 text-primary fs-3 bg-info-subtle oorder border-4 border-success mt-5 m-1">
           <Card.Body>
             <Card.Title className="fs-3 fw-semibold fst-italic">
-              Lista Richieste
+              Lista Richieste 
             </Card.Title>
 
             {requests.map((request) => (
@@ -75,24 +76,22 @@ const RequestsList = () => {
                   L'utente <span className="fw-bold">{request.name} </span> con
                   la mail <span className="fw-bold">{request.email} </span>{" "}
                   invia questo messaggio per esser accettat* come event planner:
-                  
                   <span className="fw-bold fst-italic">
                     {" "}
                     {request.message}{" "}
                   </span>
-                  
                 </li>
                 <Row className="text-end">
                   <Col>
                     <Button
-                      className="btn-sm rounded-pill border border-4 border-info fw-bold shadow-sm "
+                      className="btn-sm rounded-pill border border-4 border-info fw-bold shadow-sm hover-scale "
                       variant="success"
                       onClick={() => handleAcceptRequest(request.requestId)}
                     >
                       Accetta
                     </Button>
                     <Button
-                      className="btn-sm rounded-pill border border-4 border-info fw-bold shadow-sm "
+                      className="btn-sm rounded-pill border border-4 border-info fw-bold shadow-sm hover-scale "
                       variant="danger"
                       onClick={() => handleDeclineRequest(request.requestId)}
                     >
@@ -109,9 +108,9 @@ const RequestsList = () => {
                   variant="primary"
                   onClick={handlePrevPage}
                   disabled={currentPage === 0}
-                  className="btn btn-small"
+                  className="btn btn-small hover-scale"
                 >
-                  Previous
+                  <LuArrowBigLeftDash />
                 </Button>
               </Col>
               <Col className="text-start">
@@ -119,9 +118,9 @@ const RequestsList = () => {
                   variant="primary"
                   onClick={handleNextPage}
                   disabled={currentPage === totalPages - 1}
-                  className="btn btn-small"
+                  className="btn btn-small hover-scale"
                 >
-                  Next
+                  <LuArrowBigRightDash />
                 </Button>
               </Col>
             </Row>

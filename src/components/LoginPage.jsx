@@ -27,7 +27,7 @@ const LoginComponent = () => {
   };
 
   return (
-    <Container>
+    <Container className="fadefromleft">
       <Row className="flex-column">
         <Col>
           <Card className="bg-transparent border border-4 border-info mt-5 p-2 p-md-5 pe-md-4">
@@ -36,11 +36,11 @@ const LoginComponent = () => {
                 <Row>
                   <Col className="col-11 fle pe-0">
                     <Form.Label className="text-info fw-bold">
-                      Login Email
+                      Email{" "}
                     </Form.Label>
                     <Form.Control
                       type="email"
-                      placeholder="Inserisci la tua Email"
+                      placeholder="Inserisci qui la tua Email con cui ti sei registrato"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       className="mb-3"
@@ -55,14 +55,14 @@ const LoginComponent = () => {
                   <Col className="col-10 pe-0 flex-grow-1 ">
                     <Form.Control
                       type={showPassword ? "text" : "password"}
-                      placeholder="Password"
+                      placeholder="Inserisci qui la tua password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                     />
                   </Col>
                   <Col className="col-1 p-0 ">
                     <Button
-                      className="text-white border-2 btn-outline-info"
+                      className="text-white border-2 btn-outline-info "
                       onClick={() => setShowPassword(!showPassword)}
                     >
                       {showPassword ? <IoEye /> : <IoEyeOff />}
@@ -75,13 +75,13 @@ const LoginComponent = () => {
                   <Button
                     onClick={() => navigate("/register")}
                     variant="light"
-                    className="rounded-pill border border-4 border-info fw-bold shadow-sm my-4  me-4"
+                    className="rounded-pill border border-4 border-info fw-bold shadow-sm my-4  me-4 hover-scale"
                   >
                     Register
                   </Button>
                   <Button
                     variant="success"
-                    className="rounded-pill border border-4 border-info fw-bold shadow-sm my-4"
+                    className="rounded-pill border border-4 border-info fw-bold shadow-sm my-4 hover-scale"
                     type="submit"
                   >
                     Login

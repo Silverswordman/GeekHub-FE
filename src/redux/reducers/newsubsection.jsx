@@ -42,7 +42,7 @@ const subsectionReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: null,
-        subsection: null,
+        subsection: state.subsection,
       };
     case SAVE_SUBSECTION_FAILURE:
     case UPDATE_SUBSECTION_FAILURE:

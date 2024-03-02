@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import {Button} from "react-bootstrap";
-import { LuArrowBigLeftDash,LuArrowBigRightDash } from "react-icons/lu";
+import { Button, Row,Col } from "react-bootstrap";
+import { LuArrowBigLeftDash, LuArrowBigRightDash } from "react-icons/lu";
 
 const NavigationButtons = () => {
   const navigate = useNavigate();
@@ -23,14 +23,26 @@ const NavigationButtons = () => {
   const canGoForward = true;
 
   return (
-    <div>
-      <Button onClick={goBack} disabled={!canGoBack} className="bg-info text-primary  text-center rounded-pill">
-      <LuArrowBigLeftDash className="fs-5" />
-      </Button>
-      <Button onClick={goForward} disabled={!canGoForward} className="bg-info text-primary  text-center rounded-pill ">
-      <LuArrowBigRightDash className="fs-5"/>
-      </Button>
-    </div>
+    <Row className="ms-2  justify-content-end">
+      <Col className="pe-0">
+        <Button
+          onClick={goBack}
+          disabled={!canGoBack}
+          className="bg-info text-primary  text-center rounded-pill hover-scale"
+        >
+          <LuArrowBigLeftDash className="fs-5" />
+        </Button>
+      </Col>
+      <Col className="ps-1">
+        <Button
+          onClick={goForward}
+          disabled={!canGoForward}
+          className="bg-info text-primary  text-center rounded-pill  hover-scale"
+        >
+          <LuArrowBigRightDash className="fs-5" />
+        </Button>
+      </Col>
+    </Row>
   );
 };
 

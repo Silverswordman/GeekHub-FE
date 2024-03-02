@@ -84,10 +84,10 @@ const AddSection = () => {
                 />
               </Form.Group>
               <Button
-                className="bg-info text-primary fw-bolder border border-3 shadow-sm border-primary-subtle mt-3"
+                className="bg-info text-primary fw-bolder border border-3 shadow-sm border-primary-subtle mt-3 hover-scale"
                 type="submit"
               >
-                Aggiungi Nuova Sezione
+                Aggiungi Nuova Area
               </Button>
             </Form>
           </Card>
@@ -100,7 +100,7 @@ const AddSection = () => {
               variant="info"
               className="mt-3 border-primary fw-bolder fst-italic "
             >
-              Sezione creata correttamente
+              Area creata correttamente
             </Alert>
           </Col>
         </Row>

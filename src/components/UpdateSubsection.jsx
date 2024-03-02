@@ -74,7 +74,7 @@ const UpdateSubsectionForm = () => {
           <Card className="p-4 bg-primary-subtle">
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="subsectionTitle">
-                <Form.Label className="fw-bolder">Subsection Title</Form.Label>
+                <Form.Label className="fw-bolder">Nuovo Titolo</Form.Label>
                 <Form.Control
                   type="text"
                   name="subsectionTitle"
@@ -85,8 +85,7 @@ const UpdateSubsectionForm = () => {
               </Form.Group>
               <Form.Group controlId="subsectionDescription">
                 <Form.Label className="fw-bolder">
-                  Subsection Description
-                </Form.Label>
+Inserisci qui la nuova descrizione del tuo evento e/o servizio                </Form.Label>
                 <Form.Control
                   as="textarea"
                   rows={3}
@@ -97,20 +96,20 @@ const UpdateSubsectionForm = () => {
                 />
               </Form.Group>
               <Form.Group controlId="subsectionTime">
-                <Form.Label className="fw-bolder">Subsection Time</Form.Label>
+                <Form.Label className="fw-bolder">Orario</Form.Label>
                 <Form.Control
                   type="text"
                   name="subsectionTime"
                   value={subsectionData.subsectionTime || ""}
                   onChange={handleChange}
-                  placeholder="Tempo della sottosezione"
+                  placeholder="Puoi modificare qui l'orario"
                 />
               </Form.Group>
               <Button
-                className="bg-info text-primary fw-bolder border border-3 border-primary-subtle mt-3"
+                className="bg-info text-primary fw-bolder border border-3 border-primary-subtle mt-3 hover-scale"
                 type="submit"
               >
-                Update Subsection
+               Conferma modifiche
               </Button>
             </Form>
           </Card>
@@ -123,7 +122,7 @@ const UpdateSubsectionForm = () => {
               variant="info"
               className="mt-3 border-primary fw-bolder fst-italic"
             >
-              Sottosezione aggiornata correttamente
+              Modifiche aggiornate correttamente
             </Alert>
           </Col>
         </Row>

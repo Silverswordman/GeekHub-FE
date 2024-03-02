@@ -20,6 +20,7 @@ import RequestList from "./components/Request";
 import SendRequestComponent from "./components/RequestAdd";
 import UserList from "./components/AllUsers";
 import UserProfile from "./components/UserProfile";
+import FirstPage from "./components/FirstPage";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           <NavbarCustom />
 
           <Routes>
+          <Route path="/" element={<FirstPage />} />
             <Route path="/home" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route

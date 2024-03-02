@@ -6,6 +6,7 @@ import { getConventions } from "../redux/actions/conventionactions";
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
 import it from "date-fns/locale/it";
+import { IoMdPin } from "react-icons/io";
 
 const CustomHomeCarousel = () => {
   const dispatch = useDispatch();
@@ -31,7 +32,7 @@ const CustomHomeCarousel = () => {
     });
 
   return (
-    <Container className="mt-5 bg-gradient rounded-pill ">
+    <Container className="mt-1 bg-gradient rounded-pill fadefromleft">
       {sortedConventions.length > 0 && (
         <Carousel data-bs-theme="light">
           {sortedConventions.map((convention) => (
@@ -42,7 +43,7 @@ const CustomHomeCarousel = () => {
               >
                 <Container>
                   <Row className="px-md-5">
-                    <h4 className="text-center fw-bolder fst-italic text-white my-4 ">
+                    <h2 className="text-center fw-bolder fst-italic text-white my-4 ">
                       {" "}
                       <span className="fst-italic fw-lighter">Dal</span>{" "}
                       {format(new Date(convention.startDate), "dd MMMM yyyy", {
@@ -52,7 +53,7 @@ const CustomHomeCarousel = () => {
                       {format(new Date(convention.endDate), " dd MMMM yyyy", {
                         locale: it,
                       })}
-                    </h4>
+                    </h2>
                     <Col className="ms-md-5">
                       <div
                         className=" border border-info border-4 rounded-end-5 rounded-top-5 bg-primary "
@@ -67,12 +68,13 @@ const CustomHomeCarousel = () => {
                     </Col>
                     <Col>
                       <Card className="bg-transparent border-0">
-                        <Card.Text className="text-info fs-1 fw-bold fst-italic shadow-sm">
+                        <Card.Text className="text-info fs-1 fw-bold fst-italic shadow-sm hover-scale">
                           {convention.title}
                         </Card.Text>
                         <Card.Text className="text-white fs-4 fw-bold fst-italic">
-                          {convention.region.regionName},
-                          {convention.city.cityName}{" "}
+                          <IoMdPin className="me-1"></IoMdPin>
+                          {convention.city.cityName} ,{" "}
+                          {convention.region.regionName}
                         </Card.Text>
                         <Card.Text className="text-white">
                           {convention.address}

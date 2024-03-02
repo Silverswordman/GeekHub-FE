@@ -60,7 +60,7 @@ const RegistrationComponent = () => {
   }
 
   return (
-    <Container>
+    <Container className="fadefromleft">
       <Card className="bg-transparent border border-4 border-info mt-5 p-4">
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="username">

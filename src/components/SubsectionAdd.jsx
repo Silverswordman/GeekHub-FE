@@ -58,49 +58,49 @@ const AddSubsection = () => {
   };
 
   return (
-    <Container>
+    <Container className="fadefromleft">
       <Row className="justify-content-center mt-4">
         <Col className="col-11 col-md-8">
           <Card className="p-4 bg-primary-subtle">
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="subsectionTitle">
-                <Form.Label className="fw-bolder">Subsection Title</Form.Label>
+                <Form.Label className="fw-bolder">Titolo</Form.Label>
                 <Form.Control
                   type="text"
                   name="subsectionTitle"
                   value={subsectionData.subsectionTitle}
                   onChange={handleChange}
-                  placeholder="Titolo della sottosezione"
+                  placeholder="Inserisci qui il titolo di quest'evento o servizio o simili"
                 />
               </Form.Group>
               <Form.Group controlId="subsectionDescription">
-                <Form.Label className="fw-bolder">
-                  Subsection Description
-                </Form.Label>
+                <Form.Label className="fw-bolder">Descrizione </Form.Label>
                 <Form.Control
                   as="textarea"
                   rows={3}
                   name="subsectionDescription"
                   value={subsectionData.subsectionDescription}
                   onChange={handleChange}
-                  placeholder="Descrizione della sottosezione"
+                  placeholder="Qui puoi descrivere più accuratamente tutto ciò che comporta quest'evento o servizio della fiera esempio:Torneo di FIFA, Sfilata Cosplay, Incontro Autore ecc..."
                 />
               </Form.Group>
               <Form.Group controlId="subsectionTime">
-                <Form.Label className="fw-bolder">Subsection Time</Form.Label>
+                <Form.Label className="fw-bolder">
+                  Orario (non obbligatorio)
+                </Form.Label>
                 <Form.Control
                   type="text"
                   name="subsectionTime"
                   value={subsectionData.subsectionTime}
                   onChange={handleChange}
-                  placeholder="Tempo della sottosezione"
+                  placeholder="Che sia tutta la giornata o un orario preciso scrivilo qui !"
                 />
               </Form.Group>
               <Button
-                className="bg-info text-primary fw-bolder border border-3 border-primary-subtle mt-3"
+                className=" hover-scale bg-info text-primary fw-bolder border border-3 border-primary-subtle mt-3 "
                 type="submit"
               >
-                Add Subsection
+                Sezione salvata
               </Button>
             </Form>
           </Card>
@@ -113,7 +113,7 @@ const AddSubsection = () => {
               variant="info"
               className="mt-3 border-primary fw-bolder fst-italic"
             >
-              Sottosezione creata correttamente
+              Sezione creata correttamente{" "}
             </Alert>
           </Col>
         </Row>

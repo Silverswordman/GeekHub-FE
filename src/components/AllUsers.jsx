@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom"; // Importa Link
+import { Link } from "react-router-dom";
 import { fetchUsers } from "../redux/actions/profileactions";
 import { setCurrentPage } from "../redux/actions/profileactions";
 import { Button, Row, Col, Spinner, Card } from "react-bootstrap";
+import { LuArrowBigLeftDash, LuArrowBigRightDash } from "react-icons/lu";
 
 const UserList = () => {
   const dispatch = useDispatch();
@@ -49,7 +50,7 @@ const UserList = () => {
 
   return (
     <>
-      <Row className="my-2 w-100 justify-content-center">
+      <Row className="my-2 w-100 justify-content-center fadefromtop">
         {Array.isArray(users) &&
           users.map((user) => (
             <Col
@@ -60,12 +61,14 @@ const UserList = () => {
                 to={`/users/${user.userId}`}
                 className="text-decoration-none"
               >
-                <Card className="bg-info-subtle text-primary border-success border-4 shadow-lg p-4  ">
+                <Card className="bg-transparent bg-gradient text-white border-success-subtle border-4 shadow-lg p-4 hover-scale ">
                   <Card.Img
                     src={user.avatar}
-                    className="w-25 rounded-pill border border-4 border-primary"
+                    className="w-25 rounded-pill border border-4 border-info"
                   ></Card.Img>
-                  <Card.Text>Username: {user.username}</Card.Text>
+                  <Row className="text-end fs-5 fw-semibold fst-italic">
+                    <Card.Text> {user.username}</Card.Text>
+                  </Row>
                   <Card.Text>
                     {user.name} {user.surname}
                   </Card.Text>
@@ -76,11 +79,19 @@ const UserList = () => {
       </Row>
       <Row className="text-center">
         <Col>
-          <Button onClick={prevPage} disabled={currentPage === 0}>
-            Previous Page
+          <Button
+            onClick={prevPage}
+            disabled={currentPage === 0}
+            className="text-primary-subtle bg-primary border-1 border-info hover-scale "
+          >
+            <LuArrowBigLeftDash className="fs-5 fw-bolder" />{" "}
           </Button>
-          <Button onClick={nextPage} disabled={currentPage === totalPages - 1}>
-            Next Page
+          <Button
+            onClick={nextPage}
+            disabled={currentPage === totalPages - 1}
+            className="text-primary-subtle bg-primary border-1 border-info hover-scale "
+          >
+            <LuArrowBigRightDash className="fs-5 fw-bolder" />
           </Button>
         </Col>
       </Row>

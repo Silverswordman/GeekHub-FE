@@ -26,21 +26,23 @@ const UserProfile = () => {
   }
 
   return (
-    <Container className="my-4">
+    <Container className="my-4 fadefromleft">
       <Row className="justify-content-center">
         <Col className="col-11 col-sm-10 col-md-9 col-lg-6">
           {userProfile && (
-            <Card className="bg-info-subtle text-primary border-success border-4 shadow-lg p-4">
-              <Row >
-                <Col className="col-12">
+            <Card className="bg-transparent bg-gradient text-white border-info border-4 shadow-lg p-4">
+              <Row className="mb-3 align-items-center justify-content-center justify-content-md-start">
+                <Col className="col-9 col-md-4">
                 <Card.Img
                   src={userProfile.avatar}
-                  className="rounded-circle border border-4 border-success w-50"
+                  className="rounded-circle border border-4 border-success-subtle w-100 hover-scale"
                 />
                 </Col>
+                <Col className="col-7 text-start ">
+                <Card.Title className="fs-1 fst-italic"> {userProfile.username}</Card.Title>
+                </Col>
               </Row>
-              <Card.Text> {userProfile.name}</Card.Text>
-              <Card.Text> {userProfile.surname}</Card.Text>
+              <Card.Text className="fs-5"> {userProfile.name} {userProfile.surname}</Card.Text>
             </Card>
           )}
         </Col>

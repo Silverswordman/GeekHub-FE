@@ -100,10 +100,10 @@ const UpdateSectionForm = () => {
                 />
               </Form.Group>
               <Button
-                className="bg-info text-primary fw-bolder border border-3  border-primary-subtle mt-3"
+                className="bg-info text-primary fw-bolder border border-3  border-primary-subtle mt-3 hover-scale"
                 type="submit"
               >
-                Aggiorna Sezione
+                Aggiorna Area
               </Button>
             </Form>
           </Card>
@@ -116,7 +116,7 @@ const UpdateSectionForm = () => {
               variant="info"
               className="mt-3 border-primary fw-bolder fst-italic"
             >
-              Sezione aggiornata correttamente
+              Area aggiornata correttamente
             </Alert>
           </Col>
         </Row>

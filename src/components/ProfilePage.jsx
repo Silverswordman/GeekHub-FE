@@ -17,8 +17,9 @@ import {
   fetchProfile,
   uploadProfilePicture,
 } from "../redux/actions/profileactions";
-import UserFavorites from "./UserFavorites"; 
-
+import UserFavorites from "./UserFavorites";
+import { IoMdAddCircle } from "react-icons/io";
+import { BsPersonBoundingBox } from "react-icons/bs";
 
 const ProfileComponent = () => {
   const dispatch = useDispatch();
@@ -69,14 +70,17 @@ const ProfileComponent = () => {
     <Container className="my-4">
       <Row className="justify-content-center">
         <Col className="col-11 col-md-7 col-lg-6">
-          <Card className="bg-info-subtle border-success border-4 shadow-lg p-4">
+          <Card className="bg-transparent bg-gradient  border-info border-4 shadow-lg p-4">
             {profileDetail && profileDetail.loading && (
-              <Spinner animation="grow" className="text-primary" size="sm" />
+              <Spinner animation="grow" className="text-white" size="sm" />
             )}
             {profileDetail && profileDetail.profile && (
               <Card.Body>
-                <Card.Text className="fw-bolder fs-3 fst-italic text-center text-primary">
-                  Benvenuto! {profileDetail.profile.username}
+                <Card.Text className="fw-bolder fs-3  text-center text-white">
+                  Benvenuto!{" "}
+                  <h3 className="text-info fw-semibold  fst-italic">
+                    {profileDetail.profile.username}
+                  </h3>
                 </Card.Text>
                 <Row className="justify-content-center">
                   <Card.Img
@@ -88,7 +92,7 @@ const ProfileComponent = () => {
                     <Badge
                       pill
                       bg="primary"
-                      className="position-absolute top-100 start-50 translate-middle badge bg-primary"
+                      className="position-absolute top-100 start-50 translate-middle badge bg-success-subtle z-1 "
                       style={{
                         width: "30px",
                         height: "25px",
@@ -96,12 +100,12 @@ const ProfileComponent = () => {
                         cursor: "pointer",
                       }}
                     >
-                      <BsPencilFill />
+                      <BsPencilFill className="text-muted" />
                     </Badge>
                     {profileDetail.loading ? (
                       <Spinner
                         animation="grow"
-                        className="text-primary"
+                        className="text-white"
                         size="sm"
                       />
                     ) : (
@@ -116,74 +120,114 @@ const ProfileComponent = () => {
                         <img
                           src={profileDetail.profile.avatar}
                           alt="Avatar"
-                          className="w-100 h-100 rounded-circle border border-5 border-primary"
+                          className="w-100 h-100 rounded-circle border border-5 border-success-subtle hover-scale z-0"
                         />
                       </>
                     )}
                   </Card.Img>
                   {imageFileSizeExceedsLimit && (
-                    <Alert variant="danger" className="text-center">
-                      Image size exceeds the limit (1MB)
+                    <Alert
+                      variant="danger text-black fw-semibold"
+                      className="text-center mt-4"
+                    >
+                      Dimensioni massime per immagine 1MB
                     </Alert>
                   )}
                 </Row>
                 <Row>
                   <Col className="text-end me-5">
                     <Button
-                      className="btn-sm bg-primary text-primary-subtle"
+                      className="btn-sm bg-primary border border-1 border-success-subtle text-white-subtle hover-scale"
                       onClick={handleUpload}
                       disabled={!file || uploading}
                     >
-                      {uploading ? "Uploading..." : "Salva Nuovo Avatar"}
+                      {uploading ? "Caricamento..." : "Salva Nuovo Avatar"}
                     </Button>
                   </Col>
                 </Row>
                 <Row className="align-items-baseline">
                   <Col className="col-5">
-                    <Card.Text className="fs-5">
+                    <Card.Text className="fs-5 text-white mt-4 fw-semibold fst-italic">
                       {profileDetail.profile.name}{" "}
                       {profileDetail.profile.surname}
                     </Card.Text>
                   </Col>
-                  <Col className="col-5 text-end">
+                  <Col className="col-5 text-end text-white opacity-75">
                     <Card.Text>{profileDetail.profile.role}</Card.Text>
                   </Col>
                 </Row>
-                <Card.Text className="fs-5">
+                <Card.Text className="fs-5 text-white fst-italic">
                   {profileDetail.profile.email}
                 </Card.Text>
-                <Button
-                  onClick={handleLogout}
-                  className="text-primary fw-semibold btn-danger shadow-sm"
-                >
-                  Logout
-                </Button>
               </Card.Body>
             )}
             {profileDetail && profileDetail.error && (
               <p>Error: {profileDetail.error}</p>
             )}
             {(role === "ADMIN" || role === "EVENTPLANNER") && (
-              <Link as={Link} to="/addconvention">
-                Vuoi aggiungere una fiera alla lista?
-              </Link>
+              <Row>
+                <Col>
+                  <Button className="rounded-pill hover-scale">
+                    <Link
+                      as={Link}
+                      to="/addconvention"
+                      className="text-white text-decoration-none "
+                    >
+                      <IoMdAddCircle className="me-1" />
+                      Vuoi aggiungere una fiera al sito?
+                    </Link>
+                  </Button>
+                </Col>{" "}
+              </Row>
             )}
             {role === "ADMIN" && (
-              <Link as={Link} to="/requests">
-                Vuoi cambiare un utente?
-              </Link>
+              <Row>
+                <Col>
+                  <Button className="rounded-pill hover-scale">
+                    <Link
+                      as={Link}
+                      to="/requests"
+                      className="text-white text-decoration-none "
+                    >
+                      {" "}
+                      <BsPersonBoundingBox className="me-1 small" />
+                      Vuoi cambiare il ruolo di un utente?
+                    </Link>
+                  </Button>
+                </Col>
+              </Row>
             )}
             {role === "USER" && (
-              <Link as={Link} to="/sendrequest" className="mb-3">
-                Invia Richiesta
-              </Link>
+              <Row>
+                <Col>
+                  <Button className="small rounded-pill hover-scale">
+                    <Link
+                      as={Link}
+                      to="/sendrequest"
+                      className="mb-3 text-white text-decoration-none  "
+                    ><BsPersonBoundingBox className="me-1 small" />
+                      Manda una richiesta per diventare un organizzatore di
+                      eventi !
+                    </Link>
+                  </Button>
+                </Col>
+              </Row>
             )}
+            <Row className="text-end">
+              <Col>
+                <Button
+                  onClick={handleLogout}
+                  className="mt-3 text-secondary fst-italic fw-bold btn-danger border border-3 border-success-subtle shadow-sm btn-sm hover-scale"
+                >
+                  Logout
+                </Button>
+              </Col>
+            </Row>
           </Card>
         </Col>
       </Row>
       <UserFavorites></UserFavorites>
     </Container>
-   
   );
 };
 
