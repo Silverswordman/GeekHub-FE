@@ -17,8 +17,10 @@ const NavbarCustom = () => {
   const profileDetail = useSelector((state) => state.personalProfile);
 
   useEffect(() => {
-    dispatch(fetchProfile());
-  }, [dispatch]);
+    if (isAuthenticated) {
+      dispatch(fetchProfile());
+    }
+  }, [dispatch, isAuthenticated]);
 
   return (
     <Navbar

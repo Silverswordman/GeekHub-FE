@@ -21,6 +21,9 @@ const LoginComponent = () => {
     }
   }, [isAuthenticated, navigate]);
 
+
+  
+
   const handleLogin = (e) => {
     e.preventDefault();
     dispatch(loginUser(email, password));
