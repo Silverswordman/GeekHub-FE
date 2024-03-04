@@ -305,7 +305,7 @@ const ConventionDetail = () => {
               </Row>
             )}
             {(role === "ADMIN" || role === "USER") && (
-              <Row>
+              <Row className="mt-3">
                 <Col>
                   {isFavorite ? (
                     <Button
