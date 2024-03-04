@@ -57,7 +57,7 @@ const SectionDetail = () => {
 
   useEffect(() => {
     dispatch(getSectionDetail(conventionId, sectionId));
-    dispatch(getSubsections(conventionId, sectionId, currentPage));
+    dispatch(getSubsections(conventionId, sectionId, currentPage,4));
   }, [dispatch, conventionId, sectionId, currentPage]);
 
   const handleNextPage = () => {

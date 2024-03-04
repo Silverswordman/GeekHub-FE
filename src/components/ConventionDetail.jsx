@@ -88,7 +88,7 @@ const ConventionDetail = () => {
 
   useEffect(() => {
     dispatch(getConventionDetail(conventionId));
-    dispatch(getConventionSections(conventionId, page));
+    dispatch(getConventionSections(conventionId, page, 4));
   }, [dispatch, conventionId, page]);
 
   useEffect(() => {
