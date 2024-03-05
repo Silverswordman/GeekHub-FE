@@ -205,7 +205,7 @@ const ConventionDetail = () => {
               </Badge>
             )}
             <Row className="align-items-center mt-2 justify-content-md-center mb-md-3">
-              <Col className="col-8 col-sm-9 col-md-11 col-lg-6 mb-4 md-md-5 ">
+              <Col className="col-8 col-sm-9 col-md-11 col-lg-5 mb-4 mb-md-5 ">
                 <Card.Img
                   variant="top"
                   src={conventionDetail.logo}
@@ -241,7 +241,7 @@ const ConventionDetail = () => {
                   </Badge>
                 )}
               </Col>
-              <Col className="col-12 col-sm-11 col-lg-6 ">
+              <Col className="col-12 col-sm-11 col-lg-7  px-0">
                 <Card.Title className="text-center fw-bolder fst-italic text-white fs-1">
                   {conventionDetail.title}
                 </Card.Title>
