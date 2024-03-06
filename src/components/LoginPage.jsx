@@ -80,7 +80,7 @@ const LoginComponent = () => {
                     variant="light"
                     className="rounded-pill border border-4 border-info fw-bold shadow-sm my-4  me-4 hover-scale"
                   >
-                    Register
+                    Registrati
                   </Button>
                   <Button
                     variant="success"
